@@ -1,7 +1,7 @@
 Bird = Sprite:extend()
 
 function Bird:new(x, y, value, speed)
-    Bird.super.new(self, x, y, "img/bird.png")
+    Bird.super.new(self, x, y)
     self.value = value
     self.speed = speed
     self.target_x = 500
@@ -11,8 +11,18 @@ function Bird:new(x, y, value, speed)
     self.trapped = false
     self.gloat_timer = 0
     self.scared_dist = 150
-    self.invincible_timer = 0
+    self.invincible_timer = 2
     self.destroyed = false
+
+    -- Animations
+    self.image = love.graphics.newImage("img/bird2blue_0.10_fixed.png")
+    self.width = math.floor(self.image:getWidth() / 3)
+    self.height = math.floor(self.image:getHeight() / 3)
+
+    local g = anim8.newGrid(self.width, self.height, self.width * 3, self.height * 3)
+    self.animation = anim8.newAnimation(g('1-3','1-3'), 0.1)
+    world:add(self, self.x + self.width/4, self.y + self.height/4, self.width/2, self.height/2)
+
     -- self.scare_timer = 2
 end
 
@@ -50,16 +60,22 @@ function Bird:update(dt)
     if self.invincible_timer > 0 then
         self.invincible_timer = self.invincible_timer - dt
     end
+    self.animation:update(dt)
 end
 
 -- Bird flight movements (dipping up and down a little) shall be handled with draw?
 function Bird:draw()
-    Bird.super.draw(self)
     if self.destroyed then
         return
     end
+    -- Draw bird
+    self.animation:draw(self.image, self.x, self.y)
+    --Draw box
+    Bird.super.draw(self)
+
+    -- Draw speech messages
     if self.trapped then
-        love.graphics.print("Ah Fuck I'm Trapped!", self.x, self.y)
+        love.graphics.print("SKUAWK (I'm Trapped!)", self.x, self.y)
     elseif self.gloat_timer > 0 then
         love.graphics.print("I'm FREE sucker!", self.x, self.y)
     end
@@ -70,7 +86,8 @@ function Bird:flyTowardsDestination(dt)
     local sin = math.sin(angle)
     self.x, self.y, cols, len = world:move(self, 
         self.x + self.speed * cos * dt, 
-        self.y + self.speed * sin * dt)
+        self.y + self.speed * sin * dt,
+        collision_filter)
     if len > 0 then
         if cols[1].other:is(NetTile) then
             if self.invincible_timer <= 0 then
@@ -116,5 +133,7 @@ function Bird:gotFree()
 end
 
 function Bird:squawk()
-    squawk1:play()
+    if soundOn then
+        squawk1:play()
+    end
 end

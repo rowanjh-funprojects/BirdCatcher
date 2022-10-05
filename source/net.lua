@@ -27,9 +27,9 @@ end
 -- Create several tiny collision tiles along the net to get desired behaviour
 function Net:tileize()
     local netTiles = {}
-    for i=0,10 do
-        local x_increment = (self.endx - self.startx) / 10
-        local y_increment = (self.endy - self.starty) / 10
+    for i=0,50 do
+        local x_increment = (self.endx - self.startx) / 50
+        local y_increment = (self.endy - self.starty) / 50
         local x = self.startx + x_increment * i
         local y = self.starty + y_increment * i
         table.insert(netTiles, NetTile(x, y))

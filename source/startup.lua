@@ -11,10 +11,11 @@ function startup()
     require "source/player"
     require "source/net"
     require "source/tempNet"
+    require "source/tree"
 
     -- Game window config
     love.window.setTitle("Bird Catcher")
-    local icon = love.image.newImageData('img/bird.png')
+    local icon = love.image.newImageData('img/bird_static.png')
     love.window.setIcon(icon)
     -- Resolution
     windowWidth = 1152

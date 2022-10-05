@@ -14,7 +14,7 @@ function TempNet:draw()
 end
 
 function TempNet:update()
-    self.endx, self.endy = player.x, player.y
+    self.endx, self.endy = player.x + player.width/2, player.y + player.height/2
 end
 
 function TempNet:confirmNet()
