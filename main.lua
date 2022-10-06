@@ -30,10 +30,6 @@ function love.draw()
     cam:draw(function(l,t,w,h)
         -- Player drawing
         player:draw()
-        -- Tree drawing
-        for i,v in ipairs(trees) do
-            v:draw()
-        end
         -- Bird drawing
         if #birds > 0 then
             for i,v in ipairs(birds) do
@@ -48,6 +44,11 @@ function love.draw()
                 v:draw()
             end
         end
+        -- Tree drawing
+        for i,v in ipairs(trees) do
+            v:draw()
+        end
+
     end)
     love.graphics.print("Score: " .. score, 10, 10)
 

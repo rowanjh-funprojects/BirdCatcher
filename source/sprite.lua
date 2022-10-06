@@ -3,7 +3,6 @@ Sprite = Object:extend()
 function Sprite:new(x, y)
     self.x = x
     self.y = y
-    
 end
 
 function Sprite:draw()

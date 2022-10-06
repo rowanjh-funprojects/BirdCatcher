@@ -11,11 +11,15 @@ function Player:new(x, y, speed)
     local nSpriteRows = 2
     self.width = self.image:getWidth() / nSpriteCols
     self.height = self.image:getHeight() / nSpriteRows
-
     local g = anim8.newGrid(self.width, self.height, self.width * nSpriteCols, self.height * nSpriteRows)
     self.animation = anim8.newAnimation(g('1-4', 1), 0.1)
-    world:add(self, self.x + self.width/4, self.y + self.height/4, self.width/2, self.height/2)
-    
+
+    -- Setup collision rectangle
+    self.bbox_x_offset = self.width / 4
+    self.bbox_y_offset = self.height / 4
+    self.bbox_width = self.width / 2
+    self.bbox_height = self.height / 2
+    world:add(self, self.x, self.y, self.bbox_width, self.bbox_height)
 end
 
 function Player:update(dt)
@@ -47,13 +51,17 @@ function Player:update(dt)
     self.animation:update(dt)
 end
 function Player:draw()
+    self.animation:draw(self.image, self.x - self.bbox_x_offset, self.y - self.bbox_y_offset)
+    -- -- For debugging
+    -- -- draw bbox
+    -- local x, y, w, h = world:getRect(self)
+    -- love.graphics.rectangle("line", x, y, w, h)
     -- love.graphics.draw(self.image, self.x, self.y)
-    self.animation:draw(self.image, self.x, self.y)
-
+    -- love.graphics.rectangle("line", self.x + self.bbox_x_offset, self.y + self.bbox_y_offset, self.bbox_width, self.bbox_height)
 end
 
 function Player:alignNet(maxLength)
-    return TempNet(player.x + player.width/2, player.y + player.height/2, 200, 200, maxLength)
+    return TempNet(self.x + self.width/2 - self.bbox_x_offset, self.y + self.height / 2 - self.bbox_y_offset, 200, 200, maxLength)
 end
 
 function Player:check_bird_captures()

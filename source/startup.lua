@@ -15,12 +15,15 @@ function startup()
     require "source/userInput"
     require "source/helperFunctions"
     require "source/spawns"
+    require "source/loadAudio"
+    require "source/createEnvironment"
     
     -- Global parameters
     soundOn = true
     score = 0
     new_bird_cd = 5 -- cooldown for first new bird
     capture_range = 100
+    tree_buffer = 50
 
     -- Game window config
     love.window.setTitle("Bird Catcher")
@@ -73,17 +76,11 @@ function startup()
     
     netTiles = {}
 
-    trees = {} 
-    for i=1,20 do
-        table.insert(trees, Tree(love.math.random(0,windowWidth), love.math.random(0,windowHeight), "small"))
-    end
-    -- Initialize world & background
-
-    love.graphics.setBackgroundColor(0.3,0.5,0.10)
+    -- Initialize environment
+    createEnvironment()
 
     -- Load audio
-    squawk1 = love.audio.newSource("audio/bird-chirp1.mp3", "static")
-    squawk1:setVolume(0.05)
+    loadAudio()
 
 
 end
