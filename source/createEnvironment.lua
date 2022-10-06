@@ -10,7 +10,6 @@ function createEnvironment()
         table.insert(trees, Tree(x, y, "small"))
     end
     love.graphics.setBackgroundColor(0.3,0.5,0.10)
-    
 end
 
 -- trees = list of trees. x, y = candidate x/y location. n = max recursions/iterations

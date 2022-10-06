@@ -4,6 +4,7 @@ function startup()
     bump = require "source/libraries/bump"
     anim8 = require "source/libraries/anim8"
     gamera = require "source/libraries/gamera"
+    cron = require "source/libraries/cron"
 
     -- require all source files
     require "source/sprite"
@@ -66,7 +67,7 @@ function startup()
     end
 
     -- Initialize entities
-    player = Player(100, 100, 300)
+    player = Player(100, 100, 200)
     birds = {}
     table.insert(birds, Bird(love.math.random(0,windowWidth), 
                                 love.math.random(0,windowHeight), 

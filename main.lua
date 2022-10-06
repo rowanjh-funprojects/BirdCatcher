@@ -10,9 +10,12 @@ end
 function love.load()
     require "source/startup"
     startup()
+    seconds = 0
+    timer = cron.every(1, function() seconds = seconds + 1 end)
 end
 
 function love.update(dt)
+    timer:update(dt)
     -- Player update
     player:update(dt)
     if player.placing_net then
@@ -30,12 +33,6 @@ function love.draw()
     cam:draw(function(l,t,w,h)
         -- Player drawing
         player:draw()
-        -- Bird drawing
-        if #birds > 0 then
-            for i,v in ipairs(birds) do
-                v:draw()
-            end
-        end
         -- Net drawing
         net:draw()
         tempNet:draw()
@@ -48,9 +45,15 @@ function love.draw()
         for i,v in ipairs(trees) do
             v:draw()
         end
-
+        -- Bird drawing
+        if #birds > 0 then
+            for i,v in ipairs(birds) do
+                v:draw()
+            end
+        end
     end)
     love.graphics.print("Score: " .. score, 10, 10)
+    love.graphics.print("Time Left: " .. 60 - seconds, 10, 25)
 
 end
 
