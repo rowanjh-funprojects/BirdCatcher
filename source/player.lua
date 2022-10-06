@@ -55,3 +55,27 @@ end
 function Player:alignNet(maxLength)
     return TempNet(player.x + player.width/2, player.y + player.height/2, 200, 200, maxLength)
 end
+
+function Player:check_bird_captures()
+    local any_birds_capturable = false
+    local closest_dist = -1
+    local nearest_bird = nil
+    for i,v in ipairs(birds) do
+        if v.trapped == true then
+            local distance = get_dist(self, v)
+            if distance <= capture_range then
+                any_birds_capturable = true
+                if closest_dist == -1 or distance < closest_dist then
+                    closest_dist = distance
+                    nearest_bird = v
+                end
+            end
+        end
+    end
+    return any_birds_capturable, nearest_bird
+end
+
+function Player:grab_nearest_bird(thisbird)
+    thisbird:captured()
+    score = score + 1
+end

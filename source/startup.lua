@@ -12,16 +12,26 @@ function startup()
     require "source/net"
     require "source/tempNet"
     require "source/tree"
+    require "source/userInput"
+    require "source/helperFunctions"
+    require "source/spawns"
+    
+    -- Global parameters
+    soundOn = true
+    score = 0
+    new_bird_cd = 5 -- cooldown for first new bird
+    capture_range = 100
 
     -- Game window config
     love.window.setTitle("Bird Catcher")
     local icon = love.image.newImageData('img/bird_static.png')
     love.window.setIcon(icon)
+
     -- Resolution
     windowWidth = 1152
     windowHeight = 768
-    scale = 1 -- adjusts game window to screen size
-    offset = 0.8 -- window size relative to scale
+    local scale = 1 -- adjusts game window to screen size
+    local offset = 0.8 -- window size relative to scale
     local screen_width, screen_height = love.window.getDesktopDimensions()
     local w_scale = screen_width / windowWidth
     local h_scale = screen_height / windowHeight
@@ -36,10 +46,44 @@ function startup()
       fullscreentype = "desktop", resizable = false, borderless = false,
       vsync = true})
 
-    -- Sound control global variable
-    soundOn = true
 
     -- Camera
     cam = gamera.new(0,0,2000,2000)
+
+    -- Start physics engine
+    world = bump.newWorld()
+    function collision_filter(item, other)
+      if item:is(Player) and other:is(Bird) then return 
+      elseif item:is(Player) and other:is(NetTile) then return
+      elseif item:is(Player) and other:is(Tree) then return "slide"
+      elseif item:is(Bird) and other:is(Bird) then return
+      elseif item:is(Bird) and other:is(Tree) then return
+      elseif item:is(Bird) and other:is(NetTile) then return "touch"
+      end
+    end
+
+    -- Initialize entities
+    player = Player(100, 100, 300)
+    birds = {}
+    table.insert(birds, Bird(love.math.random(0,windowWidth), 
+                                love.math.random(0,windowHeight), 
+                                10, 400))
+    net = Net(0,0,0,0)
+    tempNet = TempNet(500, 500, 90, 20)
+    
+    netTiles = {}
+
+    trees = {} 
+    for i=1,20 do
+        table.insert(trees, Tree(love.math.random(0,windowWidth), love.math.random(0,windowHeight), "small"))
+    end
+    -- Initialize world & background
+
+    love.graphics.setBackgroundColor(0.3,0.5,0.10)
+
+    -- Load audio
+    squawk1 = love.audio.newSource("audio/bird-chirp1.mp3", "static")
+    squawk1:setVolume(0.05)
+
 
 end

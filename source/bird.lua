@@ -38,7 +38,7 @@ function Bird:update(dt)
             self:gotFree()
         end
     -- if the bird is too close to the player, try to get away
-    elseif ((player.x - self.x)^2 + (player.y - self.y)^2)^0.5 <= self.scared_dist then
+    elseif get_dist(player, self) <= self.scared_dist then
         self:findSafeDestination(dt)
         self:flyTowardsDestination(dt)
 -- If the bird is free, and not at its destination, the player isn't nearby, move towards the destination
@@ -120,7 +120,6 @@ end
 
 function Bird:captured()
     self.destroyed = true
-    score = score + 1
 end
 
 function Bird:gotFree()
