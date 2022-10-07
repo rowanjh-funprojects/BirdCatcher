@@ -11,6 +11,7 @@ function Net:new(startx, starty, endx, endy, length)
 end
 
 function Net:draw()
+    Net.super.draw(self)
     love.graphics.setColor(0.5,0.5,0.5)
     love.graphics.line(self.startx, self.starty, self.endx, self.endy)
     for i=1, #self.tiles do
@@ -35,6 +36,7 @@ function NetTile:new(x, y)
 end
 
 function NetTile:draw()
+    NetTile.super.draw(self)
     love.graphics.rectangle("fill", self.x, self.y, 5, 5)
 end
 

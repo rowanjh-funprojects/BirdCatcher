@@ -12,6 +12,7 @@ function love.load()
     startup()
     gamestate = "menu"
     launchGamestate(gamestate)
+    round_time = 60
 end
 
 function love.update(dt)
@@ -35,7 +36,14 @@ function love.update(dt)
             v:update(dt)
         end
         remove_if_destroyed(birds)
+        remove_if_destroyed(trees)
+        remove_if_destroyed(textblocks)
+        remove_if_destroyed(panels)
         bird_spawner(dt)
+        if seconds >= round_time then
+            gamestate = "endround"
+            launchGamestate(gamestate)
+        end
     end
 end
 
@@ -45,10 +53,9 @@ function love.draw()
         for i=1,#buttons do
             buttons[i]:draw()
         end
-    elseif gamestate == "forest" then
+    elseif gamestate == "forest" or gamestate == "endround" then
         cam:draw(function(l,t,w,h)
             player:draw()
-
             if net then
                 net:draw()
             end
@@ -60,15 +67,24 @@ function love.draw()
             for i,v in ipairs(trees) do
                 v:draw()
             end
-            
             if #birds > 0 then
                 for i,v in ipairs(birds) do
                     v:draw()
                 end
             end
+            if #panels > 0 then
+                for i,v in ipairs(panels) do
+                    v:draw()
+                end
+            end
+            if #textblocks > 0 then
+                for i,v in ipairs(textblocks) do
+                    v:draw()
+                end
+            end
         end)
         love.graphics.print("Score: " .. score, 10, 10)
-        love.graphics.print("Time Left: " .. 60 - seconds, 10, 25)
+        love.graphics.print("Time Left: " .. round_time - seconds, 10, 25)
     end
 end
 

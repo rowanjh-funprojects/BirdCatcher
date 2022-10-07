@@ -112,6 +112,10 @@ function destroyAll()
     remove_if_destroyed(birds)
     tag_as_destoyed(trees)
     remove_if_destroyed(trees)
+    tag_as_destoyed(panels)
+    remove_if_destroyed(panels)
+    tag_as_destoyed(textblocks)
+    remove_if_destroyed(textblocks)
     if player then
         player:destroy()
         player = nil

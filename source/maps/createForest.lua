@@ -3,6 +3,8 @@ function createForest()
     player = Player(100, 100, 200)
     birds = {}
     trees = {}
+    panels = {}
+    textblocks = {}
 
     tree_replacements_allowed = 500
     for i=1,50 do

@@ -15,13 +15,15 @@ function startup()
     require "source/entities/tempNet"
     require "source/entities/tree"
     require "source/entities/button"
+    require "source/entities/panel"
+    require "source/entities/text"
     require "source/userInput"
     require "source/helperFunctions"
     require "source/spawns"
     require "source/loadAudio"
-    require "source/createForest"
+    require "source/maps/createForest"
     require "source/maps"
-    require "source/launchMenu"
+    require "source/maps/launchMenu"
     
     -- Global parameters
     soundOn = true

@@ -3,8 +3,8 @@ Button = Entity:extend()
 function Button:new(x, y, text, action)
     -- X and Y are specified as mid points to the constructor. Then the actual x and y 
     -- of top left corner is recalcualted for printing etc.
-    self.scale = 2
     Button.super.new(self)
+    self.scale = 2
     self.text = text
     self.action = action
     local font = love.graphics.getFont()
