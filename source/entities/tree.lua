@@ -11,16 +11,19 @@ function Tree:new(x, y, type)
     end
     self.width = self.image:getWidth()
     self.height = self.image:getHeight()
+    self.transparent = false
+    
     --setup collision rectangle
     self.bbox_x_offset = self.width / 2.2
     self.bbox_y_offset = self.height-10
     self.bbox_width = 10
     self.bbox_height = 10
-    self.transparent = false
-    world:add(self, self.x + self.bbox_x_offset, self.y + self.bbox_y_offset, self.bbox_width, self.bbox_height)
+    world:add(self, self.x + self.bbox_x_offset, self.y + self.bbox_y_offset, 
+              self.bbox_width, self.bbox_height)
 end
 
 function Tree:update()
+    Tree.super.update(self)
     if intersects(self,player, 1, 0.6) then
         self.transparent = true
     else
@@ -29,6 +32,7 @@ function Tree:update()
 end
 
 function Tree:draw()
+    Tree.super.draw(self)
     if not self.transparent then
         love.graphics.draw(self.image, self.x, self.y)
     else

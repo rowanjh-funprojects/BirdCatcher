@@ -33,7 +33,7 @@ function find_tree_placement(trees)
     end
     -- Check if the placement is too close to another tree
     for i=1,#trees do
-        if get_dist_points(trees[i].x, trees[i].y, 5, 5, x, y, 5, 5) < tree_buffer then
+        if get_dist_rects(trees[i].x, trees[i].y, 5, 5, x, y, 5, 5) < tree_buffer then
             -- if it fails the check, find new x,y values
             tree_replacements_allowed = tree_replacements_allowed - 1
             x, y = find_tree_placement(trees)

@@ -9,6 +9,7 @@ function launchGamestate(state)
         -- destroyMenu()
         createForest()
         forestMusic:play()
+        BGbirds:play()
     end
 end
 

@@ -11,10 +11,12 @@ function Net:new(startx, starty, endx, endy, length)
 end
 
 function Net:draw()
+    love.graphics.setColor(0.5,0.5,0.5)
     love.graphics.line(self.startx, self.starty, self.endx, self.endy)
     for i=1, #self.tiles do
         self.tiles[i]:draw()
     end
+    love.graphics.setColor(1,1,1)
 end
 
 function Net:destroy()

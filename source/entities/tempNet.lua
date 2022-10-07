@@ -10,10 +10,15 @@ function TempNet:new(x, y, maxLength)
 end
 
 function TempNet:draw()
+    TempNet.super.draw(self)
+    love.graphics.setColor(0.5,0.5,0.5)
     love.graphics.line(self.startx, self.starty, self.endx, self.endy)
+    love.graphics.setColor(1,1,1)
+
 end
 
 function TempNet:update()
+    TempNet.super.update(self)
     self.endx, self.endy = player.x + player.width/2 - player.bbox_x_offset, player.y + player.height/2 - player.bbox_x_offset
 end
 

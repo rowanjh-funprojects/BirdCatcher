@@ -17,10 +17,12 @@ function Button:new(x, y, text, action)
 end
 
 function Button:update()
+    Button.super.update(self)
     self.highlight = checkMouseHover(self)
 end
 
 function Button:draw()
+    Button.super.draw(self)
     love.graphics.print(self.text, self.x, self.y, 0, self.scale, self.scale)
     love.graphics.rectangle("line", self.x - 20, self.y - 10, 
                             self.width + 40, self.height + 20)

@@ -4,6 +4,8 @@ function Player:new(x, y, speed)
     Player.super.new(self, x, y)
     self.speed = speed
     self.placing_net = false
+    self.quiet = false
+    self.quiettimer = 5
 
     -- Animations
     self.image = love.graphics.newImage("img/player_down walk.png")
@@ -23,6 +25,9 @@ function Player:new(x, y, speed)
 end
 
 function Player:update(dt)
+    Player.super.update(self)
+
+    -- Manage player movements
     local goalX = self.x
     local goalY = self.y
     if love.keyboard.isDown("left") or love.keyboard.isDown("a") then
@@ -52,6 +57,7 @@ function Player:update(dt)
     self.animation:update(dt)
 end
 function Player:draw()
+    Player.super.draw(self)
     self.animation:draw(self.image, self.x - self.bbox_x_offset, self.y - self.bbox_y_offset)
     -- -- For debugging
     -- -- draw bbox
@@ -72,7 +78,7 @@ function Player:check_bird_captures()
     local nearest_bird = nil
     for i,v in ipairs(birds) do
         if v.trapped == true then
-            local distance = get_dist(self, v)
+            local distance = get_dist_objs(self, v)
             if distance <= capture_range then
                 any_birds_capturable = true
                 if closest_dist == -1 or distance < closest_dist then
@@ -88,4 +94,5 @@ end
 function Player:grab_nearest_bird(thisbird)
     thisbird:captured()
     score = score + thisbird.value
+    bell:play()
 end

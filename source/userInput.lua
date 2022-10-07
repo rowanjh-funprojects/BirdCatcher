@@ -14,9 +14,11 @@ function love.keypressed(key)
             -- kill the old net, place a new net
             if net then
                 net:destroy()
+                net = nil
             end
             net = Net(tempNet.startx, tempNet.starty, tempNet.endx, tempNet.endy)
             tempNet:destroy()
+            tempNet = nil
             player.placing_net = false
         end
     end

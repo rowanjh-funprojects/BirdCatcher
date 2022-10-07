@@ -1,17 +1,21 @@
-function get_dist(objA, objB)
+function get_dist_objs(a, b)
     -- Get distance between two objects. each object Must have .x and .y attributes
     -- get middles of each object
-    local a_x, a_y = objA.x + objA.width / 2, objA.y + objA.height/2
-    local b_x, b_y = objB.x + objB.width / 2, objB.y + objB.height/2
-    return ((a_x - b_x)^2 + (a_y - b_y)^2)^0.5
+    return get_dist_rects(a.x, a.y, a.width, a.height, b.x, b.y, b.width, b.height)
 end
 
-function get_dist_points(ax, ay, aw, ah, bx, by, bw, bh)
-    -- Get distance between two objects. each object Must have .x and .y attributes
-    -- get middles of each object
-    local ax_mid, ay_mid = ax + aw / 2, ay + ah / 2
-    local bx_mid, by_mid = bx + bw / 2, by + bh / 2
-    return ((ax_mid - bx_mid)^2 + (ay_mid - by_mid)^2)^0.5
+function get_dist_rects(ax, ay, aw, ah, bx, by, bw, bh)
+    -- Get distance between two rectangles
+    local ax_mid = ax + aw / 2
+    local ay_mid = ay + ah / 2
+    local bx_mid = bx + bw / 2
+    local by_mid = by + bh / 2
+    return get_dist_points(ax_mid, ay_mid, bx_mid, by_mid)
+end
+
+function get_dist_points(ax, ay, bx, by)
+    -- Get distance between two points
+    return ((ax - bx)^2 + (ay - by)^2)^0.5
 end
 
 function intersects(a, b, sa, sb)
