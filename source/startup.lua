@@ -21,7 +21,7 @@ function startup()
     require "source/createForest"
     require "source/maps"
     require "source/launchMenu"
-    require "source/menuButton"
+    require "source/button"
     
     -- Global parameters
     soundOn = true
