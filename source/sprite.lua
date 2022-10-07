@@ -1,6 +1,7 @@
 Sprite = Entity:extend()
 
 function Sprite:new(x, y)
+    Sprite.super.new(self, x, y)
 end
 
 function Sprite:draw()

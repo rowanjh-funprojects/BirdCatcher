@@ -1,5 +1,5 @@
 function launchMap(state)
-    -- destroyObjects()
+    destroyAll()
     if state == "menu" then
         -- Create button entities
         launchMenu()

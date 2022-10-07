@@ -32,7 +32,7 @@ function love.update(dt)
         for i,v in ipairs(birds) do
             v:update(dt)
         end
-        remove_destroyed_items(birds)
+        remove_if_destroyed(birds)
         bird_spawner(dt)
     end
 end
@@ -49,7 +49,9 @@ function love.draw()
             player:draw()
             -- Net drawing
             net:draw()
-            tempNet:draw()
+            if tempNet then
+                tempNet:draw()
+            end
             if #netTiles > 0 then
                 for i,v in ipairs(netTiles) do
                     v:draw()

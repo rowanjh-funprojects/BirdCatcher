@@ -1,4 +1,4 @@
-TempNet = Object:extend()
+TempNet = Entity:extend()
 
 function TempNet:new(x, y, maxLength)
     self.startx = x
@@ -6,7 +6,7 @@ function TempNet:new(x, y, maxLength)
     self.endx = x
     self.endy = y
     self.maxLength = maxLength
-    self.isTempNet = true
+    self.destroyed = false
 end
 
 function TempNet:draw()
@@ -25,3 +25,6 @@ function TempNet:confirmNet()
     return net, netTiles
 end
 
+function TempNet:destroy()
+    self.destroyed = true
+end

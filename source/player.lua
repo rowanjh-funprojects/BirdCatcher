@@ -61,6 +61,7 @@ function Player:draw()
 end
 
 function Player:alignNet(maxLength)
+    self.placing_net = true
     return TempNet(self.x + self.width/2 - self.bbox_x_offset, self.y + self.height / 2 - self.bbox_y_offset, 200, 200, maxLength)
 end
 

@@ -14,12 +14,53 @@ function get_dist_points(ax, ay, aw, ah, bx, by, bw, bh)
     return ((ax_mid - bx_mid)^2 + (ay_mid - by_mid)^2)^0.5
 end
 
-
-function remove_destroyed_items(tbl)
-    for i=#tbl,1,-1 do
-        if tbl[i].destroyed then
-            table.remove(tbl, i)
+function remove_if_destroyed(tbl)
+    -- Handles a table of objects, and or empty table
+    local next = next -- makes next a bit more efficient
+    if not tbl then 
+        return -- if obj doesn't exist, end
+    elseif next(tbl) == nil then 
+        return -- if empty table is given, end
+    elseif #tbl > 0 then
+        -- If a table of objects is given, loop through them and remove each destroyed item
+        for i=#tbl,1,-1 do
+            if tbl[i].destroyed then
+                table.remove(tbl, i)
+            end
         end
     end
 end
 
+function tag_as_destoyed(tbl)
+    -- Handles a table of objects, and or empty table
+    local next = next -- makes next a bit more efficient
+    if not tbl then 
+        return -- if obj doesn't exist, end
+    elseif next(tbl) == nil then
+        return -- if empty table is given, end
+    elseif #tbl > 0 then
+        -- If a table of objects is given, loop through them and destroy each item
+        for i=#tbl,1,-1 do
+            tbl[i]:destroy()
+        end
+    end
+end
+
+function destroyAll()
+    tag_as_destoyed(buttons)
+    remove_if_destroyed(buttons)
+    tag_as_destoyed(birds)
+    remove_if_destroyed(birds)
+    tag_as_destoyed(netTiles)
+    remove_if_destroyed(netTiles)
+    tag_as_destoyed(trees)
+    remove_if_destroyed(trees)
+    if player then
+        player:destroy()
+        player = nil
+    end
+    if tempNet then
+        tempNet:destroy()
+        tempNet = nil
+    end
+end

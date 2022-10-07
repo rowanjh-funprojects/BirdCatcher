@@ -1,3 +1,4 @@
+-- Net definition
 Net = Entity:extend()
 
 function Net:new(startx, starty, endx, endy, length)
@@ -12,10 +13,11 @@ function Net:draw()
     love.graphics.line(self.startx, self.starty, self.endx, self.endy)
 end
 
+-- netTiles definition
 NetTile = Entity:extend()
 
 function NetTile:new(x, y)
-    Entity.super.new(self, x, y)
+    NetTile.super.new(self, x, y)
     world:add(self, self.x, self.y, 5, 5)
 end
 
