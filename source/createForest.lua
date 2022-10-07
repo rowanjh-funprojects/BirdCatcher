@@ -1,13 +1,24 @@
-function createEnvironment()
+function createForest()
+    -- Initialize entities
+    player = Player(100, 100, 200)
+    birds = {}
+    table.insert(birds, Bird(love.math.random(0,windowWidth), 
+                                love.math.random(0,windowHeight), 
+                                10, 400))
+    net = Net(0,0,0,0)
+    tempNet = TempNet(500, 500, 90, 20)
+    
+    netTiles = {}
+
     trees = {} 
     attempts_remaining = 500
-    for i=1,30 do
-        local x, y = find_tree_placement(trees)
-        table.insert(trees, Tree(x, y, "large"))
-    end
     for i=1,50 do
         local x, y = find_tree_placement(trees)
         table.insert(trees, Tree(x, y, "small"))
+    end
+    for i=1,30 do
+        local x, y = find_tree_placement(trees)
+        table.insert(trees, Tree(x, y, "large"))
     end
     love.graphics.setBackgroundColor(0.3,0.5,0.10)
 end

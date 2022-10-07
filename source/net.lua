@@ -1,4 +1,4 @@
-Net = Object:extend()
+Net = Entity:extend()
 
 function Net:new(startx, starty, endx, endy, length)
     self.startx = startx
@@ -12,11 +12,10 @@ function Net:draw()
     love.graphics.line(self.startx, self.starty, self.endx, self.endy)
 end
 
-NetTile = Object:extend()
+NetTile = Entity:extend()
 
 function NetTile:new(x, y)
-    self.x = x
-    self.y = y
+    Entity.super.new(self, x, y)
     world:add(self, self.x, self.y, 5, 5)
 end
 

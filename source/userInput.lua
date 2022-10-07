@@ -17,4 +17,20 @@ function love.keypressed(key)
             player.placing_net = false
         end
     end
+    if key == "r" then
+        love.event.quit("restart")
+    end
+end
+
+function checkMouseHover(entity)
+    local mx = love.mouse.getX()
+    local my = love.mouse.getY()
+    -- check horiz overlap first
+    if mx > entity.x and mx < entity.x + entity.width then
+        -- then check vertical overlap
+        if my > entity.y and my < entity.y + entity.width then
+            return true
+        end
+    end
+    return false
 end

@@ -22,3 +22,4 @@ function remove_destroyed_items(tbl)
         end
     end
 end
+

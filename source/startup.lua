@@ -7,6 +7,7 @@ function startup()
     cron = require "source/libraries/cron"
 
     -- require all source files
+    require "source/entity"
     require "source/sprite"
     require "source/bird"
     require "source/player"
@@ -17,7 +18,10 @@ function startup()
     require "source/helperFunctions"
     require "source/spawns"
     require "source/loadAudio"
-    require "source/createEnvironment"
+    require "source/createForest"
+    require "source/maps"
+    require "source/launchMenu"
+    require "source/menuButton"
     
     -- Global parameters
     soundOn = true
@@ -51,9 +55,6 @@ function startup()
       vsync = true})
 
 
-    -- Camera
-    cam = gamera.new(0,0,2000,2000)
-
     -- Start physics engine
     world = bump.newWorld()
     function collision_filter(item, other)
@@ -65,20 +66,8 @@ function startup()
       elseif item:is(Bird) and other:is(NetTile) then return "touch"
       end
     end
-
-    -- Initialize entities
-    player = Player(100, 100, 200)
-    birds = {}
-    table.insert(birds, Bird(love.math.random(0,windowWidth), 
-                                love.math.random(0,windowHeight), 
-                                10, 400))
-    net = Net(0,0,0,0)
-    tempNet = TempNet(500, 500, 90, 20)
-    
-    netTiles = {}
-
-    -- Initialize environment
-    createEnvironment()
+    -- Camera
+    cam = gamera.new(0,0,2000,2000)
 
     -- Load audio
     loadAudio()
