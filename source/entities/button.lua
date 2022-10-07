@@ -34,7 +34,7 @@ end
 function Button:click()
     if self.action == "gotoForest" then
         gamestate = "forest"
-        launchMap(gamestate)
+        launchGamestate(gamestate)
     elseif self.action == "showCredits" then
     elseif self.action == "quit" then
         love.event.quit()

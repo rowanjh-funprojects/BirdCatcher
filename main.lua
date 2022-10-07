@@ -11,9 +11,7 @@ function love.load()
     require "source/startup"
     startup()
     gamestate = "menu"
-    launchMap(gamestate)
-    seconds = 0
-    timer = cron.every(1, function() seconds = seconds + 1 end)
+    launchGamestate(gamestate)
 end
 
 function love.update(dt)
@@ -36,7 +34,6 @@ function love.update(dt)
         for i,v in ipairs(trees) do
             v:update(dt)
         end
-        
         remove_if_destroyed(birds)
         bird_spawner(dt)
     end
@@ -50,23 +47,20 @@ function love.draw()
         end
     elseif gamestate == "forest" then
         cam:draw(function(l,t,w,h)
-            -- Player drawing
             player:draw()
 
-            -- Net drawing
             if net then
                 net:draw()
             end
+
             if tempNet then
                 tempNet:draw()
             end
 
-            -- Tree drawing
             for i,v in ipairs(trees) do
                 v:draw()
             end
             
-            -- Bird drawing
             if #birds > 0 then
                 for i,v in ipairs(birds) do
                     v:draw()

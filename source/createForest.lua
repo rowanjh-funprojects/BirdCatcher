@@ -13,8 +13,13 @@ function createForest()
         local x, y = find_tree_placement(trees)
         table.insert(trees, Tree(x, y, "large"))
     end
+
+    -- Set background
     love.graphics.setBackgroundColor(0.3,0.5,0.10)
 
+    -- Initialize timer
+    seconds = 0
+    timer = cron.every(1, function() seconds = seconds + 1 end)
 end
 
 -- trees = list of trees. x, y = candidate x/y location. n = max recursions/iterations

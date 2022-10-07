@@ -26,15 +26,15 @@ function startup()
     -- Global parameters
     soundOn = true
     score = 0
-    new_bird_cd = 5 -- cooldown for first new bird
+    new_bird_cd = 1 -- cooldown for first new bird
     capture_range = 100
     tree_buffer = 50
     bird_speed = 300
 
     -- Game window config
     love.window.setTitle("Bird Catcher")
-    local icon = love.image.newImageData('img/bird_static.png')
-    love.window.setIcon(icon)
+    -- local icon = love.image.newImageData('img/bird_static.png')
+    -- love.window.setIcon(icon)
 
     -- Resolution
     windowWidth = 1152
@@ -72,6 +72,4 @@ function startup()
 
     -- Load audio
     loadAudio()
-
-
 end
