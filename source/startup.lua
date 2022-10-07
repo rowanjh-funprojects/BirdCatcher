@@ -7,13 +7,14 @@ function startup()
     cron = require "source/libraries/cron"
 
     -- require all source files
-    require "source/entity"
-    require "source/sprite"
-    require "source/bird"
-    require "source/player"
-    require "source/net"
-    require "source/tempNet"
-    require "source/tree"
+    require "source/entities/entity"
+    require "source/entities/sprite"
+    require "source/entities/bird"
+    require "source/entities/player"
+    require "source/entities/net"
+    require "source/entities/tempNet"
+    require "source/entities/tree"
+    require "source/entities/button"
     require "source/userInput"
     require "source/helperFunctions"
     require "source/spawns"
@@ -21,7 +22,6 @@ function startup()
     require "source/createForest"
     require "source/maps"
     require "source/launchMenu"
-    require "source/button"
     
     -- Global parameters
     soundOn = true
