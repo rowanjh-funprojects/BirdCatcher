@@ -18,9 +18,9 @@ end
 
 function love.update(dt)
     if gamestate == "menu" then
-        menu1:update()
-        menu2:update()
-        menu3:update()
+        for i=1,#buttons do
+            buttons[i]:update()
+        end
     elseif gamestate == "forest" then
         timer:update(dt)
         -- Player update
@@ -40,9 +40,9 @@ end
 function love.draw()
     if gamestate == "menu" then
         love.graphics.print("BIRD CATCHER", 180, 50,0,10,10)
-        menu1:draw()
-        menu2:draw()
-        menu3:draw()
+        for i=1,#buttons do
+            buttons[i]:draw()
+        end
     elseif gamestate == "forest" then
         cam:draw(function(l,t,w,h)
             -- Player drawing

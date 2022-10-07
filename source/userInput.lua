@@ -28,7 +28,7 @@ function checkMouseHover(entity)
     -- check horiz overlap first
     if mx > entity.x and mx < entity.x + entity.width then
         -- then check vertical overlap
-        if my > entity.y and my < entity.y + entity.width then
+        if my > entity.y and my < entity.y + entity.height then
             return true
         end
     end
