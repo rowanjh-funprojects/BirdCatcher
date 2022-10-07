@@ -6,13 +6,24 @@ function Net:new(startx, starty, endx, endy, length)
     self.starty = starty
     self.endx = endx
     self.endy = endy
-    self.length = length
+    self.length = ((self.startx - self.endx)^2 + (self.starty - self.endy)^2)^0.5
+    self.tiles = self:tileize()
 end
 
 function Net:draw()
     love.graphics.line(self.startx, self.starty, self.endx, self.endy)
+    for i=1, #self.tiles do
+        self.tiles[i]:draw()
+    end
 end
 
+function Net:destroy()
+    Net.super.destroy(self)
+    -- remove tiles
+    for i=1, #self.tiles do
+        self.tiles[i]:destroy()
+    end
+end
 -- netTiles definition
 NetTile = Entity:extend()
 
@@ -23,6 +34,11 @@ end
 
 function NetTile:draw()
     love.graphics.rectangle("fill", self.x, self.y, 5, 5)
+end
+
+function NetTile:destroy()
+    NetTile.super.destroy(self)
+    world:remove(self)
 end
 
 -- Create several tiny collision tiles along the net to get desired behaviour

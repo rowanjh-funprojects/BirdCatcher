@@ -47,7 +47,8 @@ function Player:update(dt)
             goalY = tempNet.starty + sin * tempNet.maxLength
         end
     end
-    self.x, self.y = world:move(self, goalX, goalY, collision_filter)
+    self.x, self.y, cols, len = world:move(self, goalX, goalY, collision_filter)
+
     self.animation:update(dt)
 end
 function Player:draw()
@@ -86,5 +87,5 @@ end
 
 function Player:grab_nearest_bird(thisbird)
     thisbird:captured()
-    score = score + 1
+    score = score + thisbird.value
 end

@@ -32,6 +32,11 @@ function love.update(dt)
         for i,v in ipairs(birds) do
             v:update(dt)
         end
+        -- Tree update
+        for i,v in ipairs(trees) do
+            v:update(dt)
+        end
+        
         remove_if_destroyed(birds)
         bird_spawner(dt)
     end
@@ -47,20 +52,20 @@ function love.draw()
         cam:draw(function(l,t,w,h)
             -- Player drawing
             player:draw()
+
             -- Net drawing
-            net:draw()
+            if net then
+                net:draw()
+            end
             if tempNet then
                 tempNet:draw()
             end
-            if #netTiles > 0 then
-                for i,v in ipairs(netTiles) do
-                    v:draw()
-                end
-            end
+
             -- Tree drawing
             for i,v in ipairs(trees) do
                 v:draw()
             end
+            
             -- Bird drawing
             if #birds > 0 then
                 for i,v in ipairs(birds) do

@@ -11,9 +11,12 @@ function love.keypressed(key)
             tempNet = player:alignNet(20)
         -- if in net placement mode, finalize net placement
         elseif player.placing_net then
-            -- kill old netTiles
-            tag_as_destoyed(netTiles)
-            net, netTiles = tempNet:confirmNet()
+            -- kill the old net, place a new net
+            if net then
+                net:destroy()
+            end
+            net = Net(tempNet.startx, tempNet.starty, tempNet.endx, tempNet.endy)
+            tempNet:destroy()
             player.placing_net = false
         end
     end

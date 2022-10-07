@@ -29,6 +29,7 @@ function startup()
     new_bird_cd = 5 -- cooldown for first new bird
     capture_range = 100
     tree_buffer = 50
+    bird_speed = 300
 
     -- Game window config
     love.window.setTitle("Bird Catcher")

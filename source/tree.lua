@@ -16,12 +16,26 @@ function Tree:new(x, y, type)
     self.bbox_y_offset = self.height-10
     self.bbox_width = 10
     self.bbox_height = 10
-
+    self.transparent = false
     world:add(self, self.x + self.bbox_x_offset, self.y + self.bbox_y_offset, self.bbox_width, self.bbox_height)
 end
 
+function Tree:update()
+    if intersects(self,player, 1, 0.6) then
+        self.transparent = true
+    else
+        self.transparent = false
+    end
+end
+
 function Tree:draw()
-    love.graphics.draw(self.image, self.x, self.y)
+    if not self.transparent then
+        love.graphics.draw(self.image, self.x, self.y)
+    else
+        love.graphics.setColor(1,1,1,0.7)
+        love.graphics.draw(self.image, self.x, self.y)
+        love.graphics.setColor(1,1,1,1)
+    end
     -- -- draw bbox (debugging)
     -- local x, y, w, h = world:getRect(self)
     -- love.graphics.rectangle("line", x, y, w, h)
