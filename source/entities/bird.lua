@@ -13,6 +13,8 @@ function Bird:new(x, y, speed, value)
     self.scared_timer = 1
     self.invincible_timer = 2
     self.destroyed = false
+    self.lifespan = bird_lifespan
+    self.emigrating = false -- Bird still wants to stay in the world
 
     -- Animations
     self.image = love.graphics.newImage("img/bird2blue_0.10_fixed.png")
@@ -37,6 +39,13 @@ function Bird:update(dt)
             self.escapetime = self.escapetime - 1*dt
         else
             self:gotFree()
+        end
+    -- If the bird is emigrating
+    elseif self.emigrating then
+        if self:isOffscreen() then
+            self:destroy()
+        else
+            self:moveTowardsDestination(dt)
         end
     -- If bird is free and too close to the plaer, get scared away
     elseif get_dist_objs(player, self) <= self.scared_dist then
@@ -64,6 +73,11 @@ function Bird:update(dt)
     if self.scared_timer > 0 then
         self.scared_timer = self.scared_timer - dt
     end
+    if self.lifespan <= 0 and not self.emigrating then
+        self:emigrate() -- fly away from the world
+    else
+        self.lifespan = self.lifespan - dt
+    end
     self.animation:update(dt)
 end
 
@@ -82,6 +96,27 @@ function Bird:draw()
     local xSpriteOffset = (self.spriteWidth - self.width) / 2
     local ySpriteOffset = (self.spriteHeight - self.height) / 2
     self.animation:draw(self.image, self.x - xSpriteOffset, self.y - ySpriteOffset)
+end
+
+function Bird:emigrate()
+    self.emigrating = true
+    self.patience = 0
+    -- pick a random destination around the edge of the map
+    -- choose an edge, top, bot, left, or right
+    local edge = love.math.random(1,4)
+    if edge == 1 then -- top
+        self.target_x = love.math.random(0,worldWidth)
+        self.target_y = self.height*-1 - 100
+    elseif edge == 2 then --right
+        self.target_x = worldWidth + 100
+        self.target_y = love.math.random(0,worldHeight)
+    elseif edge == 3 then --bottom
+        self.target_x = love.math.random(0,worldWidth)
+        self.target_y = worldHeight + 100
+    else --left
+        self.target_x = self.width*-1 - 100
+        self.target_y = love.math.random(0,worldHeight)
+    end
 end
 
 function Bird:destroy()
@@ -112,11 +147,6 @@ function Bird:findRandomDestination()
     self.target_y = love.math.random(0, windowHeight - self.height)
 end
 
-function Bird:scaredAway()
-    self.scared_timer = 1
-    self:findSafeDestination()
-end
-
 -- pick a spot in the opposite direction from the player
 function Bird:findSafeDestination()
     local angle = math.atan2(player.y - self.y, player.x - self.x)
@@ -125,6 +155,13 @@ function Bird:findSafeDestination()
     self.target_x = self.x + love.math.random(200, 500) * (cos + love.math.random(-1, 1)) * -1
     self.target_y = self.y + love.math.random(200, 500) * (sin + love.math.random(-1, 1)) * -1
 end
+
+
+function Bird:scaredAway()
+    self.scared_timer = 1
+    self:findSafeDestination()
+end
+
 
 function Bird:gotTrapped()
     self.trapped = true

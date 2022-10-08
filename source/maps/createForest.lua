@@ -1,6 +1,6 @@
 function createForest()
     -- Initialize parameters
-    round_time = 120
+    round_time = 90
     player_skill = 0.7
 
     -- Initialize entities

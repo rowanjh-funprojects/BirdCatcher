@@ -33,3 +33,10 @@ function Sprite:destroy()
     Sprite.super.destroy(self)
 end
 
+function Sprite:isOffscreen()
+    if ((self.x + self.width) < 0) or self.x > worldWidth then
+        if ((self.y  + self.height) < 0) or self.y > worldHeight then 
+            return true
+        end
+    end
+end

@@ -6,7 +6,8 @@ function Player:new(x, y, speed)
     self.placing_net = false
     self.quiet = false
     self.quiettimer = 5
-    self.skill = 0.6
+    self.skill = player_skill
+    self.frustration = 0
     self.speaktimer = 0
     
     -- Animations
@@ -89,6 +90,7 @@ end
 
 function Player:tryToExtractBird(thisbird)
     if player:extractSkillCheck() then
+        self.frustration = 0
         thisbird:captured()
         if thisbird.value <= 10 then
             bell:play()
@@ -99,12 +101,13 @@ function Player:tryToExtractBird(thisbird)
         player:talk("+"..thisbird.value, 1)
         captured_birds = captured_birds + 1
     else
+        self.frustration = self.frustration + player_frustration_increment
         thisbird:gotFree()
     end
 end
 
 function Player:extractSkillCheck()
-    if love.math.random(0,1) >= player.skill then
+    if player.skill + player.frustration >= (love.math.random(0,100)/100) then
         return true
     else 
         player:talk("doh", 2)

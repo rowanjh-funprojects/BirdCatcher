@@ -5,11 +5,14 @@ function startup()
     tree_buffer = 50
     bird_speed = 300
     player_speed = 200
-    worldWidth = 1500
-    worldHeight = 1500
-    bird_scare_dist = 300
+    worldWidth = 1200
+    worldHeight = 900
+    bird_scare_dist = 200
     bird_escape_time = {3,7}
-    
+    bird_lifespan = 60
+    player_skill = 0.6
+    player_frustration_increment = 0.1
+
     -- require all libraries
     Object = require "source/libraries/classic"
     bump = require "source/libraries/bump"

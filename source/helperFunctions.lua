@@ -116,6 +116,9 @@ function destroyAll()
     remove_if_destroyed(panels)
     tag_as_destoyed(textblocks)
     remove_if_destroyed(textblocks)
+    tag_as_destoyed(worldEdges)
+    remove_if_destroyed(worldEdges)
+
     if player then
         player:destroy()
         player = nil
@@ -136,4 +139,8 @@ function makeWorldEdges()
     table.insert(worldEdges, WorldEdge(worldWidth + 1, 0, 10, worldHeight)) -- right
     table.insert(worldEdges, WorldEdge(0, -10, worldWidth, 10)) -- top
     table.insert(worldEdges, WorldEdge(0, worldHeight + 1, worldWidth, 10)) -- bot
+end
+
+function getOffscreenDestination()
+    return x, y
 end
