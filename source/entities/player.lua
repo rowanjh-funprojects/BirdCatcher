@@ -2,12 +2,13 @@ Player = Sprite:extend()
 
 function Player:new(x, y, speed)
     Player.super.new(self, x, y)
-    self.speed = speed
+    self.speed = player_speed
     self.placing_net = false
     self.quiet = false
     self.quiettimer = 5
-    self.catchValueTimer = 0
-
+    self.skill = 0.6
+    self.speaktimer = 0
+    
     -- Animations
     self.image = love.graphics.newImage("img/player_down walk.png")
     local nSpriteCols = 4
@@ -54,24 +55,12 @@ function Player:update(dt)
     end
     self.x, self.y, cols, len = world:move(self, goalX, goalY, collision_filter)
 
-    if self.catchValueTimer > 0 then
-        self.catchValueTimer = self.catchValueTimer - dt
-    end
     self.animation:update(dt)
 end
+
 function Player:draw()
     Player.super.draw(self)
     self.animation:draw(self.image, self.x - self.bbox_x_offset, self.y - self.bbox_y_offset)
-    if self.catchValueTimer > 0 then
-        love.graphics.print("+"..player.latestScore, self.x, self.y - 15)
-    end
-
-    -- -- For debugging
-    -- -- draw bbox
-    -- local x, y, w, h = world:getRect(self)
-    -- love.graphics.rectangle("line", x, y, w, h)
-    -- love.graphics.draw(self.image, self.x, self.y)
-    -- love.graphics.rectangle("line", self.x + self.bbox_x_offset, self.y + self.bbox_y_offset, self.bbox_width, self.bbox_height)
 end
 
 function Player:alignNet(maxLength)
@@ -98,18 +87,29 @@ function Player:check_bird_captures()
     return any_birds_capturable, nearest_bird
 end
 
-function Player:grab_nearest_bird(thisbird)
-    thisbird:captured()
-    if thisbird.value <= 10 then
-        bell:play()
-    elseif thisbird.value >10 then
-        bellMulti:play()
+function Player:tryToExtractBird(thisbird)
+    if player:extractSkillCheck() then
+        thisbird:captured()
+        if thisbird.value <= 10 then
+            bell:play()
+        elseif thisbird.value >10 then
+            bellMulti:play()
+        end
+        score = score + thisbird.value
+        player:talk("+"..thisbird.value, 1)
+        captured_birds = captured_birds + 1
+    else
+        thisbird:gotFree()
     end
-    score = score + thisbird.value
-    self.latestScore = thisbird.value
-    self.catchValueTimer = 1
-    captured_birds = captured_birds + 1
+end
 
+function Player:extractSkillCheck()
+    if love.math.random(0,1) >= player.skill then
+        return true
+    else 
+        player:talk("doh", 2)
+        failed_extractions = failed_extractions + 1
+    end
 end
 
 function Player:destroy()

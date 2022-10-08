@@ -9,7 +9,6 @@ function Bird:new(x, y, speed, value)
     self.patience = love.math.random(1, 4) -- How long the bird will wait in one spot
     self.escapetime = love.math.random(3, 10)
     self.trapped = false
-    self.gloat_timer = 0
     self.scared_dist = bird_scare_dist
     self.scared_timer = 1
     self.invincible_timer = 2
@@ -59,9 +58,6 @@ function Bird:update(dt)
             self.patience = love.math.random(1, 4)
         end
     end 
-    if self.gloat_timer > 0 then
-        self.gloat_timer = self.gloat_timer - dt
-    end
     if self.invincible_timer > 0 then
         self.invincible_timer = self.invincible_timer - dt
     end
@@ -80,9 +76,6 @@ function Bird:draw()
         love.graphics.circle("fill", self.x + self.width/2, self.y + self.height/2, self.width * 0.6)
         love.graphics.circle("fill", self.x + self.width/2, self.y + self.height/2, self.width * 0.3)
         love.graphics.setColor(1,1,1,1)
-
-    elseif self.gloat_timer > 0 then
-        love.graphics.print("I'm FREE!", self.x, self.y)
     end
 
     -- Draw bird, with bbox offset
@@ -135,8 +128,8 @@ end
 
 function Bird:gotTrapped()
     self.trapped = true
-    self.escapetime = love.math.random(1, 7)
-    self:chirp("trapped")
+    self.escapetime = love.math.random(bird_escape_time[1], bird_escape_time[2])
+    self:chirp("gotTrapped")
 end
 
 function Bird:captured()
@@ -146,16 +139,16 @@ end
 function Bird:gotFree()
     self.trapped = false
     self.patience = 0
-    self.gloat_timer = 2
     self.invincible_timer = 2
     self:findSafeDestination()
+    self:talk("Escaped", 2)
     self:chirp("gotFree")
     escaped_birds = escaped_birds + 1
 end
 
 function Bird:chirp(type)
     if soundOn then
-        if type == "trapped" then
+        if type == "gotTrapped" then
             chirp_2:play()
         elseif type == "gotFree" then
             chirp_3:play()

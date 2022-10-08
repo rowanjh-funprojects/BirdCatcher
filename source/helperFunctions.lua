@@ -131,3 +131,9 @@ function destroyAll()
 
 end
 
+function makeWorldEdges()
+    table.insert(worldEdges, WorldEdge(-10, 0, 10, worldHeight)) -- left
+    table.insert(worldEdges, WorldEdge(worldWidth + 1, 0, 10, worldHeight)) -- right
+    table.insert(worldEdges, WorldEdge(0, -10, worldWidth, 10)) -- top
+    table.insert(worldEdges, WorldEdge(0, worldHeight + 1, worldWidth, 10)) -- bot
+end

@@ -1,20 +1,24 @@
 function createForest()
+    -- Initialize parameters
+    round_time = 120
+    player_skill = 0.7
+
     -- Initialize entities
-    player = Player(worldWidth/2, worldHeight/2, 200)
     birds = {}
     trees = {}
     panels = {}
     textblocks = {}
     spawners = {}
     worldEdges = {}
-
-    round_time = 80
+    player = Player(worldWidth/2, worldHeight/2, 200)
+    makeWorldEdges()
 
     -- round statistics
     score = 0
     captured_birds = 0
     escaped_birds = 0
     nets_placed = 0
+    failed_extractions = 0
 
 
     tree_replacements_allowed = 500

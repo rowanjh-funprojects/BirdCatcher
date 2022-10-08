@@ -4,9 +4,11 @@ function startup()
     capture_range = 100
     tree_buffer = 50
     bird_speed = 300
+    player_speed = 200
     worldWidth = 1500
     worldHeight = 1500
     bird_scare_dist = 300
+    bird_escape_time = {3,7}
     
     -- require all libraries
     Object = require "source/libraries/classic"
@@ -29,6 +31,7 @@ function startup()
     require "source/entities/text"
     require "source/entities/button"
     require "source/entities/panel"
+    require "source/entities/worldEdge"
     require "source/userInput"
     require "source/helperFunctions"
     require "source/debugging"
@@ -71,11 +74,8 @@ function startup()
     world = bump.newWorld()
 
     function collision_filter(item, other)
-      if item:is(Player) and other:is(Bird) then return 
-      elseif item:is(Player) and other:is(NetTile) then return
+      if item:is(Player) and other:is(WorldEdge) then return "slide"
       elseif item:is(Player) and other:is(Tree) then return "slide"
-      elseif item:is(Bird) and other:is(Bird) then return
-      elseif item:is(Bird) and other:is(Tree) then return
       elseif item:is(Bird) and other:is(NetTile) then return "cross"
       end
     end
