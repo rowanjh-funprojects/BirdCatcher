@@ -12,6 +12,8 @@ function love.load()
     startup()
     gamestate = "menu"
     launchGamestate(gamestate)
+    round_time = 20
+
 end
 
 function love.update(dt)
@@ -20,6 +22,8 @@ function love.update(dt)
             buttons[i]:update()
         end
     elseif gamestate == "forest" then
+        cam:setPosition(player.x, player.y)
+
         timer:update(dt)
         -- Player update
         player:update(dt)
@@ -34,13 +38,17 @@ function love.update(dt)
         for i,v in ipairs(trees) do
             v:update(dt)
         end
+        -- Spawners update
+        for i,v in ipairs(spawners) do
+            v:update(dt)
+        end
 
         remove_if_destroyed(birds)
         remove_if_destroyed(trees)
         remove_if_destroyed(textblocks)
         remove_if_destroyed(panels)
         remove_if_destroyed(buttons)
-        bird_spawner(dt)
+
         if seconds >= round_time then
             gamestate = "endround"
             launchGamestate(gamestate)
@@ -71,6 +79,7 @@ function love.draw()
     elseif gamestate == "forest" or gamestate == "endround" then
         cam:draw(function(l,t,w,h)
             player:draw()
+
             if net then
                 net:draw()
             end
@@ -87,24 +96,25 @@ function love.draw()
                     v:draw()
                 end
             end
-            if #panels > 0 then
-                for i,v in ipairs(panels) do
-                    v:draw()
-                end
-            end
-            if #textblocks > 0 then
-                for i,v in ipairs(textblocks) do
-                    v:draw()
-                end
-            end
-            if #buttons > 0 then
-                for i,v in ipairs(buttons) do
-                    v:draw()
-                end
-            end
         end)
         love.graphics.print("Score: " .. score, 10, 10)
         love.graphics.print("Time Left: " .. round_time - seconds, 10, 25)
+        if #panels > 0 then
+            for i,v in ipairs(panels) do
+                v:draw()
+            end
+        end
+        if #textblocks > 0 then
+            for i,v in ipairs(textblocks) do
+                v:draw()
+            end
+        end
+        if #buttons > 0 then
+            for i,v in ipairs(buttons) do
+                v:draw()
+            end
+        end
+
     end
     -- drawDebugGrid()
 end

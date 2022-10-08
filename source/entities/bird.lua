@@ -4,8 +4,8 @@ function Bird:new(x, y, value, speed)
     Bird.super.new(self, x, y)
     self.value = value
     self.speed = speed
-    self.target_x = 500
-    self.target_y = 500
+    self.target_x = x
+    self.target_y = y
     self.patience = love.math.random(1, 4) -- How long the bird will wait in one spot
     self.escapetime = love.math.random(3, 10)
     self.trapped = false

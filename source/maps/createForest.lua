@@ -1,22 +1,22 @@
 function createForest()
     -- Initialize entities
-    player = Player(100, 100, 200)
+    player = Player(worldWidth/2, worldHeight/2, 200)
     birds = {}
     trees = {}
     panels = {}
     textblocks = {}
+    spawners = {}
     score = 0
-    new_bird_cd = 1 -- cooldown for first new bird
-
 
     tree_replacements_allowed = 500
+
     for i=1,50 do
-        local x, y = find_tree_placement(trees)
-        table.insert(trees, Tree(x, y, "small"))
-    end
-    for i=1,30 do
-        local x, y = find_tree_placement(trees)
+        local x, y = find_tree_placement(trees, worldWidth, worldHeight)
         table.insert(trees, Tree(x, y, "large"))
+    end
+    for i=1,100 do
+        local x, y = find_tree_placement(trees, worldWidth, worldHeight)
+        table.insert(trees, Tree(x, y, "small"))
     end
 
     -- Set background
@@ -25,12 +25,24 @@ function createForest()
     -- Initialize timer
     seconds = 0
     timer = cron.every(1, function() seconds = seconds + 1 end)
+        
+    -- Initialize spawner
+    table.insert(spawners, Spawner("bird", 5, 2))
+
+    -- Spawn initial birds
+    for i=1, 5 do
+        spawners[1]:spawn()
+    end
+
+
 end
 
 -- trees = list of trees. x, y = candidate x/y location. n = max recursions/iterations
-function find_tree_placement(trees)
+function find_tree_placement(trees, ww, wh)
+    -- @ww = world width
+    -- @wh = world height
     -- Create candidate coordinates
-    local x, y = love.math.random(0,windowWidth), love.math.random(0,windowHeight)
+    local x, y = love.math.random(0,ww), love.math.random(0,wh)
 
     --  Break conditions
     if tree_replacements_allowed <= 0 or #trees == 0 then

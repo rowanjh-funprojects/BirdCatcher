@@ -1,4 +1,12 @@
 function startup()
+    -- Global parameters
+    soundOn = true
+    capture_range = 100
+    tree_buffer = 50
+    bird_speed = 300
+    worldWidth = 1500
+    worldHeight = 1500
+    
     -- require all libraries
     Object = require "source/libraries/classic"
     bump = require "source/libraries/bump"
@@ -14,6 +22,7 @@ function startup()
     require "source/entities/net"
     require "source/entities/tempNet"
     require "source/entities/tree"
+    require "source/entities/spawner"
     require "source/entities/image"
     require "source/entities/text"
     require "source/entities/button"
@@ -21,19 +30,11 @@ function startup()
     require "source/userInput"
     require "source/helperFunctions"
     require "source/debugging"
-    require "source/spawns"
     require "source/loadAudio"
     require "source/maps"
     require "source/maps/createForest"
     require "source/maps/launchMenu"
     require "source/maps/roundEnd"
-    
-    -- Global parameters
-    round_time = 5
-    soundOn = true
-    capture_range = 100
-    tree_buffer = 50
-    bird_speed = 300
     
     -- Game window config
     love.window.setTitle("Bird Catcher")
@@ -74,8 +75,9 @@ function startup()
       elseif item:is(Bird) and other:is(NetTile) then return "touch"
       end
     end
+
     -- Camera
-    cam = gamera.new(0,0,2000,2000)
+    cam = gamera.new(0,0,worldWidth, worldHeight)
 
     -- Load audio
     loadAudio()
