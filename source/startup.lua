@@ -76,7 +76,7 @@ function startup()
       elseif item:is(Player) and other:is(Tree) then return "slide"
       elseif item:is(Bird) and other:is(Bird) then return
       elseif item:is(Bird) and other:is(Tree) then return
-      elseif item:is(Bird) and other:is(NetTile) then return "touch"
+      elseif item:is(Bird) and other:is(NetTile) then return "cross"
       end
     end
 

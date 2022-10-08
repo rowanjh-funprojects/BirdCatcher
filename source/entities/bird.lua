@@ -11,8 +11,8 @@ function Bird:new(x, y, speed, value)
     self.trapped = false
     self.gloat_timer = 0
     self.scared_dist = bird_scare_dist
+    self.scared_timer = 1
     self.invincible_timer = 2
-    self.panic_timer = 1
     self.destroyed = false
 
     -- Animations
@@ -39,10 +39,14 @@ function Bird:update(dt)
         else
             self:gotFree()
         end
-    -- If not trapped and bird is too close to to the player
+    -- If bird is free and too close to the plaer, get scared away
     elseif get_dist_objs(player, self) <= self.scared_dist then
-        self:findSafeDestination(dt)
-        self:moveTowardsDestination(dt)
+        if self.scared_timer <= 0 then
+            self:scaredAway()
+        end
+        if get_dist_points(self.x, self.y, self.target_x, self.target_y) >= 60 then
+            self:moveTowardsDestination(dt)
+        end
     -- If not trapped, and not yet at destination
     elseif get_dist_points(self.x, self.y, self.target_x, self.target_y) >= 60 then
         self:moveTowardsDestination(dt)
@@ -60,6 +64,9 @@ function Bird:update(dt)
     end
     if self.invincible_timer > 0 then
         self.invincible_timer = self.invincible_timer - dt
+    end
+    if self.scared_timer > 0 then
+        self.scared_timer = self.scared_timer - dt
     end
     self.animation:update(dt)
 end
@@ -92,6 +99,7 @@ function Bird:moveTowardsDestination(dt)
     local angle = math.atan2(self.target_y - self.y, self.target_x - self.x)
     local cos = math.cos(angle)
     local sin = math.sin(angle)
+    local cols, len
     self.x, self.y, cols, len = world:move(self, 
         self.x + self.speed * cos * dt, 
         self.y + self.speed * sin * dt,
@@ -111,6 +119,11 @@ function Bird:findRandomDestination()
     self.target_y = love.math.random(0, windowHeight - self.height)
 end
 
+function Bird:scaredAway()
+    self.scared_timer = 1
+    self:findSafeDestination()
+end
+
 -- pick a spot in the opposite direction from the player
 function Bird:findSafeDestination()
     local angle = math.atan2(player.y - self.y, player.x - self.x)
@@ -122,7 +135,7 @@ end
 
 function Bird:gotTrapped()
     self.trapped = true
-    self.escapetime = love.math.random(3, 10)
+    self.escapetime = love.math.random(1, 7)
     self:chirp("trapped")
 end
 
@@ -135,8 +148,9 @@ function Bird:gotFree()
     self.patience = 0
     self.gloat_timer = 2
     self.invincible_timer = 2
-    self:findRandomDestination()
+    self:findSafeDestination()
     self:chirp("gotFree")
+    escaped_birds = escaped_birds + 1
 end
 
 function Bird:chirp(type)

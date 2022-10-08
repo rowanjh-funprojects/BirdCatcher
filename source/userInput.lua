@@ -5,7 +5,7 @@ function love.keypressed(key)
         -- prioritize capturing bird
         local any_birds_capturable, nearest_capturable_bird = player:check_bird_captures()
         if any_birds_capturable then
-            Player:grab_nearest_bird(nearest_capturable_bird)
+            player:grab_nearest_bird(nearest_capturable_bird)
         -- place net, if not already in net placement mode
         elseif not player.placing_net then
             tempNet = player:alignNet(20)
@@ -27,7 +27,7 @@ function love.keypressed(key)
         love.event.quit("restart")
     end
     -- Kill net placement
-    if key == "escape" and player.placing_net then
+    if (key == "escape" or key == "x") and player.placing_net then
         player.placing_net = false
         tempNet:destroy()
         tempNet = nil

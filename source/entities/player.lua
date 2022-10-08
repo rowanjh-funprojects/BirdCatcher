@@ -6,6 +6,7 @@ function Player:new(x, y, speed)
     self.placing_net = false
     self.quiet = false
     self.quiettimer = 5
+    self.catchValueTimer = 0
 
     -- Animations
     self.image = love.graphics.newImage("img/player_down walk.png")
@@ -53,11 +54,18 @@ function Player:update(dt)
     end
     self.x, self.y, cols, len = world:move(self, goalX, goalY, collision_filter)
 
+    if self.catchValueTimer > 0 then
+        self.catchValueTimer = self.catchValueTimer - dt
+    end
     self.animation:update(dt)
 end
 function Player:draw()
     Player.super.draw(self)
     self.animation:draw(self.image, self.x - self.bbox_x_offset, self.y - self.bbox_y_offset)
+    if self.catchValueTimer > 0 then
+        love.graphics.print("+"..player.latestScore, self.x, self.y - 15)
+    end
+
     -- -- For debugging
     -- -- draw bbox
     -- local x, y, w, h = world:getRect(self)
@@ -98,6 +106,10 @@ function Player:grab_nearest_bird(thisbird)
         bellMulti:play()
     end
     score = score + thisbird.value
+    self.latestScore = thisbird.value
+    self.catchValueTimer = 1
+    captured_birds = captured_birds + 1
+
 end
 
 function Player:destroy()

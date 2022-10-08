@@ -15,11 +15,11 @@ function Spawner:update(dt)
     Spawner.super.update(self,dt)
     self.cd = self.cd - dt
     if self.cd <= 0 then
-        self:spawn()
+        self:spawnNow()
     end
 end
 
-function Spawner:spawn()
+function Spawner:spawnNow()
     self.cd = self.spawntimer
     if self.type == "bird" then
         table.insert(birds, Bird(love.math.random(0, worldWidth), love.math.random(0, worldHeight), bird_speed, 10))

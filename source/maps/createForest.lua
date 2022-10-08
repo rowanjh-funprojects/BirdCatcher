@@ -6,7 +6,16 @@ function createForest()
     panels = {}
     textblocks = {}
     spawners = {}
+    worldEdges = {}
+
+    round_time = 80
+
+    -- round statistics
     score = 0
+    captured_birds = 0
+    escaped_birds = 0
+    nets_placed = 0
+
 
     tree_replacements_allowed = 500
 
@@ -28,11 +37,10 @@ function createForest()
         
     -- Initialize spawner
     table.insert(spawners, Spawner("bird", 5, 2))
-    table.insert(spawners, Spawner("specialBird", 60, 20))
-
+    table.insert(spawners, Spawner("specialBird", 50, 20))
     -- Spawn initial birds
     for i=1, 5 do
-        spawners[1]:spawn()
+        spawners[1]:spawnNow()
     end
 end
 

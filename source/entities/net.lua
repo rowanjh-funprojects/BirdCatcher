@@ -8,6 +8,7 @@ function Net:new(startx, starty, endx, endy, length)
     self.endy = endy
     self.length = ((self.startx - self.endx)^2 + (self.starty - self.endy)^2)^0.5
     self.tiles = self:tileize()
+    nets_placed = nets_placed + 1
 end
 
 function Net:draw(dt)
