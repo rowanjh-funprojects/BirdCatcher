@@ -8,8 +8,8 @@ function Image:new(x, y, source)
     self.height = self.image:getHeight()
 end
 
-function Image:update()
-    Image.super.update(self)
+function Image:update(dt)
+    Image.super.update(self, dt)
 end
 
 function Image:draw()

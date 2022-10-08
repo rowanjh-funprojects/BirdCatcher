@@ -41,3 +41,7 @@ function Text:draw()
     love.graphics.print(self.text, self.x, self.y, 0, self.scale, self.scale)
     love.graphics.setColor(1, 1, 1)
 end
+
+function Text:destroy()
+    Text.super.destroy(self)
+end

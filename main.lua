@@ -12,7 +12,7 @@ function love.load()
     startup()
     gamestate = "menu"
     launchGamestate(gamestate)
-    round_time = 20
+    round_time = 90
 
 end
 

@@ -28,13 +28,12 @@ function createForest()
         
     -- Initialize spawner
     table.insert(spawners, Spawner("bird", 5, 2))
+    table.insert(spawners, Spawner("specialBird", 60, 20))
 
     -- Spawn initial birds
     for i=1, 5 do
         spawners[1]:spawn()
     end
-
-
 end
 
 -- trees = list of trees. x, y = candidate x/y location. n = max recursions/iterations

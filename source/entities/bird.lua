@@ -1,6 +1,6 @@
 Bird = Sprite:extend()
 
-function Bird:new(x, y, value, speed)
+function Bird:new(x, y, speed, value)
     Bird.super.new(self, x, y)
     self.value = value
     self.speed = speed
@@ -10,7 +10,7 @@ function Bird:new(x, y, value, speed)
     self.escapetime = love.math.random(3, 10)
     self.trapped = false
     self.gloat_timer = 0
-    self.scared_dist = 150
+    self.scared_dist = bird_scare_dist
     self.invincible_timer = 2
     self.panic_timer = 1
     self.destroyed = false
@@ -32,22 +32,22 @@ function Bird:new(x, y, value, speed)
 end
 
 function Bird:update(dt)
-    Bird.super.update(self)
+    Bird.super.update(self, dt)
     if self.trapped then
         if self.escapetime > 0 then
             self.escapetime = self.escapetime - 1*dt
         else
             self:gotFree()
         end
-    -- if the bird is too close to the player, try to get away
+    -- If not trapped and bird is too close to to the player
     elseif get_dist_objs(player, self) <= self.scared_dist then
         self:findSafeDestination(dt)
         self:moveTowardsDestination(dt)
--- If the bird is free, and not at its destination, the player isn't nearby, move towards the destination
+    -- If not trapped, and not yet at destination
     elseif get_dist_points(self.x, self.y, self.target_x, self.target_y) >= 60 then
         self:moveTowardsDestination(dt)
+    -- If at destination, wait until patience runs out
     else
-        -- If bird is chilling at its destination, it will be patient until it gets bored and finds new destination
         if self.patience > 0 then
             self.patience = self.patience - dt
         else
@@ -66,10 +66,9 @@ end
 
 function Bird:draw()
     Bird.super.draw(self)
-
     if self.trapped then
         -- Add halo if trapped
-        love.graphics.setColor(255,223,0,0.3)
+        love.graphics.setColor(1,0.95,0,0.3)
         love.graphics.circle("fill", self.x + self.width/2, self.y + self.height/2, self.width * 0.8)
         love.graphics.circle("fill", self.x + self.width/2, self.y + self.height/2, self.width * 0.6)
         love.graphics.circle("fill", self.x + self.width/2, self.y + self.height/2, self.width * 0.3)
@@ -87,7 +86,6 @@ end
 
 function Bird:destroy()
     Bird.super.destroy(self)
-    world:remove(self)
 end
 
 function Bird:moveTowardsDestination(dt)

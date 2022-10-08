@@ -12,6 +12,7 @@ function Spawner:new(type, spawntimer, initialcd)
 end
 
 function Spawner:update(dt)
+    Spawner.super.update(self,dt)
     self.cd = self.cd - dt
     if self.cd <= 0 then
         self:spawn()
@@ -19,8 +20,15 @@ function Spawner:update(dt)
 end
 
 function Spawner:spawn()
+    self.cd = self.spawntimer
     if self.type == "bird" then
-        table.insert(birds, Bird(love.math.random(0, worldWidth), love.math.random(0, worldHeight), 10, bird_speed))
-        self.cd = self.spawntimer
+        table.insert(birds, Bird(love.math.random(0, worldWidth), love.math.random(0, worldHeight), bird_speed, 10))
     end
+    if self.type == "specialBird" then
+        table.insert(birds, specialBird(love.math.random(0, worldWidth), love.math.random(0, worldHeight), bird_speed * 2, 25))
+    end
+end
+
+function Spawner:destroy()
+    Spawner.super.destroy(self)
 end

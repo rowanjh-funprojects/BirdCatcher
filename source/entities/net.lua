@@ -10,8 +10,8 @@ function Net:new(startx, starty, endx, endy, length)
     self.tiles = self:tileize()
 end
 
-function Net:draw()
-    Net.super.draw(self)
+function Net:draw(dt)
+    Net.super.draw(self, dt)
     love.graphics.setColor(0.6,0.6,0.6)
     love.graphics.line(self.startx, self.starty, self.endx, self.endy)
     for i=1, #self.tiles do
@@ -42,7 +42,6 @@ end
 
 function NetTile:destroy()
     NetTile.super.destroy(self)
-    world:remove(self)
 end
 
 -- Create several tiny collision tiles along the net to get desired behaviour

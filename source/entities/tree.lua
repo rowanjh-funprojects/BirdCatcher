@@ -44,3 +44,7 @@ function Tree:draw()
     -- local x, y, w, h = world:getRect(self)
     -- love.graphics.rectangle("line", x, y, w, h)
   end
+
+function Tree:destroy(self)
+    Tree.super.destroy(self)
+end

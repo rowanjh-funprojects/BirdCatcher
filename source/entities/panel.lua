@@ -13,8 +13,8 @@ function Panel:new(x, y, width, height, col)
     end
 end
 
-function Panel:update()
-    Panel.super.update(self)
+function Panel:update(dt)
+    Panel.super.update(self, dt)
 end
 
 function Panel:draw()
@@ -22,4 +22,8 @@ function Panel:draw()
     love.graphics.setColor(self.col[1], self.col[2], self.col[3], self.col[4])
     love.graphics.rectangle("fill", self.x - self.width / 2, self.y - self.height / 2, self.width, self.height)
     love.graphics.setColor(1, 1, 1)
+end
+
+function Panel:destroy()
+    Panel.super.destroy(self)
 end

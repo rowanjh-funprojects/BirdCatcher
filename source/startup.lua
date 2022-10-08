@@ -6,6 +6,7 @@ function startup()
     bird_speed = 300
     worldWidth = 1500
     worldHeight = 1500
+    bird_scare_dist = 300
     
     -- require all libraries
     Object = require "source/libraries/classic"
@@ -17,8 +18,9 @@ function startup()
     -- require all source files
     require "source/entities/entity"
     require "source/entities/sprite"
-    require "source/entities/bird"
     require "source/entities/player"
+    require "source/entities/bird"
+    require "source/entities/specialBird"
     require "source/entities/net"
     require "source/entities/tempNet"
     require "source/entities/tree"
@@ -30,6 +32,7 @@ function startup()
     require "source/userInput"
     require "source/helperFunctions"
     require "source/debugging"
+    require "source/sound"
     require "source/loadAudio"
     require "source/maps"
     require "source/maps/createForest"
@@ -66,6 +69,7 @@ function startup()
 
     -- Start physics engine
     world = bump.newWorld()
+
     function collision_filter(item, other)
       if item:is(Player) and other:is(Bird) then return 
       elseif item:is(Player) and other:is(NetTile) then return
@@ -81,6 +85,4 @@ function startup()
 
     -- Load audio
     loadAudio()
-
-
 end

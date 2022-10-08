@@ -7,8 +7,7 @@ function Entity:new(x, y)
     self.destroyed = false
 end
 
-function Entity:update()
-    
+function Entity:update(dt)
 end
 
 function Entity:draw()
@@ -21,4 +20,7 @@ end
 
 function Entity:destroy()
     self.destroyed = true
+    if world:hasItem(self) then
+        world:remove(self)
+    end
 end

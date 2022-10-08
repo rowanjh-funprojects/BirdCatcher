@@ -14,5 +14,5 @@ function launchMenu()
     table.insert(buttons, Button(windowWidth/2, windowHeight/2, "Tutorial", 3, "showTutorial", txtCol, buttonCol, "fill"))
     table.insert(buttons, Button(windowWidth/2, windowHeight/2 + 75, "Credits", 3, "showCredits", txtCol, buttonCol, "fill"))
     table.insert(buttons, Button(windowWidth/2, windowHeight/2 + 150, "Exit", 3, "quit", txtCol, buttonCol, "fill"))
-    love.graphics.setBackgroundColor(buttonCol)
+    love.graphics.setBackgroundColor(0,0,0)
 end

@@ -25,8 +25,7 @@ function Player:new(x, y, speed)
 end
 
 function Player:update(dt)
-    Player.super.update(self)
-
+    Player.super.update(self, dt)
     -- Manage player movements
     local goalX = self.x
     local goalY = self.y
@@ -93,6 +92,14 @@ end
 
 function Player:grab_nearest_bird(thisbird)
     thisbird:captured()
+    if thisbird.value <= 10 then
+        bell:play()
+    elseif thisbird.value >10 then
+        bellMulti:play()
+    end
     score = score + thisbird.value
-    bell:play()
+end
+
+function Player:destroy()
+    Player.super.destroy(self)
 end
