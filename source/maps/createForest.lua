@@ -5,6 +5,9 @@ function createForest()
     trees = {}
     panels = {}
     textblocks = {}
+    score = 0
+    new_bird_cd = 1 -- cooldown for first new bird
+
 
     tree_replacements_allowed = 500
     for i=1,50 do

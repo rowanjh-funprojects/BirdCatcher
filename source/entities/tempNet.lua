@@ -11,7 +11,7 @@ end
 
 function TempNet:draw()
     TempNet.super.draw(self)
-    love.graphics.setColor(0.5,0.5,0.5)
+    love.graphics.setColor(0.6,0.6,0.6)
     love.graphics.line(self.startx, self.starty, self.endx, self.endy)
     love.graphics.setColor(1,1,1)
 

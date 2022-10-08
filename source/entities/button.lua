@@ -1,19 +1,26 @@
-Button = Entity:extend()
+Button = Text:extend()
 
-function Button:new(x, y, text, action)
-    -- X and Y are specified as mid points to the constructor. Then the actual x and y 
-    -- of top left corner is recalcualted for printing etc.
-    Button.super.new(self)
-    self.scale = 2
-    self.text = text
+function Button:new(x, y, text, scale, action, txtCol, bCol, fill)
+    -- @tCol = text colour
+    -- @bCol = button color
+    -- @fill = whether button should be "fill"ed or drawn with "line" only
+    -- input x and y are treated as mid points, and recalcualted to be 
+    -- the top-left corner
+
+    Button.super.new(self, x, y, text, scale, txtCol)
     self.action = action
-    local font = love.graphics.getFont()
-    self.width = font:getWidth(self.text) * self.scale
-    self.height = font:getHeight() * self.scale
-    -- self.x and self.y will give the top left corner
-    self.x = x - self.width / 2
-    self.y = y - self.height / 2
+    if not fill then 
+        self.fill = "line" 
+    else 
+        self.fill = fill 
+    end
     self.highlight = false
+    if bCol then
+        self.bCol = bCol
+    else
+        self.bCol = {0.92,0.83,0.70}
+    end
+
 end
 
 function Button:update()
@@ -22,23 +29,30 @@ function Button:update()
 end
 
 function Button:draw()
-    Button.super.draw(self)
-    love.graphics.print(self.text, self.x, self.y, 0, self.scale, self.scale)
-    love.graphics.rectangle("line", self.x - 20, self.y - 10, 
+    -- love.graphics.print(self.text, self.x, self.y, 0, self.scale, self.scale)
+    love.graphics.setColor(self.bCol)
+    love.graphics.rectangle(self.fill, self.x - 20, self.y - 10, 
                             self.width + 40, self.height + 20)
     if self.highlight then
-        love.graphics.rectangle("line", self.x - 30, self.y - 15, 
+        love.graphics.rectangle(self.fill, self.x - 30, self.y - 15, 
                                 self.width + 60, self.height + 30)
-
     end
+    love.graphics.setColor(1, 1, 1)
+
+    -- draw text second so that it appears on top if using filled rects
+    Button.super.draw(self)
 end
 
 function Button:click()
     if self.action == "gotoForest" then
         gamestate = "forest"
         launchGamestate(gamestate)
-    elseif self.action == "showCredits" then
+    elseif self.action == "menu" then
+        love.event.quit("restart")
     elseif self.action == "quit" then
         love.event.quit()
+    elseif self.action == "restart" then
+        gamestate = "forest"
+        launchGamestate("forest")
     end
 end

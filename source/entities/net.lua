@@ -12,7 +12,7 @@ end
 
 function Net:draw()
     Net.super.draw(self)
-    love.graphics.setColor(0.5,0.5,0.5)
+    love.graphics.setColor(0.6,0.6,0.6)
     love.graphics.line(self.startx, self.starty, self.endx, self.endy)
     for i=1, #self.tiles do
         self.tiles[i]:draw()

@@ -14,33 +14,35 @@ function startup()
     require "source/entities/net"
     require "source/entities/tempNet"
     require "source/entities/tree"
+    require "source/entities/image"
+    require "source/entities/text"
     require "source/entities/button"
     require "source/entities/panel"
-    require "source/entities/text"
     require "source/userInput"
     require "source/helperFunctions"
+    require "source/debugging"
     require "source/spawns"
     require "source/loadAudio"
-    require "source/maps/createForest"
     require "source/maps"
+    require "source/maps/createForest"
     require "source/maps/launchMenu"
+    require "source/maps/roundEnd"
     
     -- Global parameters
+    round_time = 5
     soundOn = true
-    score = 0
-    new_bird_cd = 1 -- cooldown for first new bird
     capture_range = 100
     tree_buffer = 50
     bird_speed = 300
-
+    
     -- Game window config
     love.window.setTitle("Bird Catcher")
     -- local icon = love.image.newImageData('img/bird_static.png')
     -- love.window.setIcon(icon)
 
     -- Resolution
-    windowWidth = 1152
-    windowHeight = 768
+    windowWidth = 1200
+    windowHeight = 800
     local scale = 1 -- adjusts game window to screen size
     local offset = 0.8 -- window size relative to scale
     local screen_width, screen_height = love.window.getDesktopDimensions()
@@ -53,7 +55,10 @@ function startup()
       scale = h_scale
     end
     scale = scale * offset
-    love.window.setMode(windowWidth * scale, windowHeight * scale, {fullscreen = false,
+    -- update actual window size
+    windowWidth = windowWidth * scale
+    windowHeight = windowHeight * scale
+    love.window.setMode(windowWidth, windowHeight, {fullscreen = false,
       fullscreentype = "desktop", resizable = false, borderless = false,
       vsync = true})
 
@@ -74,4 +79,6 @@ function startup()
 
     -- Load audio
     loadAudio()
+
+
 end

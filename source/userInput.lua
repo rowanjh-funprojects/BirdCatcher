@@ -37,12 +37,10 @@ end
 
 function love.mousepressed(x, y, button, istouch)
     if button == 1  then
-        if gamestate == "menu" then
-            for i=1,#buttons do
-                if buttons[i].highlight then
-                    buttons[i]:click()
-                    break
-                end
+        for i=1,#buttons do
+            if buttons[i].highlight then
+                buttons[i]:click()
+                break
             end
         end
     end
