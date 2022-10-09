@@ -1,9 +1,11 @@
 Sprite = Entity:extend()
 
-function Sprite:new(x, y)
+function Sprite:new(x, y, spriteWidth, spriteWidth)
     Sprite.super.new(self, x, y)
     self.speaktimer = 0
     self.speakmessage = nil
+    self.spriteWidth = spriteWidth
+    self.spriteHeight = spriteWidth
 end
 
 
@@ -20,8 +22,10 @@ function Sprite:draw()
         love.graphics.print(self.speakmessage, self.x, self.y - 15)
     end
 
-    -- for debugging sprites
-    -- love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
+    -- for debugging sprites: pink rectangles
+    love.graphics.setColor(1,0.5,0.5)
+    love.graphics.rectangle("line", self.x - self.spriteWidth/2, self.y - self.spriteHeight/2, self.spriteWidth, self.spriteHeight)
+    love.graphics.setColor(1,1,1)
 end
 
 function Sprite:talk(text, duration)
@@ -34,8 +38,8 @@ function Sprite:destroy()
 end
 
 function Sprite:isOffscreen()
-    if ((self.x + self.width) < 0) or self.x > worldWidth then
-        if ((self.y  + self.height) < 0) or self.y > worldHeight then 
+    if ((self.x + self.spriteWidth / 2) < 0) or (self.x - self.spriteWidth / 2) > worldWidth then
+        if ((self.y  + self.spriteHeight / 2) < 0) or (self.y - self.spriteHeight / 2) > worldHeight then 
             return true
         end
     end

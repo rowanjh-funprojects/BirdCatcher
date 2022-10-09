@@ -2,12 +2,16 @@ Bird = Sprite:extend()
 
 function Bird:new(x, y, speed, value)
     Bird.super.new(self, x, y)
+
+    -- Bird parameters
     self.value = value
     self.speed = speed
+
+    -- Bird state
     self.target_x = x
     self.target_y = y
-    self.patience = love.math.random(1, 4) -- How long the bird will wait in one spot
-    self.escapetime = love.math.random(3, 10)
+    self.patience = 0
+    self.escapetime = 0
     self.trapped = false
     self.scared_dist = bird_scare_dist
     self.scared_timer = 1
@@ -18,18 +22,25 @@ function Bird:new(x, y, speed, value)
 
     -- Animations
     self.image = love.graphics.newImage("img/bird2blue_0.10_fixed.png")
-    self.spriteWidth = math.floor(self.image:getWidth() / 3)
-    self.spriteHeight = math.floor(self.image:getHeight() / 3)
+    local nSpriteCols = 3
+    local nSpriteRows = 3
+    self.spriteWidth = math.floor(self.image:getWidth() / nSpriteCols)
+    self.spriteHeight = math.floor(self.image:getHeight() / nSpriteRows)
     local g = anim8.newGrid(self.spriteWidth, self.spriteHeight, 
-                            self.spriteWidth * 3, self.spriteHeight * 3)
+                            self.spriteWidth * nSpriteCols, self.spriteHeight * nSpriteRows)
     self.animation = anim8.newAnimation(g('1-3','1-3'), 0.1)
 
-    -- Setup collision rectangle. This is the authoritative position of the bird. 
-    -- The drawing animation then needs to be offset so that the middle of the 
-    -- sprite drawing matches the middle of the collision rect.
-    self.width = self.spriteWidth / 2
-    self.height = self.spriteHeight / 2
-    world:add(self, self.x, self.y, self.width, self.height)
+    -- drawing offsets
+    self.drawOffsetX = self.spriteWidth / 2
+    self.y_drawoffset = self.spriteHeight / 2
+    
+    -- Setup collision rectangle.
+    self.boxWidth = math.floor(self.spriteWidth / 2)
+    self.boxHeight = math.floor(self.spriteHeight / 2)
+    self.boxOffsetX = self.boxWidth / 2
+    self.boxOffsetY = self.boxHeight / 2
+
+    world:add(self, self.x - self.boxOffsetX, self.y - self.boxOffsetY, self.boxWidth, self.boxHeight)
 end
 
 function Bird:update(dt)
@@ -52,11 +63,11 @@ function Bird:update(dt)
         if self.scared_timer <= 0 then
             self:scaredAway()
         end
-        if get_dist_points(self.x, self.y, self.target_x, self.target_y) >= 60 then
+        if get_dist_points(self.x, self.y, self.target_x, self.target_y) >= 30 then
             self:moveTowardsDestination(dt)
         end
     -- If not trapped, and not yet at destination
-    elseif get_dist_points(self.x, self.y, self.target_x, self.target_y) >= 60 then
+    elseif get_dist_points(self.x, self.y, self.target_x, self.target_y) >= 30 then
         self:moveTowardsDestination(dt)
     -- If at destination, wait until patience runs out, and find new destination
     else
@@ -86,16 +97,14 @@ function Bird:draw()
     if self.trapped then
         -- Add halo if trapped
         love.graphics.setColor(1,0.95,0,0.3)
-        love.graphics.circle("fill", self.x + self.width/2, self.y + self.height/2, self.width * 0.8)
-        love.graphics.circle("fill", self.x + self.width/2, self.y + self.height/2, self.width * 0.6)
-        love.graphics.circle("fill", self.x + self.width/2, self.y + self.height/2, self.width * 0.3)
+        love.graphics.circle("fill", self.x, self.y, self.spriteWidth * 0.5)
+        love.graphics.circle("fill", self.x, self.y, self.spriteWidth * 0.4)
+        love.graphics.circle("fill", self.x, self.y, self.spriteWidth * 0.3)
         love.graphics.setColor(1,1,1,1)
     end
 
     -- Draw bird, with bbox offset
-    local xSpriteOffset = (self.spriteWidth - self.width) / 2
-    local ySpriteOffset = (self.spriteHeight - self.height) / 2
-    self.animation:draw(self.image, self.x - xSpriteOffset, self.y - ySpriteOffset)
+    self.animation:draw(self.image, self.x - self.drawOffsetX, self.y - self.y_drawoffset)
 end
 
 function Bird:emigrate()
@@ -106,7 +115,7 @@ function Bird:emigrate()
     local edge = love.math.random(1,4)
     if edge == 1 then -- top
         self.target_x = love.math.random(0,worldWidth)
-        self.target_y = self.height*-1 - 100
+        self.target_y = self.spriteHeight*-1 - 100
     elseif edge == 2 then --right
         self.target_x = worldWidth + 100
         self.target_y = love.math.random(0,worldHeight)
@@ -114,7 +123,7 @@ function Bird:emigrate()
         self.target_x = love.math.random(0,worldWidth)
         self.target_y = worldHeight + 100
     else --left
-        self.target_x = self.width*-1 - 100
+        self.target_x = self.spriteWidth*-1 - 100
         self.target_y = love.math.random(0,worldHeight)
     end
 end
@@ -124,13 +133,23 @@ function Bird:destroy()
 end
 
 function Bird:moveTowardsDestination(dt)
-    local angle = math.atan2(self.target_y - self.y, self.target_x - self.x)
+    -- Transform to bbox coordinates
+    local currentX = self.x - self.boxOffsetX
+    local currentY = self.y - self.boxOffsetY
+    local goalX = self.target_x - self.boxOffsetX
+    local goalY = self.target_y - self.boxOffsetY
+
+    -- Work out angle of trajectory
+    local angle = math.atan2(goalY - currentY, goalX - currentX)
     local cos = math.cos(angle)
     local sin = math.sin(angle)
     local cols, len
-    self.x, self.y, cols, len = world:move(self, 
-        self.x + self.speed * cos * dt, 
-        self.y + self.speed * sin * dt,
+
+    -- Move in straight line towards destination point
+    local resultingX, resultingY
+    resultingX, resultingY, cols, len = world:move(self, 
+        currentX + self.speed * cos * dt, 
+        currentY + self.speed * sin * dt,
         collision_filter)
     if len > 0 then
         if cols[1].other:is(NetTile) then
@@ -139,6 +158,9 @@ function Bird:moveTowardsDestination(dt)
             end
         end
     end
+    -- Transform back to original coordinates
+    self.x = resultingX + self.boxOffsetX
+    self.y = resultingY + self.boxOffsetY
 end
 
 -- pick a random spot on the map
@@ -147,8 +169,8 @@ function Bird:selectNewDestination()
 end
 
 function Bird:findRandomDestination()
-    self.target_x = love.math.random(0, windowWidth - self.width)
-    self.target_y = love.math.random(0, windowHeight - self.height)
+    self.target_x = love.math.random(0, windowWidth - self.spriteWidth)
+    self.target_y = love.math.random(0, windowHeight - self.spriteHeight)
 end
 
 -- pick a spot in the opposite direction from the player
@@ -162,7 +184,8 @@ end
 
 
 function Bird:scaredAway()
-    self.scared_timer = 1
+    self.scared_timer = 1 -- won't be scared again too fast
+    self.patience = 0 -- find a new destination as soon as it reaches it safe destination
     self:findSafeDestination()
 end
 

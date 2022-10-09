@@ -17,9 +17,9 @@ function TempNet:draw()
 
 end
 
-function TempNet:update()
-    TempNet.super.update(self)
-    self.endx, self.endy = player.x + player.width/2 - player.bbox_x_offset, player.y + player.height/2 - player.bbox_x_offset
+function TempNet:update(dt, player)
+    TempNet.super.update(self, dt)
+    self.endx, self.endy = player.x, player.y
 end
 
 function TempNet:destroy()

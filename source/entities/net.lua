@@ -33,12 +33,18 @@ NetTile = Entity:extend()
 
 function NetTile:new(x, y)
     NetTile.super.new(self, x, y)
-    world:add(self, self.x, self.y, 5, 5)
+    self.boxWidth = 5
+    self.boxHeight = 5
+    self.boxOffsetX = self.boxWidth / 2
+    self.boxOffsetY = self.boxHeight / 2
+    self.drawOffsetX = self.boxOffsetX
+    self.drawOffsetY = self.boxOffsetY
+    world:add(self, self.x - self.boxOffsetX, self.y - self.boxOffsetY, self.boxWidth, self.boxHeight)
 end
 
 function NetTile:draw()
     NetTile.super.draw(self)
-    love.graphics.rectangle("fill", self.x, self.y, 5, 5)
+    love.graphics.rectangle("fill", self.x - self.drawOffsetX, self.y - self.drawOffsetY, 5, 5)
 end
 
 function NetTile:destroy()
@@ -56,13 +62,4 @@ function Net:tileize()
         table.insert(netTiles, NetTile(x, y))
     end
     return netTiles
-end
-
-function killOldNet()
-    if #netTiles > 0 then
-        for i = #netTiles, 1, -1 do
-            world:remove(netTiles[i])
-            table.remove(netTiles, i)
-        end
-    end
 end

@@ -20,7 +20,6 @@ function Button:new(x, y, text, scale, action, txtCol, bCol, fill)
     else
         self.bCol = {0.92,0.83,0.70}
     end
-
 end
 
 function Button:update()
@@ -29,15 +28,18 @@ function Button:update()
 end
 
 function Button:draw()
-    -- love.graphics.print(self.text, self.x, self.y, 0, self.scale, self.scale)
     love.graphics.setColor(self.bCol)
-    love.graphics.rectangle(self.fill, self.x - 20, self.y - 10, 
+    love.graphics.rectangle(self.fill, 
+                            self.x - self.drawOffsetX - 20, 
+                            self.y - self.drawOffsetY - 10, 
                             self.width + 40, self.height + 20)
     if self.highlight then
-        love.graphics.rectangle(self.fill, self.x - 30, self.y - 15, 
+        love.graphics.rectangle(self.fill, 
+                                self.x - self.drawOffsetX - 30, 
+                                self.y - self.drawOffsetY - 15, 
                                 self.width + 60, self.height + 30)
     end
-    love.graphics.setColor(1, 1, 1)
+    love.graphics.setColor(1, 1, 1, 1)
 
     -- draw text second so that it appears on top if using filled rects
     Button.super.draw(self)

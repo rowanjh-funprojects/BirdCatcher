@@ -10,7 +10,7 @@ end
 
 function BirdSpecial:draw()
     love.graphics.setColor(0.3,0.6,1,0.3)
-    love.graphics.circle("fill", self.x + self.width/2, self.y + self.height/2, self.width * 0.8)
+    love.graphics.circle("fill", self.x, self.y, self.spriteWidth * 0.5)
     love.graphics.setColor(1,1,1,1)
 
     BirdSpecial.super.draw(self)

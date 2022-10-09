@@ -1,30 +1,38 @@
 Player = Sprite:extend()
 
-function Player:new(x, y, speed)
+function Player:new(x, y)
     Player.super.new(self, x, y)
+
+    -- Player parameters
     self.speed = player_speed
+    self.skill = player_skill
+
+    -- Player state
     self.placing_net = false
     self.quiet = false
-    self.quiettimer = 5
-    self.skill = player_skill
     self.frustration = 0
     self.speaktimer = 0
-    
-    -- Animations
+    self.quiettimer = 5
+
+    -- Sprite, image, animations
     self.image = love.graphics.newImage("img/player_down walk.png")
     local nSpriteCols = 4
     local nSpriteRows = 2
-    self.width = self.image:getWidth() / nSpriteCols
-    self.height = self.image:getHeight() / nSpriteRows
-    local g = anim8.newGrid(self.width, self.height, self.width * nSpriteCols, self.height * nSpriteRows)
+    self.spriteWidth = math.floor(self.image:getWidth() / nSpriteCols)
+    self.spriteHeight = math.floor(self.image:getHeight() / nSpriteRows)
+    local g = anim8.newGrid(self.spriteWidth, self.spriteHeight, self.spriteWidth * nSpriteCols, self.spriteHeight * nSpriteRows)
     self.animation = anim8.newAnimation(g('1-4', 1), 0.1)
 
+    -- drawing offsets
+    self.drawOffsetX = self.spriteWidth / 2
+    self.y_drawoffset = self.spriteHeight / 2
+
     -- Setup collision rectangle
-    self.bbox_x_offset = self.width / 4
-    self.bbox_y_offset = self.height / 4
-    self.bbox_width = self.width / 2
-    self.bbox_height = self.height / 2
-    world:add(self, self.x, self.y, self.bbox_width, self.bbox_height)
+    self.boxWidth = math.floor(self.spriteWidth / 2)
+    self.boxHeight = math.floor(self.spriteHeight / 2)
+    self.boxOffsetX = self.boxWidth / 2
+    self.boxOffsetY = self.boxHeight / 2
+    world:add(self, self.x - self.boxOffsetX, self.y - self.boxOffsetY, self.boxWidth, self.boxHeight)
 end
 
 function Player:update(dt)
@@ -54,19 +62,27 @@ function Player:update(dt)
             goalY = tempNet.starty + sin * tempNet.maxLength
         end
     end
-    self.x, self.y, cols, len = world:move(self, goalX, goalY, collision_filter)
 
+    -- Transform coordinates for bounding box offset
+    goalX = goalX - self.boxOffsetX
+    goalY = goalY - self.boxOffsetY
+    local resultingX, resultingY
+    resultingX, resultingY, cols, len = world:move(self, goalX, goalY, collision_filter)
+
+    -- Transform coordinates back to original
+    self.x = resultingX + self.boxOffsetX
+    self.y = resultingY + self.boxOffsetY
     self.animation:update(dt)
 end
 
 function Player:draw()
     Player.super.draw(self)
-    self.animation:draw(self.image, self.x - self.bbox_x_offset, self.y - self.bbox_y_offset)
+    self.animation:draw(self.image, self.x - self.drawOffsetX, self.y - self.y_drawoffset)
 end
 
 function Player:alignNet(maxLength)
     self.placing_net = true
-    return TempNet(self.x + self.width/2 - self.bbox_x_offset, self.y + self.height / 2 - self.bbox_y_offset, 200, 200, maxLength)
+    return TempNet(self.x, self.y, 200, 200, maxLength)
 end
 
 function Player:check_bird_captures()
@@ -89,7 +105,7 @@ function Player:check_bird_captures()
 end
 
 function Player:tryToExtractBird(thisbird)
-    if player:extractSkillCheck() then
+    if self:extractSkillCheck() then
         self.frustration = 0
         thisbird:captured()
         if thisbird.value <= 10 then
@@ -98,7 +114,7 @@ function Player:tryToExtractBird(thisbird)
             bellMulti:play()
         end
         score = score + thisbird.value
-        player:talk("+"..thisbird.value, 1)
+        self:talk("+"..thisbird.value, 1)
         captured_birds = captured_birds + 1
     else
         self.frustration = self.frustration + player_frustration_increment
@@ -107,10 +123,10 @@ function Player:tryToExtractBird(thisbird)
 end
 
 function Player:extractSkillCheck()
-    if player.skill + player.frustration >= (love.math.random(0,100)/100) then
+    if self.skill + self.frustration >= (love.math.random(0,100)/100) then
         return true
     else 
-        player:talk("doh", 2)
+        self:talk("doh", 2)
         failed_extractions = failed_extractions + 1
     end
 end

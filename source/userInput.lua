@@ -50,9 +50,9 @@ function checkMouseHover(entity)
     local mx = love.mouse.getX()
     local my = love.mouse.getY()
     -- check horiz overlap first
-    if mx > entity.x and mx < entity.x + entity.width then
+    if mx > entity.x - (entity.width / 2) and mx < entity.x + (entity.width / 2) then
         -- then check vertical overlap
-        if my > entity.y and my < entity.y + entity.height then
+        if my > (entity.y - entity.height / 2) and my < entity.y + (entity.height / 2) then
             return true
         end
     end

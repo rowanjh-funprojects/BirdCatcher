@@ -1,16 +1,7 @@
 function get_dist_objs(a, b)
     -- Get distance between two objects. each object Must have .x and .y attributes
     -- get middles of each object
-    return get_dist_rects(a.x, a.y, a.width, a.height, b.x, b.y, b.width, b.height)
-end
-
-function get_dist_rects(ax, ay, aw, ah, bx, by, bw, bh)
-    -- Get distance between two rectangles
-    local ax_mid = ax + aw / 2
-    local ay_mid = ay + ah / 2
-    local bx_mid = bx + bw / 2
-    local by_mid = by + bh / 2
-    return get_dist_points(ax_mid, ay_mid, bx_mid, by_mid)
+    return get_dist_points(a.x, a.y, b.x, b.y)
 end
 
 function get_dist_points(ax, ay, bx, by)
@@ -18,59 +9,29 @@ function get_dist_points(ax, ay, bx, by)
     return ((ax - bx)^2 + (ay - by)^2)^0.5
 end
 
-function intersects(a, b, sa, sb)
-    -- @a, b box objects
+function spriteIntersects(a, b, sa, sb)
+    -- @a, b sprite objects
     -- @sa scale for object a
     -- @sb scale for object b
-    -- scales add a buffer around box before checking for intersection
-    -- (proportion e.g. 2 = double width, 0.5 = half width)
-    -- Buffer holds centre of the image stationary (see rescale_box)
+    -- scales add a positive or negative buffer around sprite before checking for intersection
+    -- (i.e. making the sprite collision square smaller or bigger)
     local a_left, a_right, a_top, a_bottom
-    local b_left, b_right, b_top, b_bottom
-    if not sa then 
-        a_left = a.x
-        a_right = a.x + a.width
-        a_top = a.y
-        a_bottom = a.y + a.height
-    else
-        -- get rescaled values
-        local ax_r, ay_r, aw_r, ah_r = rescale_box(a, sa)
-        a_left = ax_r
-        a_right = ax_r + aw_r
-        a_top = ay_r
-        a_bottom = ay_r + ah_r
-    end
+    a_left = a.x - a.spriteWidth * sa / 2
+    a_right = a.x + a.spriteWidth * sa / 2
+    a_top = a.y - a.spriteHeight * sa / 2
+    a_bottom = a.y + a.spriteHeight * sa / 2
 
-    if not sb then
-        b_left = b.x
-        b_right = b.x + b.width
-        b_top = b.y
-        b_bottom = b.y + b.height
-    else
-        -- get rescaled values
-        local bx_r, by_r, bw_r, bh_r = rescale_box(b, sb)
-        b_left = bx_r
-        b_right = bx_r + bw_r
-        b_top = by_r
-        b_bottom = by_r + bh_r
-    end
+    local b_left, b_right, b_top, b_bottom
+    b_left = b.x - b.spriteWidth * sb / 2
+    b_right = b.x + b.spriteWidth * sb / 2
+    b_top = b.y + b.spriteHeight * sb / 2
+    b_bottom = b.y - b.spriteHeight * sb / 2
+
     -- Check if two objects intersect each other
     return  a_right > b_left
         and a_left < b_right
         and a_bottom > b_top
         and a_top < b_bottom
-end
-
-function rescale_box(obj, scale)
-    -- Take a box in physical space, and get a re-scaled x,y,w,h. 
-    -- Keep the center of the object in the same place
-    local x, y, w, h = obj.x, obj.y, obj.width, obj.height
-    local new_w = w * scale
-    local new_h = h * scale
-
-    local new_x = x - (new_w - w)/2
-    local new_y = y - (new_h - h)/2
-    return new_x, new_y, new_w, new_h
 end
 
 function remove_if_destroyed(tbl)

@@ -2,6 +2,8 @@ function createForest()
     -- Initialize parameters
     round_time = 90
     player_skill = 0.7
+    n_perchTrees = 6
+    n_trees = 20
 
     -- Initialize entities
     player = Player(worldWidth/2, worldHeight/2, 200)
@@ -24,11 +26,11 @@ function createForest()
 
     tree_replacements_allowed = 1000
 
-    for i=1,25 do
+    for i=1,n_perchTrees do
         local x, y = find_tree_placement(trees, worldWidth, worldHeight)
         table.insert(trees, TreePerch(x, y, "large"))
     end
-    for i=1,125 do
+    for i=1,n_trees do
         local x, y = find_tree_placement(trees, worldWidth, worldHeight)
         table.insert(trees, Tree(x, y, "small"))
     end
@@ -62,7 +64,7 @@ function find_tree_placement(trees, ww, wh)
     end
     -- Check if the placement is too close to another tree
     for i=1,#trees do
-        if get_dist_rects(trees[i].x, trees[i].y, 5, 5, x, y, 5, 5) < tree_buffer then
+        if get_dist_points(trees[i].x, trees[i].y, x, y) < tree_buffer then
             -- if it fails the check, find new x,y values
             tree_replacements_allowed = tree_replacements_allowed - 1
             x, y = find_tree_placement(trees)

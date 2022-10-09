@@ -33,7 +33,7 @@ function BirdPerching:findNewPerch()
             end
         end
         if #perchOptions > 0 then
-            -- choose from the candidate perches
+            -- choose randomly from the candidate perches (ideally more likely to pick a closer tree)
             local choice = love.math.random(1, #perchOptions)
             self.target_x = perchOptions[choice].x
             self.target_y = perchOptions[choice].y
