@@ -37,6 +37,10 @@ function love.update(dt)
         for i,v in ipairs(trees) do
             v:update(dt)
         end
+        -- environment update
+        for i,v in ipairs(bgElements) do
+            v:update(dt)
+        end
         -- Spawners update
         for i,v in ipairs(spawners) do
             v:update(dt)
@@ -44,6 +48,7 @@ function love.update(dt)
 
         remove_if_destroyed(birds)
         remove_if_destroyed(trees)
+        remove_if_destroyed(bgElements)
         remove_if_destroyed(textblocks)
         remove_if_destroyed(panels)
         remove_if_destroyed(buttons)
@@ -86,7 +91,9 @@ function love.draw()
             if tempNet then
                 tempNet:draw()
             end
-
+            for i,v in ipairs(bgElements) do
+                v:draw()
+            end
             for i,v in ipairs(trees) do
                 v:draw()
             end

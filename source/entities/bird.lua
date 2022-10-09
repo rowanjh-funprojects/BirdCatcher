@@ -47,7 +47,7 @@ function Bird:update(dt)
         else
             self:moveTowardsDestination(dt)
         end
-    -- If bird is free and too close to the plaer, get scared away
+    -- If bird is free and too close to the player, get scared away
     elseif get_dist_objs(player, self) <= self.scared_dist then
         if self.scared_timer <= 0 then
             self:scaredAway()
@@ -58,12 +58,12 @@ function Bird:update(dt)
     -- If not trapped, and not yet at destination
     elseif get_dist_points(self.x, self.y, self.target_x, self.target_y) >= 60 then
         self:moveTowardsDestination(dt)
-    -- If at destination, wait until patience runs out
+    -- If at destination, wait until patience runs out, and find new destination
     else
         if self.patience > 0 then
             self.patience = self.patience - dt
         else
-            self:findRandomDestination()
+            self:selectNewDestination()
             self.patience = love.math.random(1, 4)
         end
     end 
@@ -142,6 +142,10 @@ function Bird:moveTowardsDestination(dt)
 end
 
 -- pick a random spot on the map
+function Bird:selectNewDestination()
+    self:findRandomDestination()
+end
+
 function Bird:findRandomDestination()
     self.target_x = love.math.random(0, windowWidth - self.width)
     self.target_y = love.math.random(0, windowHeight - self.height)

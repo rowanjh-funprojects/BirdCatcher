@@ -21,11 +21,14 @@ end
 
 function Spawner:spawnNow()
     self.cd = self.spawntimer
-    if self.type == "bird" then
+    if self.type == "Bird" then
         table.insert(birds, Bird(love.math.random(0, worldWidth), love.math.random(0, worldHeight), bird_speed, 10))
     end
-    if self.type == "specialBird" then
-        table.insert(birds, specialBird(love.math.random(0, worldWidth), love.math.random(0, worldHeight), bird_speed * 2, 25))
+    if self.type == "BirdSpecial" then
+        table.insert(birds, BirdSpecial(love.math.random(0, worldWidth), love.math.random(0, worldHeight), bird_speed * 2, 25))
+    end
+    if self.type == "BirdPerching" then
+        table.insert(birds, BirdPerching(love.math.random(0, worldWidth), love.math.random(0, worldHeight), bird_speed, 10, "TreePerch"))
     end
 end
 

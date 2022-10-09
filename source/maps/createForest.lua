@@ -4,13 +4,14 @@ function createForest()
     player_skill = 0.7
 
     -- Initialize entities
+    player = Player(worldWidth/2, worldHeight/2, 200)
     birds = {}
     trees = {}
+    bgElements = {}
     panels = {}
     textblocks = {}
     spawners = {}
     worldEdges = {}
-    player = Player(worldWidth/2, worldHeight/2, 200)
     makeWorldEdges()
 
     -- round statistics
@@ -21,13 +22,13 @@ function createForest()
     failed_extractions = 0
 
 
-    tree_replacements_allowed = 500
+    tree_replacements_allowed = 1000
 
-    for i=1,50 do
+    for i=1,25 do
         local x, y = find_tree_placement(trees, worldWidth, worldHeight)
-        table.insert(trees, Tree(x, y, "large"))
+        table.insert(trees, TreePerch(x, y, "large"))
     end
-    for i=1,100 do
+    for i=1,125 do
         local x, y = find_tree_placement(trees, worldWidth, worldHeight)
         table.insert(trees, Tree(x, y, "small"))
     end
@@ -40,8 +41,8 @@ function createForest()
     timer = cron.every(1, function() seconds = seconds + 1 end)
         
     -- Initialize spawner
-    table.insert(spawners, Spawner("bird", 5, 2))
-    table.insert(spawners, Spawner("specialBird", 50, 20))
+    table.insert(spawners, Spawner("BirdPerching", 5, 2))
+    table.insert(spawners, Spawner("BirdSpecial", 50, 20))
     -- Spawn initial birds
     for i=1, 5 do
         spawners[1]:spawnNow()

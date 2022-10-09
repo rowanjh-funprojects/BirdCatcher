@@ -22,8 +22,8 @@ function Tree:new(x, y, type)
               self.bbox_width, self.bbox_height)
 end
 
-function Tree:update()
-    Tree.super.update(self)
+function Tree:update(dt)
+    Tree.super.update(self, dt)
     if intersects(self,player, 1, 0.6) then
         self.transparent = true
     else
