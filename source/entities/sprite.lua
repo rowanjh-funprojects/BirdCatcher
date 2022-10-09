@@ -21,11 +21,10 @@ function Sprite:draw()
     if self.speaktimer > 0 then
         love.graphics.print(self.speakmessage, self.x, self.y - 15)
     end
-
-    -- for debugging sprites: pink rectangles
-    love.graphics.setColor(1,0.5,0.5)
-    love.graphics.rectangle("line", self.x - self.spriteWidth/2, self.y - self.spriteHeight/2, self.spriteWidth, self.spriteHeight)
-    love.graphics.setColor(1,1,1)
+    -- -- for debugging sprites: pink rectangles
+    -- love.graphics.setColor(1,0.5,0.5)
+    -- love.graphics.rectangle("line", self.x - self.spriteWidth/2, self.y - self.spriteHeight/2, self.spriteWidth, self.spriteHeight)
+    -- love.graphics.setColor(1,1,1)
 end
 
 function Sprite:talk(text, duration)

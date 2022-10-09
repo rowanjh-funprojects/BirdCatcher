@@ -1,17 +1,23 @@
 BirdPerching = Bird:extend()
 
-function BirdPerching:new(x, y, speed, value, perchOn)
+function BirdPerching:new(x, y, speed, value, perchesOn)
     BirdPerching.super.new(self, x, y, speed, value)
-    self.perchOn = perchOn
+    self.perchesOn = perchesOn
 end
 
 function BirdPerching:update(dt)
     BirdPerching.super.update(self, dt)
+
 end
 
 function BirdPerching:draw()
     BirdPerching.super.draw(self)
-    love.graphics.rectangle("fill", self.target_x, self.target_y, 10, 10)
+    
+    -- draw target for debugging
+    love.graphics.setColor(1,0.8,0.3,0.8)
+    love.graphics.circle("fill", self.target_x, self.target_y, 3)
+    love.graphics.setColor(1,1,1,1)
+
 end
 
 function BirdPerching:destroy()
@@ -25,7 +31,7 @@ end
 
 function BirdPerching:findNewPerch()
     local foundDestination = false
-    if self.perchOn == "TreePerch" then
+    if self.perchesOn == "TreePerch" then
         local perchOptions = {}
         for i,v in ipairs(trees) do
             if v:is(TreePerch) then
@@ -35,8 +41,9 @@ function BirdPerching:findNewPerch()
         if #perchOptions > 0 then
             -- choose randomly from the candidate perches (ideally more likely to pick a closer tree)
             local choice = love.math.random(1, #perchOptions)
-            self.target_x = perchOptions[choice].x
-            self.target_y = perchOptions[choice].y
+            local targetTree = perchOptions[choice]
+            self.target_x = targetTree.x + love.math.random(targetTree.spriteWidth / 4 * -1, targetTree.spriteWidth / 4)
+            self.target_y = targetTree.y + love.math.random(targetTree.spriteHeight / 4 * -1, targetTree.spriteHeight / 4)
             foundDestination = true
         end
     end

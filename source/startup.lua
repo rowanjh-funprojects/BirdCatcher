@@ -5,8 +5,6 @@ function startup()
     tree_buffer = 50
     bird_speed = 300
     player_speed = 200
-    worldWidth = 1200
-    worldHeight = 900
     bird_scare_dist = 200
     bird_escape_time = {3,7}
     bird_lifespan = 60
@@ -67,6 +65,7 @@ function startup()
       scale = h_scale
     end
     scale = scale * offset
+
     -- update actual window size
     windowWidth = windowWidth * scale
     windowHeight = windowHeight * scale
@@ -74,8 +73,10 @@ function startup()
       fullscreentype = "desktop", resizable = false, borderless = false,
       vsync = true})
 
+    -- Start physics engine, initialize world width/height for menu
+    worldWidth = windowWidth
+    worldHeight = windowHeight
 
-    -- Start physics engine
     world = bump.newWorld()
 
     function collision_filter(item, other)
@@ -84,8 +85,8 @@ function startup()
       elseif item:is(Bird) and other:is(NetTile) then return "cross"
       end
     end
-
-    -- Camera
+    
+    -- Start Camera
     cam = gamera.new(0,0,worldWidth, worldHeight)
 
     -- Load audio

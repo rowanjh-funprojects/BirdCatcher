@@ -1,9 +1,14 @@
 function createForest()
-    -- Initialize parameters
-    round_time = 90
+    -- Initialize level parameters
     player_skill = 0.7
-    n_perchTrees = 6
-    n_trees = 20
+    round_time = 90
+    n_perchTrees = 7
+    n_trees = 100
+
+    -- Resize world
+    worldWidth = 1400
+    worldHeight = 1000
+    cam:setWorld(0,0,worldWidth,worldHeight)
 
     -- Initialize entities
     player = Player(worldWidth/2, worldHeight/2, 200)

@@ -1,5 +1,8 @@
 -- Handle all user inputs (keys, mouse clicks)
 function love.keypressed(key)
+    if not gamestate == "forest" then
+        return
+    end
     -- Space: Capture bird or place net
     if key == "space" then
         -- prioritize capturing bird
