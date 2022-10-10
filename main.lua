@@ -115,6 +115,7 @@ function love.draw()
         end)
         love.graphics.print("Score: " .. score, 10, 10)
         love.graphics.print("Time Left: " .. round_time - seconds, 10, 25)
+        love.graphics.print("High Score: " .. high_score, windowWidth/2, 10)
         if #panels > 0 then
             for i,v in ipairs(panels) do
                 v:draw()

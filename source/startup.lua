@@ -11,6 +11,7 @@ function startup()
     bird_spawn_rate = 8
     player_skill = 0.6
     player_frustration_increment = 0.1
+    high_score = 0
 
     -- require all libraries
     Object = require "source/libraries/classic"

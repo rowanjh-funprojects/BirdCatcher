@@ -8,5 +8,5 @@ function WorldEdge:new(x,y,width,height)
 end
 
 function WorldEdge:destroy()
-    WorldEdge.super.destroy()
+    WorldEdge.super.destroy(self)
 end

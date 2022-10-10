@@ -40,6 +40,6 @@ function Tree:draw()
     end
   end
 
-function Tree:destroy(self)
+function Tree:destroy()
     Tree.super.destroy(self)
 end
