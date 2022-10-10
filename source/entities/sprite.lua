@@ -19,7 +19,9 @@ end
 function Sprite:draw()
     Sprite.super.draw(self)
     if self.speaktimer > 0 then
-        love.graphics.print(self.speakmessage, self.x, self.y - 15)
+        local font = love.graphics.getFont()
+        local speechWidth = font:getWidth(self.speakmessage) --gets the width in pixels for this font
+        love.graphics.print(self.speakmessage, self.x - speechWidth/2, self.y - self.spriteHeight/2 - 5)
     end
     -- -- for debugging sprites: pink rectangles
     -- love.graphics.setColor(1,0.5,0.5)

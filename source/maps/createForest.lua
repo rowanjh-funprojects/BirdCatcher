@@ -21,6 +21,26 @@ function createForest()
     worldEdges = {}
     makeWorldEdges()
 
+    -- Initialize spawner
+    table.insert(spawners, Spawner("BirdPerching", bird_spawn_rate, 2))
+    table.insert(spawners, Spawner("BirdSpecial", 50, 20))
+
+    -- Spawn initial birds
+    for i=1, 5 do
+        spawners[1]:spawnNow()
+    end
+
+    -- Create environment
+    tree_replacements_allowed = 1000
+    for i=1,n_trees do
+        local x, y = find_tree_placement(trees, worldWidth, worldHeight)
+        table.insert(trees, Tree(x, y, "small"))
+    end
+   for i=1,n_perchTrees do
+        local x, y = find_tree_placement(trees, worldWidth, worldHeight)
+        table.insert(trees, TreePerch(x, y, "large"))
+    end
+
     -- round statistics
     score = 0
     captured_birds = 0
@@ -28,32 +48,13 @@ function createForest()
     nets_placed = 0
     failed_extractions = 0
 
-
-    tree_replacements_allowed = 1000
-
-    for i=1,n_perchTrees do
-        local x, y = find_tree_placement(trees, worldWidth, worldHeight)
-        table.insert(trees, TreePerch(x, y, "large"))
-    end
-    for i=1,n_trees do
-        local x, y = find_tree_placement(trees, worldWidth, worldHeight)
-        table.insert(trees, Tree(x, y, "small"))
-    end
-
     -- Set background
     love.graphics.setBackgroundColor(0.3,0.5,0.10)
 
-    -- Initialize timer
+    -- Initialize round timer
     seconds = 0
     timer = cron.every(1, function() seconds = seconds + 1 end)
         
-    -- Initialize spawner
-    table.insert(spawners, Spawner("BirdPerching", 5, 2))
-    table.insert(spawners, Spawner("BirdSpecial", 50, 20))
-    -- Spawn initial birds
-    for i=1, 5 do
-        spawners[1]:spawnNow()
-    end
 end
 
 -- trees = list of trees. x, y = candidate x/y location. n = max recursions/iterations

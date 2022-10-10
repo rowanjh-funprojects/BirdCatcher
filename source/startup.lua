@@ -3,11 +3,12 @@ function startup()
     soundOn = true
     capture_range = 100
     tree_buffer = 50
-    bird_speed = 300
     player_speed = 200
+    bird_speed = 300
     bird_scare_dist = 200
     bird_escape_time = {3,7}
     bird_lifespan = 60
+    bird_spawn_rate = 8
     player_skill = 0.6
     player_frustration_increment = 0.1
 

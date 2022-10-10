@@ -13,11 +13,10 @@ end
 function BirdPerching:draw()
     BirdPerching.super.draw(self)
     
-    -- draw target for debugging
-    love.graphics.setColor(1,0.8,0.3,0.8)
-    love.graphics.circle("fill", self.target_x, self.target_y, 3)
-    love.graphics.setColor(1,1,1,1)
-
+    -- -- draw target for debugging
+    -- love.graphics.setColor(1,1,1,0.8)
+    -- love.graphics.circle("fill", self.target_x, self.target_y, 3)
+    -- love.graphics.setColor(1,1,1,1)
 end
 
 function BirdPerching:destroy()

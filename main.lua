@@ -17,8 +17,14 @@ end
 
 function love.update(dt)
     if gamestate == "menu" then
-        for i=1,#buttons do
-            buttons[i]:update()
+        if show_tutorial then
+            for i = 1, #tutorial_elements do
+                tutorial_elements[i]:update()
+            end
+        else
+            for i=1,#buttons do
+                buttons[i]:update()
+            end
         end
     elseif gamestate == "forest" then
         cam:setPosition(player.x, player.y)
@@ -79,7 +85,11 @@ function love.draw()
         for i=1,#textblocks do
             textblocks[i]:draw()
         end
-
+        if show_tutorial then
+            for i = 1, #tutorial_elements do
+                tutorial_elements[i]:draw()
+            end
+        end
     elseif gamestate == "forest" or gamestate == "endround" then
         cam:draw(function(l,t,w,h)
             player:draw()
@@ -129,7 +139,7 @@ local love_errorhandler = love.errhand
 function love.errorhandler(msg)
     if lldebugger then
         lldebugger.start() -- Add this
-        error(msg, 2)
+         error(msg, 2)
     else
         return love_errorhandler(msg)
     end

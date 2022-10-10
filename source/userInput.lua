@@ -40,10 +40,22 @@ end
 
 function love.mousepressed(x, y, button, istouch)
     if button == 1  then
+        if show_tutorial then
+            -- check for tutorial window first to give close button 
+            -- priority over other buttons
+            for i=1, #tutorial_elements do
+                if tutorial_elements[i]:is(Button) then
+                    if tutorial_elements[i].highlight then
+                        tutorial_elements[i]:click()
+                        return
+                    end
+                end
+            end
+        end
         for i=1,#buttons do
             if buttons[i].highlight then
                 buttons[i]:click()
-                break
+                return
             end
         end
     end

@@ -4,7 +4,7 @@ function Tree:new(x, y, type)
     Tree.super.new(self, x, y)
     self.type = type
     if self.type == "large" then
-        self.image = love.graphics.newImage("img/Green-Tree_large.png")
+        self.image = love.graphics.newImage("img/Green-Tree_large_glow.png")
     else
         self.image = love.graphics.newImage("img/Green-Tree_small.png")
     end

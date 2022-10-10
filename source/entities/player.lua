@@ -126,7 +126,7 @@ function Player:extractSkillCheck()
     if self.skill + self.frustration >= (love.math.random(0,100)/100) then
         return true
     else 
-        self:talk("doh", 2)
+        self:talk("Bird slipped away!", 2)
         failed_extractions = failed_extractions + 1
     end
 end

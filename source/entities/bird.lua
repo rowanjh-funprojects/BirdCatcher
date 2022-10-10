@@ -15,7 +15,7 @@ function Bird:new(x, y, speed, value)
     self.trapped = false
     self.scared_dist = bird_scare_dist
     self.scared_timer = 1
-    self.invincible_timer = 2
+    self.invincible_timer = 0
     self.destroyed = false
     self.lifespan = bird_lifespan
     self.emigrating = false -- Bird still wants to stay in the world
@@ -97,14 +97,18 @@ function Bird:draw()
     if self.trapped then
         -- Add halo if trapped
         love.graphics.setColor(1,0.95,0,0.3)
-        love.graphics.circle("fill", self.x, self.y, self.spriteWidth * 0.5)
         love.graphics.circle("fill", self.x, self.y, self.spriteWidth * 0.4)
         love.graphics.circle("fill", self.x, self.y, self.spriteWidth * 0.3)
+        love.graphics.circle("fill", self.x, self.y, self.spriteWidth * 0.2)
         love.graphics.setColor(1,1,1,1)
     end
 
     -- Draw bird, with bbox offset
+    if self.invincible_timer > 0 then
+        love.graphics.setColor(1,1,1,0.75)
+    end
     self.animation:draw(self.image, self.x - self.drawOffsetX, self.y - self.y_drawoffset)
+    love.graphics.setColor(1,1,1,1)
 end
 
 function Bird:emigrate()

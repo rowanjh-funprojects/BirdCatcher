@@ -51,6 +51,10 @@ function Button:click()
         launchGamestate(gamestate)
     elseif self.action == "menu" then
         love.event.quit("restart")
+    elseif self.action == "showTutorial" then
+        show_tutorial = true
+    elseif self.action == "closeTutorial" then
+        show_tutorial = false
     elseif self.action == "quit" then
         love.event.quit()
     elseif self.action == "restart" then
