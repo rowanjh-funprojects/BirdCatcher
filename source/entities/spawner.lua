@@ -30,6 +30,9 @@ function Spawner:spawnNow()
     if self.type == "BirdPerching" then
         table.insert(birds, BirdPerching(love.math.random(0, worldWidth), love.math.random(0, worldHeight), bird_speed, 10, "TreePerch"))
     end
+    if self.type == "BirdLittleBrown" then
+        table.insert(birds, BirdLittleBrown(love.math.random(0, worldWidth), love.math.random(0, worldHeight), bird_speed, 10))
+    end
 end
 
 function Spawner:destroy()

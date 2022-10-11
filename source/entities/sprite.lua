@@ -4,8 +4,10 @@ function Sprite:new(x, y, spriteWidth, spriteWidth)
     Sprite.super.new(self, x, y)
     self.speaktimer = 0
     self.speakmessage = nil
-    self.spriteWidth = spriteWidth
-    self.spriteHeight = spriteWidth
+    if spriteWidth then
+        self.spriteWidth = spriteWidth
+        self.spriteHeight = spriteWidth
+    end
 end
 
 

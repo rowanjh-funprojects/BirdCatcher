@@ -20,15 +20,18 @@ function Bird:new(x, y, speed, value)
     self.lifespan = bird_lifespan
     self.emigrating = false -- Bird still wants to stay in the world
 
-    -- Animations
-    self.image = love.graphics.newImage("img/bird2blue_0.10_fixed.png")
-    local nSpriteCols = 3
-    local nSpriteRows = 3
-    self.spriteWidth = math.floor(self.image:getWidth() / nSpriteCols)
-    self.spriteHeight = math.floor(self.image:getHeight() / nSpriteRows)
-    local g = anim8.newGrid(self.spriteWidth, self.spriteHeight, 
-                            self.spriteWidth * nSpriteCols, self.spriteHeight * nSpriteRows)
-    self.animation = anim8.newAnimation(g('1-3','1-3'), 0.1)
+    -- Default sprite and animation
+    if not self.image then
+        self.image = love.graphics.newImage("img/bird2blue_0.10_fixed.png")
+        local nSpriteCols = 3
+        local nSpriteRows = 3
+        self.spriteWidth = math.floor(self.image:getWidth() / nSpriteCols)
+        self.spriteHeight = math.floor(self.image:getHeight() / nSpriteRows)
+        local g = anim8.newGrid(self.spriteWidth, self.spriteHeight, 
+                                self.spriteWidth * nSpriteCols, self.spriteHeight * nSpriteRows)
+        self.animation = anim8.newAnimation(g('1-3','1-3'), 0.1)
+        
+    end
 
     -- drawing offsets
     self.drawOffsetX = self.spriteWidth / 2
@@ -109,6 +112,11 @@ function Bird:draw()
     end
     self.animation:draw(self.image, self.x - self.drawOffsetX, self.y - self.y_drawoffset)
     love.graphics.setColor(1,1,1,1)
+    
+    -- -- draw target for debugging
+    -- love.graphics.setColor(1,1,1,0.8)
+    -- love.graphics.circle("fill", self.target_x, self.target_y, 3)
+    -- love.graphics.setColor(1,1,1,1)
 end
 
 function Bird:emigrate()

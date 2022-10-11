@@ -9,6 +9,11 @@ function love.keypressed(key)
         local any_birds_capturable, nearest_capturable_bird = player:check_bird_captures()
         if any_birds_capturable then
             player:tryToExtractBird(nearest_capturable_bird)
+            if tempNet then
+                tempNet:destroy()
+                tempNet = nil
+                player.placing_net = false
+            end
         -- place net, if not already in net placement mode
         elseif not player.placing_net then
             tempNet = player:alignNet(20)

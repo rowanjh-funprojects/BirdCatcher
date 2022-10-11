@@ -27,6 +27,7 @@ function startup()
     require "source/entities/bird"
     require "source/entities/birdSpecial"
     require "source/entities/birdPerching"
+    require "source/entities/birdLittleBrown"
     require "source/entities/net"
     require "source/entities/tempNet"
     require "source/entities/tree"

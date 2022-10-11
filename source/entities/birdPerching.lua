@@ -2,21 +2,19 @@ BirdPerching = Bird:extend()
 
 function BirdPerching:new(x, y, speed, value, perchesOn)
     BirdPerching.super.new(self, x, y, speed, value)
-    self.perchesOn = perchesOn
+    if perchesOn then
+        self.perchesOn = perchesOn
+    else
+        self.perchesOn = "TreePerch" -- defualt
+    end
 end
 
 function BirdPerching:update(dt)
     BirdPerching.super.update(self, dt)
-
 end
 
 function BirdPerching:draw()
     BirdPerching.super.draw(self)
-    
-    -- -- draw target for debugging
-    -- love.graphics.setColor(1,1,1,0.8)
-    -- love.graphics.circle("fill", self.target_x, self.target_y, 3)
-    -- love.graphics.setColor(1,1,1,1)
 end
 
 function BirdPerching:destroy()

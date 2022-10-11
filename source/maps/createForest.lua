@@ -22,7 +22,8 @@ function createForest()
     makeWorldEdges()
 
     -- Initialize spawner
-    table.insert(spawners, Spawner("BirdPerching", bird_spawn_rate, 2))
+    table.insert(spawners, Spawner("BirdLittleBrown", bird_spawn_rate*2, 2))
+    table.insert(spawners, Spawner("BirdPerching", bird_spawn_rate*4, 8))
     table.insert(spawners, Spawner("BirdSpecial", 50, 20))
 
     -- Spawn initial birds
