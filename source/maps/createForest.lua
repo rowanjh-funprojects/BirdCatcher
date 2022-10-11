@@ -23,13 +23,15 @@ function createForest()
 
     -- Initialize spawner
     table.insert(spawners, Spawner("BirdLittleBrown", bird_spawn_rate*2, 2))
-    table.insert(spawners, Spawner("BirdPerching", bird_spawn_rate*4, 8))
-    table.insert(spawners, Spawner("BirdSpecial", 50, 20))
+    table.insert(spawners, Spawner("BirdPerching", bird_spawn_rate*2, 8))
+    table.insert(spawners, Spawner("BirdSpecial", 60, 30))
 
     -- Spawn initial birds
     for i=1, 5 do
         spawners[1]:spawnNow()
     end
+    spawners[2]:spawnNow()
+
 
     -- Create environment
     tree_replacements_allowed = 1000
