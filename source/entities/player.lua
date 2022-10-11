@@ -15,7 +15,7 @@ function Player:new(x, y)
     self.quiettimer = 5
 
     -- Sprite, image, animations
-    self.image = love.graphics.newImage("img/player_down walk.png")
+    self.image = sprites.player
     local nSpriteCols = 4
     local nSpriteRows = 2
     self.spriteWidth = math.floor(self.image:getWidth() / nSpriteCols)

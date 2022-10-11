@@ -22,7 +22,7 @@ function Bird:new(x, y, speed, value)
 
     -- Default sprite and animation
     if not self.image then
-        self.image = love.graphics.newImage("img/bird2blue_0.10_fixed.png")
+        self.image = sprites.birds.generic
         local nSpriteCols = 3
         local nSpriteRows = 3
         self.spriteWidth = math.floor(self.image:getWidth() / nSpriteCols)

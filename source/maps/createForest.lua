@@ -4,6 +4,7 @@ function createForest()
     round_time = 90
     n_perchTrees = 7
     n_trees = 100
+    n_biggestTrees = 7
 
     -- Resize world
     worldWidth = 1400
@@ -34,16 +35,58 @@ function createForest()
 
 
     -- Create environment
+
+    -- Trees
     tree_replacements_allowed = 1000
-    for i=1,n_trees do
+
+    for i=1,3 do
         local x, y = find_tree_placement(trees, worldWidth, worldHeight)
-        table.insert(trees, Tree(x, y, "small"))
+        table.insert(trees, Tree(x, y, sprites.world.rockBare))
     end
-   for i=1,n_perchTrees do
+    for i=1,7 do
         local x, y = find_tree_placement(trees, worldWidth, worldHeight)
-        table.insert(trees, TreePerch(x, y, "large"))
+        table.insert(trees, Tree(x, y, sprites.world.rockBareSmall))
+    end
+    for i=1,3 do
+        local x, y = find_tree_placement(trees, worldWidth, worldHeight)
+        table.insert(trees, Tree(x, y, sprites.world.rockBareLarge))
+    end
+    for i=1,2 do
+        local x, y = find_tree_placement(trees, worldWidth, worldHeight)
+        table.insert(trees, Tree(x, y, sprites.world.rockMossHuge))
+    end
+    for i=1,3 do
+        local x, y = find_tree_placement(trees, worldWidth, worldHeight)
+        table.insert(trees, Tree(x, y, sprites.world.rockMoss))
     end
 
+    for i=1,n_biggestTrees do
+        local x, y = find_tree_placement(trees, worldWidth, worldHeight)
+        table.insert(trees, Tree(x, y, sprites.world.treeGreenBiggest))
+    end
+    for i=1,n_trees do
+        local x, y = find_tree_placement(trees, worldWidth, worldHeight)
+        table.insert(trees, Tree(x, y, sprites.world.treeGreenTiny))
+    end
+    for i=1,5 do
+        local x, y = find_tree_placement(trees, worldWidth, worldHeight)
+        table.insert(trees, Tree(x, y, sprites.world.treeStagLarge))
+    end
+    for i=1,5 do
+        local x, y = find_tree_placement(trees, worldWidth, worldHeight)
+        table.insert(trees, Tree(x, y, sprites.world.treeStagSmall))
+    end
+    for i=1,5 do
+        local x, y = find_tree_placement(trees, worldWidth, worldHeight)
+        table.insert(trees, Tree(x, y, sprites.world.treeYellowLarge))
+    end
+
+    for i=1,n_perchTrees do
+        local x, y = find_tree_placement(trees, worldWidth, worldHeight)
+        table.insert(trees, TreePerch(x, y, sprites.world.treeGreenLargeGlow))
+    end
+
+    
     -- round statistics
     score = 0
     captured_birds = 0

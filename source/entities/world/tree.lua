@@ -2,12 +2,7 @@ Tree = Sprite:extend()
 
 function Tree:new(x, y, type)
     Tree.super.new(self, x, y)
-    self.type = type
-    if self.type == "large" then
-        self.image = love.graphics.newImage("img/Green-Tree_large_glow.png")
-    else
-        self.image = love.graphics.newImage("img/Green-Tree_small.png")
-    end
+    self.image = type
     self.spriteWidth = self.image:getWidth()
     self.spriteHeight = self.image:getHeight()
     self.transparent = false

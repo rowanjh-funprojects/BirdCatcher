@@ -13,6 +13,8 @@ function love.load()
     gamestate = "menu"
     launchGamestate(gamestate)
 
+
+
 end
 
 function love.update(dt)
@@ -91,7 +93,16 @@ function love.draw()
             end
         end
     elseif gamestate == "forest" or gamestate == "endround" then
+
         cam:draw(function(l,t,w,h)
+            -- Tilemap
+            local nTilesWide = math.floor(worldWidth / tileset1.tile_width) + 1
+            local nTilesHigh = math.floor(worldHeight / tileset1.tile_height) + 1
+            for row=0, nTilesHigh do
+                for col=0, nTilesWide do
+                    love.graphics.draw(tileset1.tiles, tileset1.quads[25], col * tileset1.tile_width, row * tileset1.tile_height)
+                end
+            end
             player:draw()
 
             if net then
@@ -134,6 +145,7 @@ function love.draw()
 
     end
     -- drawDebugGrid()
+    
 end
 
 local love_errorhandler = love.errhand

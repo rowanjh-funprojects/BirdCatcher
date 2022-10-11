@@ -43,6 +43,7 @@ function startup()
     require "source/debugging"
     require "source/sound"
     require "source/loadAudio"
+    require "source/loadSprites"
     require "source/maps"
     require "source/maps/createForest"
     require "source/maps/launchMenu"

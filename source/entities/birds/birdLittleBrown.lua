@@ -3,7 +3,7 @@ BirdLittleBrown = BirdPerching:extend()
 function BirdLittleBrown:new(x, y, speed, value)
     -- Customize sprite
 
-    self.image = love.graphics.newImage("img/little-brown-bird-30px.png")
+    self.image = sprites.birds.littleBrown
     local nSpriteCols = 2
     local nSpriteRows = 2
     self.spriteWidth = math.floor(self.image:getWidth() / nSpriteCols)

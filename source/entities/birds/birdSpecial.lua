@@ -1,7 +1,7 @@
 BirdSpecial = Bird:extend()
 
 function BirdSpecial:new(x, y, speed, value)
-    self.image = love.graphics.newImage("img/parrot-60px.png")
+    self.image = sprites.birds.special
     local nSpriteCols = 4
     local nSpriteRows = 4
     self.spriteWidth = math.floor(self.image:getWidth() / nSpriteCols)
