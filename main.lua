@@ -107,11 +107,12 @@ function love.draw()
             for i,v in ipairs(env.bgElements) do
                 v:draw()
             end
+            player:draw()
+
             for i,v in ipairs(env.rocks) do
                 v:draw()
             end
 
-            player:draw()
 
             if net then
                 net:draw()

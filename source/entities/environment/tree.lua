@@ -4,12 +4,6 @@ function Tree:new(x, y, img)
     Tree.super.new(self, x, y, img)
     self.transparent = false
     
-    --setup collision rectangle at base of the tree trunk
-    self.boxOffsetX = 5
-    self.boxOffsetY = self.sprite.height / 2 - 5
-    self.boxWidth = 10
-    self.boxHeight = 10
-    world:add(self, self.x - self.boxOffsetX, self.y + self.boxOffsetY, self.boxWidth, self.boxHeight)
 end
 
 function Tree:update(dt)
@@ -33,4 +27,14 @@ function Tree:draw()
 
 function Tree:destroy()
     Tree.super.destroy(self)
+end
+
+function Tree:addToWorld()
+    Tree.super.addToWorld(self)
+    --setup collision rectangle at base of the tree trunk
+    self.boxOffsetX = 5
+    self.boxOffsetY = self.sprite.height / 2 - 5
+    self.boxWidth = 10
+    self.boxHeight = 10
+    world:add(self, self.x - self.boxOffsetX, self.y + self.boxOffsetY, self.boxWidth, self.boxHeight)
 end

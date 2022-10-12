@@ -10,8 +10,13 @@ end
 
 function TreePerch:draw()
     TreePerch.super.draw(self)
+
 end
 
 function TreePerch:destroy()
     TreePerch.super.destroy(self)
+end
+
+function TreePerch:addToWorld()
+    TreePerch.super.addToWorld(self)
 end

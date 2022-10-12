@@ -46,80 +46,41 @@ function generateLevel(spec)
         for i=1, spec.env.ponds do
             local pondx = love.math.random(sprites.env.pond.width / 2, params.worldWidth - (sprites.env.pond.width / 2))
             local pondy = love.math.random(sprites.env.pond.height / 2, params.worldHeight - (sprites.env.pond.height / 2))
-            table.insert(env.bgElements, Pond(pondx, pondy, sprites.env.pond))
+            local pond = Pond(pondx, pondy, sprites.env.pond)
+            table.insert(env.bgElements, pond)
+            pond:addToWorld()
         end
     end
     
     for k,v in pairs(spec.env.rocks) do  
         if v > 0 then
             for i=1,v do
-                local rock = place_obj(EnvElement(200, 200, sprites.env[k]), env.bgElements)
+                local rock = place_obj(Rock(200, 200, sprites.env[k]), env.bgElements)
                 if rock then
                     table.insert(env.rocks, rock)
+                    rock:addToWorld()
                 end
             end   
         end
     end
-    
+    for i=1,spec.env.perchTrees do
+        local perchTree = place_obj(TreePerch(200, 200, sprites.env.treeYellowLarge), env.trees)
+        if perchTree then
+            table.insert(env.trees, perchTree)
+            perchTree:addToWorld()
+        end
+    end
     for k,v in pairs(spec.env.trees) do
         if v > 0 then
             for i=1,v do
-                local tree = place_obj(EnvElement(200, 200, sprites.env[k]), env.bgElements, env.trees)
+                local tree = place_obj(Tree(200, 200, sprites.env[k]), env.bgElements, env.trees)
                 if tree then
                     table.insert(env.trees, tree)
+                    tree:addToWorld()
                 end
             end
         end
     end
-    -- for i=1, #spec.env.n_trees do
-    --     local tree = place_obj(Tree(200, 200, sprites.env.treeGreenTiny), env.bgElements, env.trees)
-    --     if tree then
-    --         table.insert(env.trees, tree)
-    --     end
-    -- end
-
-    -- for i=1,3 do
-    --     local x, y = find_placement(env.trees, params.worldWidth, params.worldHeight)
-    --     table.insert(env.trees, Tree(x, y, sprites.env.rockBare))
-    -- end
-    -- for i=1,7 do
-    --     local x, y = find_placement(env.trees, params.worldWidth, params.worldHeight)
-    --     table.insert(env.trees, Tree(x, y, sprites.env.rockBareSmall))
-    -- end
-    -- for i=1,3 do
-    --     local x, y = find_placement(env.trees, params.worldWidth, params.worldHeight)
-    --     table.insert(env.trees, Tree(x, y, sprites.env.rockBareLarge))
-    -- end
-    -- for i=1,2 do
-    --     local x, y = find_placement(env.trees, params.worldWidth, params.worldHeight)
-    --     table.insert(env.trees, Tree(x, y, sprites.env.rockMossHuge))
-    -- end
-    -- for i=1,3 do
-    --     local x, y = find_placement(env.trees, params.worldWidth, params.worldHeight)
-    --     table.insert(env.trees, Tree(x, y, sprites.env.rockMoss))
-    -- end
-
-    -- for i=1,spec.n_biggestTrees do
-    --     local x, y = find_placement(env.trees, params.worldWidth, params.worldHeight)
-    --     table.insert(env.trees, Tree(x, y, sprites.env.treeGreenBiggest))
-    -- end
-    -- for i=1,spec.n_trees do
-    --     local x, y = find_placement(env.trees, params.worldWidth, params.worldHeight)
-    --     table.insert(env.trees, Tree(x, y, sprites.env.treeGreenTiny))
-    -- end
-    -- for i=1,5 do
-    --     local x, y = find_placement(env.trees, params.worldWidth, params.worldHeight)
-    --     table.insert(env.trees, Tree(x, y, sprites.env.treeStagLarge))
-    -- end
-    -- for i=1,5 do
-    --     local x, y = find_placement(env.trees, params.worldWidth, params.worldHeight)
-    --     table.insert(env.trees, Tree(x, y, sprites.env.treeStagSmall))
-    -- end
-    -- for i=1,spec.n_perchTrees do
-    --     local x, y = find_placement(env.trees, params.worldWidth, params.worldHeight)
-    --     table.insert(env.trees, TreePerch(x, y, sprites.env.treeYellowLarge))
-    -- end
-
     
     -- round statistics
     score = 0

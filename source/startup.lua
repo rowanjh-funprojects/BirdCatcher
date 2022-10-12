@@ -38,6 +38,7 @@ function startup()
     require "source/entities/environment/treePerch"
     require "source/entities/environment/worldEdge"
     require "source/entities/environment/pond"
+    require "source/entities/environment/rock"
     require "source/entities/spawner"
     require "source/entities/ui/image"
     require "source/entities/ui/text"
@@ -90,7 +91,7 @@ function startup()
 
     function collision_filter(item, other)
       if item:is(Player) and other:is(WorldEdge) then return "slide"
-      elseif item:is(Player) and other:is(Tree) then return "slide"
+      elseif item:is(Player) and other:is(EnvElement) then return "slide"
       elseif item:is(Bird) and other:is(NetTile) then return "cross"
       end
     end

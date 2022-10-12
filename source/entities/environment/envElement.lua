@@ -15,3 +15,7 @@ end
 function EnvElement:destroy()
     EnvElement.super.destroy(self)
 end
+
+function EnvElement:addToWorld()
+    
+end
