@@ -41,8 +41,8 @@ function Sprite:destroy()
 end
 
 function Sprite:isOffscreen()
-    if ((self.x + self.spriteWidth / 2) < 0) or (self.x - self.spriteWidth / 2) > worldWidth then
-        if ((self.y  + self.spriteHeight / 2) < 0) or (self.y - self.spriteHeight / 2) > worldHeight then 
+    if ((self.x + self.spriteWidth / 2) < 0) or (self.x - self.spriteWidth / 2) > params.worldWidth then
+        if ((self.y  + self.spriteHeight / 2) < 0) or (self.y - self.spriteHeight / 2) > params.worldHeight then 
             return true
         end
     end

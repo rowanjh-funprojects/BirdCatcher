@@ -42,11 +42,11 @@ function love.update(dt)
             v:update(dt)
         end
         -- Tree update
-        for i,v in ipairs(trees) do
+        for i,v in ipairs(env.trees) do
             v:update(dt)
         end
         -- environment update
-        for i,v in ipairs(bgElements) do
+        for i,v in ipairs(env.bgElements) do
             v:update(dt)
         end
         -- Spawners update
@@ -55,10 +55,10 @@ function love.update(dt)
         end
 
         remove_if_destroyed(birds)
-        remove_if_destroyed(trees)
-        remove_if_destroyed(bgElements)
-        remove_if_destroyed(textblocks)
-        remove_if_destroyed(panels)
+        remove_if_destroyed(env.trees)
+        remove_if_destroyed(env.bgElements)
+        remove_if_destroyed(ui.textblocks)
+        remove_if_destroyed(ui.panels)
         remove_if_destroyed(buttons)
 
         if seconds >= round_time then
@@ -78,14 +78,14 @@ function love.draw()
         for i=1,#images do
             images[i]:draw()
         end
-        for i=1,#panels do
-            panels[i]:draw()
+        for i=1,#ui.panels do
+            ui.panels[i]:draw()
         end
         for i=1,#buttons do
             buttons[i]:draw()
         end
-        for i=1,#textblocks do
-            textblocks[i]:draw()
+        for i=1,#ui.textblocks do
+            ui.textblocks[i]:draw()
         end
         if show_tutorial then
             for i = 1, #tutorial_elements do
@@ -96,8 +96,8 @@ function love.draw()
 
         cam:draw(function(l,t,w,h)
             -- Tilemap
-            local nTilesWide = math.floor(worldWidth / tileset1.tile_width) + 1
-            local nTilesHigh = math.floor(worldHeight / tileset1.tile_height) + 1
+            local nTilesWide = math.floor(params.worldWidth / tileset1.tile_width) + 1
+            local nTilesHigh = math.floor(params.worldHeight / tileset1.tile_height) + 1
             for row=0, nTilesHigh do
                 for col=0, nTilesWide do
                     love.graphics.draw(tileset1.tiles, tileset1.quads[25], col * tileset1.tile_width, row * tileset1.tile_height)
@@ -112,10 +112,10 @@ function love.draw()
             if tempNet then
                 tempNet:draw()
             end
-            for i,v in ipairs(bgElements) do
+            for i,v in ipairs(env.bgElements) do
                 v:draw()
             end
-            for i,v in ipairs(trees) do
+            for i,v in ipairs(env.trees) do
                 v:draw()
             end
             if #birds > 0 then
@@ -126,14 +126,14 @@ function love.draw()
         end)
         love.graphics.print("Score: " .. score, 10, 10)
         love.graphics.print("Time Left: " .. round_time - seconds, 10, 25)
-        love.graphics.print("High Score: " .. high_score, windowWidth/2, 10)
-        if #panels > 0 then
-            for i,v in ipairs(panels) do
+        love.graphics.print("High Score: " .. globals.high_score, params.winWidth/2, 10)
+        if #ui.panels > 0 then
+            for i,v in ipairs(ui.panels) do
                 v:draw()
             end
         end
-        if #textblocks > 0 then
-            for i,v in ipairs(textblocks) do
+        if #ui.textblocks > 0 then
+            for i,v in ipairs(ui.textblocks) do
                 v:draw()
             end
         end

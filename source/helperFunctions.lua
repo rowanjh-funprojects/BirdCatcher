@@ -71,16 +71,16 @@ function destroyAll()
     remove_if_destroyed(buttons)
     tag_as_destoyed(birds)
     remove_if_destroyed(birds)
-    tag_as_destoyed(trees)
-    remove_if_destroyed(trees)
-    tag_as_destoyed(bgElements)
-    remove_if_destroyed(bgElements)
-    tag_as_destoyed(panels)
-    remove_if_destroyed(panels)
-    tag_as_destoyed(textblocks)
-    remove_if_destroyed(textblocks)
-    tag_as_destoyed(worldEdges)
-    remove_if_destroyed(worldEdges)
+    tag_as_destoyed(env.trees)
+    remove_if_destroyed(env.trees)
+    tag_as_destoyed(env.bgElements)
+    remove_if_destroyed(env.bgElements)
+    tag_as_destoyed(ui.panels)
+    remove_if_destroyed(ui.panels)
+    tag_as_destoyed(ui.textblocks)
+    remove_if_destroyed(ui.textblocks)
+    tag_as_destoyed(env.worldEdges)
+    remove_if_destroyed(env.worldEdges)
 
     if player then
         player:destroy()
@@ -98,10 +98,10 @@ function destroyAll()
 end
 
 function makeWorldEdges()
-    table.insert(worldEdges, WorldEdge(-10, 0, 10, worldHeight)) -- left
-    table.insert(worldEdges, WorldEdge(worldWidth + 1, 0, 10, worldHeight)) -- right
-    table.insert(worldEdges, WorldEdge(0, -10, worldWidth, 10)) -- top
-    table.insert(worldEdges, WorldEdge(0, worldHeight + 1, worldWidth, 10)) -- bot
+    table.insert(env.worldEdges, WorldEdge(-10, 0, 10, params.worldHeight)) -- left
+    table.insert(env.worldEdges, WorldEdge(params.worldWidth + 1, 0, 10, params.worldHeight)) -- right
+    table.insert(env.worldEdges, WorldEdge(0, -10, params.worldWidth, 10)) -- top
+    table.insert(env.worldEdges, WorldEdge(0, params.worldHeight + 1, params.worldWidth, 10)) -- bot
 end
 
 function getOffscreenDestination()

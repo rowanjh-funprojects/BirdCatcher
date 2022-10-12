@@ -1,18 +1,23 @@
 function startup()
-    -- Global parameters
-    soundOn = true
-    capture_range = 100
-    tree_buffer = 50
-    player_speed = 200
-    bird_speed = 300
-    bird_scare_dist = 200
-    bird_escape_time = {3,7}
-    bird_lifespan = 60
-    bird_spawn_rate = 8
-    player_skill = 0.6
-    player_frustration_increment = 0.1
-    high_score = 0
+    -- Global settings and parameters
+    globals = {}
+    globals.soundOn = true
+    globals.high_score = 0
 
+    params = {}
+    params.capture_range = 100
+    params.tree_buffer = 50
+    params.player_speed = 200
+    params.bird_speed = 300
+    params.bird_scare_dist = 200
+    params.bird_escape_time = {3,7}
+    params.bird_lifespan = 60
+    params.bird_spawn_rate = 8
+    params.player_skill = 0.6
+    params.player_frustration_increment = 0.1
+
+    env = {}
+    ui = {}
     -- require all libraries
     Object = require "source/libraries/classic"
     bump = require "source/libraries/bump"
@@ -55,13 +60,13 @@ function startup()
     -- love.window.setIcon(icon)
 
     -- Resolution
-    windowWidth = 1200
-    windowHeight = 800
+    local winWidth = 1200
+    local winHeight = 800
     local scale = 1 -- adjusts game window to screen size
     local offset = 0.8 -- window size relative to scale
     local screen_width, screen_height = love.window.getDesktopDimensions()
-    local w_scale = screen_width / windowWidth
-    local h_scale = screen_height / windowHeight
+    local w_scale = screen_width / winWidth
+    local h_scale = screen_height / winHeight
     -- scale set to be the lesser of w_scale and h_scale so that window will not exceed screen size
     if w_scale < h_scale then
       scale = w_scale
@@ -71,15 +76,15 @@ function startup()
     scale = scale * offset
 
     -- update actual window size
-    windowWidth = windowWidth * scale
-    windowHeight = windowHeight * scale
-    love.window.setMode(windowWidth, windowHeight, {fullscreen = false,
+    params.winWidth = winWidth * scale
+    params.winHeight = winHeight * scale
+    love.window.setMode(winWidth, winHeight, {fullscreen = false,
       fullscreentype = "desktop", resizable = false, borderless = false,
       vsync = true})
 
     -- Start physics engine, initialize world width/height for menu
-    worldWidth = windowWidth
-    worldHeight = windowHeight
+    params.worldWidth = winWidth
+    params.worldHeight = winHeight
 
     world = bump.newWorld()
 
@@ -91,7 +96,7 @@ function startup()
     end
     
     -- Start Camera
-    cam = gamera.new(0,0,worldWidth, worldHeight)
+    cam = gamera.new(0,0,params.worldWidth, params.worldHeight)
 
     -- Load audio
     loadAudio()

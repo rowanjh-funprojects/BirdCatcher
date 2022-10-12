@@ -30,7 +30,7 @@ function BirdPerching:findNewPerch()
     local foundDestination = false
     if self.perchesOn == "TreePerch" then
         local perchOptions = {}
-        for i,v in ipairs(trees) do
+        for i,v in ipairs(env.trees) do
             if v:is(TreePerch) then
                 table.insert(perchOptions, v)
             end

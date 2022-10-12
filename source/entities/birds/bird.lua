@@ -13,11 +13,11 @@ function Bird:new(x, y, speed, value)
     self.patience = 0
     self.escapetime = 0
     self.trapped = false
-    self.scared_dist = bird_scare_dist
+    self.scared_dist = params.bird_scare_dist
     self.scared_timer = 1
     self.invincible_timer = 0
     self.destroyed = false
-    self.lifespan = bird_lifespan
+    self.lifespan = params.bird_lifespan
     self.emigrating = false -- Bird still wants to stay in the world
 
     -- Default sprite and animation
@@ -126,17 +126,17 @@ function Bird:emigrate()
     -- choose an edge, top, bot, left, or right
     local edge = love.math.random(1,4)
     if edge == 1 then -- top
-        self.target_x = love.math.random(0,worldWidth)
+        self.target_x = love.math.random(0,params.worldWidth)
         self.target_y = self.spriteHeight*-1 - 100
     elseif edge == 2 then --right
-        self.target_x = worldWidth + 100
-        self.target_y = love.math.random(0,worldHeight)
+        self.target_x = params.worldWidth + 100
+        self.target_y = love.math.random(0,params.worldHeight)
     elseif edge == 3 then --bottom
-        self.target_x = love.math.random(0,worldWidth)
-        self.target_y = worldHeight + 100
+        self.target_x = love.math.random(0,params.worldWidth)
+        self.target_y = params.worldHeight + 100
     else --left
         self.target_x = self.spriteWidth*-1 - 100
-        self.target_y = love.math.random(0,worldHeight)
+        self.target_y = love.math.random(0,params.worldHeight)
     end
 end
 
@@ -181,8 +181,8 @@ function Bird:selectNewDestination()
 end
 
 function Bird:findRandomDestination()
-    self.target_x = love.math.random(0, windowWidth - self.spriteWidth)
-    self.target_y = love.math.random(0, windowHeight - self.spriteHeight)
+    self.target_x = love.math.random(0, params.worldWidth - self.spriteWidth)
+    self.target_y = love.math.random(0, params.worldHeight - self.spriteHeight)
 end
 
 -- pick a spot in the opposite direction from the player
@@ -204,7 +204,7 @@ end
 
 function Bird:gotTrapped()
     self.trapped = true
-    self.escapetime = love.math.random(bird_escape_time[1], bird_escape_time[2])
+    self.escapetime = love.math.random(params.bird_escape_time[1], params.bird_escape_time[2])
     self:chirp("gotTrapped")
 end
 
@@ -223,7 +223,7 @@ function Bird:gotFree()
 end
 
 function Bird:chirp(type)
-    if soundOn then
+    if globals.soundOn then
         if type == "gotTrapped" then
             chirp_2:play()
         elseif type == "gotFree" then

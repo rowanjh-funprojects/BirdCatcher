@@ -1,6 +1,6 @@
 function drawDebugGrid()
-    for i=0, windowWidth, 100 do
-        for j=0, windowHeight, 100 do
+    for i=0, params.winWidth, 100 do
+        for j=0, winHeight, 100 do
             if i == 0 then
                 love.graphics.print('Height '..j, i, j)
             elseif j == 0 then

@@ -4,8 +4,8 @@ function Player:new(x, y)
     Player.super.new(self, x, y)
 
     -- Player parameters
-    self.speed = player_speed
-    self.skill = player_skill
+    self.speed = params.player_speed
+    self.skill = params.player_skill
 
     -- Player state
     self.placing_net = false
@@ -92,7 +92,7 @@ function Player:check_bird_captures()
     for i,v in ipairs(birds) do
         if v.trapped == true then
             local distance = get_dist_objs(self, v)
-            if distance <= capture_range then
+            if distance <= params.capture_range then
                 any_birds_capturable = true
                 if closest_dist == -1 or distance < closest_dist then
                     closest_dist = distance
@@ -117,7 +117,7 @@ function Player:tryToExtractBird(thisbird)
         self:talk("+"..thisbird.value, 1)
         captured_birds = captured_birds + 1
     else
-        self.frustration = self.frustration + player_frustration_increment
+        self.frustration = self.frustration + params.player_frustration_increment
         thisbird:gotFree()
     end
 end

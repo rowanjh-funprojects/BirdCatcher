@@ -61,5 +61,7 @@ function Button:click()
     elseif self.action == "restart" then
         gamestate = "forest"
         launchGamestate("forest")
+    elseif self.action == "resume" then
+        paused = false
     end
 end
