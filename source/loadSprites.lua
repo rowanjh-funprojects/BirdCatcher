@@ -6,7 +6,7 @@ sprites.player = prepSprite("img/player_down walk.png", 2, 4, 0.1, '1-4',1)
 sprites.birds = {}
 sprites.birds.generic = prepSprite("img/bird2blue_0.10_fixed.png", 3, 3, 0.1,'1-3','1-3')
 sprites.birds.special = prepSprite("img/parrot-60px.png", 4, 4, 0.1,'1-4', '1-2')
-sprites.birds.littleBrown = prepSprite("img/little-brown-bird-30px-browner.png", 2, 2, 0.4, 1,1, 2,1, 1,2, 2,2, 1,2, 2,1)
+sprites.birds.littleBrown = prepSprite("img/little-brown-bird-30px-browner.png", 2, 2, 0.1, 1,1, 2,1, 1,2, 2,2, 1,2, 2,1)
 
 sprites.env = {}
 sprites.env.treeGreenTiny = prepSprite("img/green-tree-tiny.png", 1, 1)

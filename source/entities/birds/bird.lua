@@ -165,6 +165,7 @@ function Bird:scaredAway()
     self.scared_timer = 1 -- won't be scared again too fast
     self.patience = 0 -- find a new destination as soon as it reaches it safe destination
     self:findSafeDestination()
+    self:talk("!",1)
 end
 
 
