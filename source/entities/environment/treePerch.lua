@@ -1,7 +1,7 @@
 TreePerch = Tree:extend()
 
-function TreePerch:new(x, y, type)
-    TreePerch.super.new(self, x, y, type)
+function TreePerch:new(x, y, img)
+    TreePerch.super.new(self, x, y, img)
 end
 
 function TreePerch:update(dt)

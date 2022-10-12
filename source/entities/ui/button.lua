@@ -48,10 +48,10 @@ end
 function Button:click()
     if self.action == "gotoForest" then
         gamestate = "forest"
-        launchGamestate(gamestate)
+        launchLevel(gamestate)
     elseif self.action == "menu" then
         gamestate = "menu"
-        launchGamestate(gamestate)
+        launchLevel(gamestate)
     elseif self.action == "showTutorial" then
         show_tutorial = true
     elseif self.action == "closeTutorial" then
@@ -60,7 +60,7 @@ function Button:click()
         love.event.quit()
     elseif self.action == "restart" then
         gamestate = "forest"
-        launchGamestate("forest")
+        launchLevel("forest")
     elseif self.action == "resume" then
         paused = false
     end

@@ -1,32 +1,33 @@
+-- Load raw images
 sprites = {}
 
-sprites.player = love.graphics.newImage("img/player_down walk.png")
+sprites.player = prepSprite("img/player_down walk.png", 2, 4, 0.1, '1-4',1)
 
 sprites.birds = {}
-sprites.birds.generic = love.graphics.newImage("img/bird2blue_0.10_fixed.png")
-sprites.birds.special = love.graphics.newImage("img/parrot-60px.png")
-sprites.birds.littleBrown = love.graphics.newImage("img/little-brown-bird-30px-browner.png")
+sprites.birds.generic = prepSprite("img/bird2blue_0.10_fixed.png", 3, 3, 0.1,'1-3','1-3')
+sprites.birds.special = prepSprite("img/parrot-60px.png", 4, 4, 0.1,'1-4', '1-2')
+sprites.birds.littleBrown = prepSprite("img/little-brown-bird-30px-browner.png", 2, 2, 0.4, 1,1, 2,1, 1,2, 2,2, 1,2, 2,1)
 
 sprites.env = {}
-sprites.env.treeGreenTiny = love.graphics.newImage("img/green-tree-tiny.png")
-sprites.env.treeGreenSmall = love.graphics.newImage("img/green-tree-small.png")
-sprites.env.treeGreenLarge = love.graphics.newImage("img/green-tree-large.png")
-sprites.env.treeGreenLargeGlow = love.graphics.newImage("img/green-tree-large-glow.png")
-sprites.env.treeGreenLarger = love.graphics.newImage("img/green-tree-larger.png")
-sprites.env.treeGreenBiggest = love.graphics.newImage("img/green-tree-biggest.png")
-sprites.env.treeStagSmall = love.graphics.newImage("img/stag-small.png")
-sprites.env.treeStagLarge = love.graphics.newImage("img/stag-large.png")
-sprites.env.treeYellowLarge = love.graphics.newImage("img/yellow-tree-large.png")
-sprites.env.treeRedSmall = love.graphics.newImage("img/red-tree-small.png")
-sprites.env.rockBare = love.graphics.newImage("img/rock-bare-1.png")
-sprites.env.rockBareSmall = love.graphics.newImage("img/rock-bare-small-1.png")
-sprites.env.rockBareLarge = love.graphics.newImage("img/rock-bare-large-1.png")
-sprites.env.rockMossHuge = love.graphics.newImage("img/rock-moss-huge-1.png")
-sprites.env.rockMoss = love.graphics.newImage("img/rock-moss-1.png")
-sprites.env.pond = love.graphics.newImage("img/pond.png")
+sprites.env.treeGreenTiny = prepSprite("img/green-tree-tiny.png", 1, 1)
+sprites.env.treeGreenSmall = prepSprite("img/green-tree-small.png", 1, 1)
+sprites.env.treeGreenLarge = prepSprite("img/green-tree-large.png", 1, 1)
+sprites.env.treeGreenLargeGlow = prepSprite("img/green-tree-large-glow.png", 1, 1)
+sprites.env.treeGreenLarger = prepSprite("img/green-tree-larger.png", 1, 1)
+sprites.env.treeGreenBiggest = prepSprite("img/green-tree-biggest.png", 1, 1)
+sprites.env.treeStagSmall = prepSprite("img/stag-small.png", 1, 1)
+sprites.env.treeStagLarge = prepSprite("img/stag-large.png", 1, 1)
+sprites.env.treeYellowLarge = prepSprite("img/yellow-tree-large.png", 1, 1)
+sprites.env.treeRedSmall = prepSprite("img/red-tree-small.png", 1, 1)
+sprites.env.rockBare = prepSprite("img/rock-bare-1.png", 1, 1)
+sprites.env.rockBareSmall = prepSprite("img/rock-bare-small-1.png", 1, 1)
+sprites.env.rockBareLarge = prepSprite("img/rock-bare-large-1.png", 1, 1)
+sprites.env.rockMossHuge = prepSprite("img/rock-moss-huge-1.png", 1, 1)
+sprites.env.rockMoss = prepSprite("img/rock-moss-1.png", 1, 1)
+sprites.env.pond = prepSprite("img/pond.png", 1, 1)
 
 sprites.ui = {}
-sprites.ui.bgmenu = love.graphics.newImage("img/bg-menu-dalle.png")
+sprites.ui.bgmenu = prepSprite("img/bg-menu-dalle.png", 1, 1)
 
 
 -- tileset2

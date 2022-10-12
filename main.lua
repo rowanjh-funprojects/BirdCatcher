@@ -11,7 +11,7 @@ function love.load()
     require "source/startup"
     startup()
     gamestate = "menu"
-    launchGamestate(gamestate)
+    launchLevel(gamestate)
 
 
 
@@ -63,7 +63,7 @@ function love.update(dt)
 
         if seconds >= round_time then
             gamestate = "endround"
-            launchGamestate(gamestate)
+            launchLevel(gamestate)
         end
     elseif gamestate == "endround" then
         -- Buttons update
@@ -103,6 +103,14 @@ function love.draw()
                     love.graphics.draw(tileset1.tiles, tileset1.quads[25], col * tileset1.tile_width, row * tileset1.tile_height)
                 end
             end
+            
+            for i,v in ipairs(env.bgElements) do
+                v:draw()
+            end
+            for i,v in ipairs(env.rocks) do
+                v:draw()
+            end
+
             player:draw()
 
             if net then
@@ -111,9 +119,6 @@ function love.draw()
 
             if tempNet then
                 tempNet:draw()
-            end
-            for i,v in ipairs(env.bgElements) do
-                v:draw()
             end
             for i,v in ipairs(env.trees) do
                 v:draw()

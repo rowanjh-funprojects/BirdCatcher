@@ -1,8 +1,7 @@
 Bird = Sprite:extend()
 
-function Bird:new(x, y, speed, value)
-    Bird.super.new(self, x, y)
-
+function Bird:new(x, y, sprite, speed, value)
+    Bird.super.new(self, x, y, sprite)
     -- Bird parameters
     self.value = value
     self.speed = speed
@@ -15,31 +14,14 @@ function Bird:new(x, y, speed, value)
     self.trapped = false
     self.scared_dist = params.bird_scare_dist
     self.scared_timer = 1
-    self.invincible_timer = 0
+    self.invincible_timer = 2
     self.destroyed = false
     self.lifespan = params.bird_lifespan
     self.emigrating = false -- Bird still wants to stay in the world
-
-    -- Default sprite and animation
-    if not self.image then
-        self.image = sprites.birds.generic
-        local nSpriteCols = 3
-        local nSpriteRows = 3
-        self.spriteWidth = math.floor(self.image:getWidth() / nSpriteCols)
-        self.spriteHeight = math.floor(self.image:getHeight() / nSpriteRows)
-        local g = anim8.newGrid(self.spriteWidth, self.spriteHeight, 
-                                self.spriteWidth * nSpriteCols, self.spriteHeight * nSpriteRows)
-        self.animation = anim8.newAnimation(g('1-3','1-3'), 0.1)
-        
-    end
-
-    -- drawing offsets
-    self.drawOffsetX = self.spriteWidth / 2
-    self.y_drawoffset = self.spriteHeight / 2
     
     -- Setup collision rectangle.
-    self.boxWidth = math.floor(self.spriteWidth / 2)
-    self.boxHeight = math.floor(self.spriteHeight / 2)
+    self.boxWidth = math.floor(self.sprite.width / 2)
+    self.boxHeight = math.floor(self.sprite.height / 2)
     self.boxOffsetX = self.boxWidth / 2
     self.boxOffsetY = self.boxHeight / 2
 
@@ -92,7 +74,6 @@ function Bird:update(dt)
     else
         self.lifespan = self.lifespan - dt
     end
-    self.animation:update(dt)
 end
 
 function Bird:draw()
@@ -100,17 +81,16 @@ function Bird:draw()
     if self.trapped then
         -- Add halo if trapped
         love.graphics.setColor(1,0.95,0,0.3)
-        love.graphics.circle("fill", self.x, self.y, self.spriteWidth * 0.4)
-        love.graphics.circle("fill", self.x, self.y, self.spriteWidth * 0.3)
-        love.graphics.circle("fill", self.x, self.y, self.spriteWidth * 0.2)
+        love.graphics.circle("fill", self.x, self.y, self.sprite.width * 0.4)
+        love.graphics.circle("fill", self.x, self.y, self.sprite.width * 0.3)
+        love.graphics.circle("fill", self.x, self.y, self.sprite.width * 0.2)
         love.graphics.setColor(1,1,1,1)
     end
 
     -- Draw bird, with bbox offset
     if self.invincible_timer > 0 then
-        love.graphics.setColor(1,1,1,0.75)
+        love.graphics.setColor(1,1,1,0.85)
     end
-    self.animation:draw(self.image, self.x - self.drawOffsetX, self.y - self.y_drawoffset)
     love.graphics.setColor(1,1,1,1)
     
     -- -- draw target for debugging
@@ -124,20 +104,7 @@ function Bird:emigrate()
     self.patience = 0
     -- pick a random destination around the edge of the map
     -- choose an edge, top, bot, left, or right
-    local edge = love.math.random(1,4)
-    if edge == 1 then -- top
-        self.target_x = love.math.random(0,params.worldWidth)
-        self.target_y = self.spriteHeight*-1 - 100
-    elseif edge == 2 then --right
-        self.target_x = params.worldWidth + 100
-        self.target_y = love.math.random(0,params.worldHeight)
-    elseif edge == 3 then --bottom
-        self.target_x = love.math.random(0,params.worldWidth)
-        self.target_y = params.worldHeight + 100
-    else --left
-        self.target_x = self.spriteWidth*-1 - 100
-        self.target_y = love.math.random(0,params.worldHeight)
-    end
+    self.target_x, self.target_y = getOffscreenPoint()
 end
 
 function Bird:destroy()
@@ -181,8 +148,8 @@ function Bird:selectNewDestination()
 end
 
 function Bird:findRandomDestination()
-    self.target_x = love.math.random(0, params.worldWidth - self.spriteWidth)
-    self.target_y = love.math.random(0, params.worldHeight - self.spriteHeight)
+    self.target_x = love.math.random(0, params.worldWidth - self.sprite.width)
+    self.target_y = love.math.random(0, params.worldHeight - self.sprite.height)
 end
 
 -- pick a spot in the opposite direction from the player

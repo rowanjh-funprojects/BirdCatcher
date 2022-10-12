@@ -1,7 +1,7 @@
 BirdPerching = Bird:extend()
 
-function BirdPerching:new(x, y, speed, value, perchesOn)
-    BirdPerching.super.new(self, x, y, speed, value)
+function BirdPerching:new(x, y, sprite, speed, value, perchesOn)
+    BirdPerching.super.new(self, x, y, sprite, speed, value)
     if perchesOn then
         self.perchesOn = perchesOn
     else
@@ -39,8 +39,8 @@ function BirdPerching:findNewPerch()
             -- choose randomly from the candidate perches (ideally more likely to pick a closer tree)
             local choice = love.math.random(1, #perchOptions)
             local targetTree = perchOptions[choice]
-            self.target_x = targetTree.x + love.math.random(targetTree.spriteWidth / 4 * -1, targetTree.spriteWidth / 4)
-            self.target_y = targetTree.y + love.math.random(targetTree.spriteHeight / 4 * -1, targetTree.spriteHeight / 4)
+            self.target_x = targetTree.x + love.math.random(targetTree.sprite.width / 4 * -1, targetTree.sprite.width / 4)
+            self.target_y = targetTree.y + love.math.random(targetTree.sprite.height / 4 * -1, targetTree.sprite.height / 4)
             foundDestination = true
         end
     end

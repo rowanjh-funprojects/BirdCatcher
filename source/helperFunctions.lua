@@ -16,22 +16,20 @@ function spriteIntersects(a, b, sa, sb)
     -- scales add a positive or negative buffer around sprite before checking for intersection
     -- (i.e. making the sprite collision square smaller or bigger)
     local a_left, a_right, a_top, a_bottom
-    a_left = a.x - a.spriteWidth * sa / 2
-    a_right = a.x + a.spriteWidth * sa / 2
-    a_top = a.y - a.spriteHeight * sa / 2
-    a_bottom = a.y + a.spriteHeight * sa / 2
+    a_left = a.x - a.sprite.width * sa / 2
+    a_right = a.x + a.sprite.width * sa / 2
+    a_top = a.y - a.sprite.height * sa / 2
+    a_bottom = a.y + a.sprite.height * sa / 2
 
     local b_left, b_right, b_top, b_bottom
-    b_left = b.x - b.spriteWidth * sb / 2
-    b_right = b.x + b.spriteWidth * sb / 2
-    b_top = b.y + b.spriteHeight * sb / 2
-    b_bottom = b.y - b.spriteHeight * sb / 2
+    b_left = b.x - b.sprite.width * sb / 2
+    b_right = b.x + b.sprite.width * sb / 2
+    b_top = b.y - b.sprite.height * sb / 2
+    b_bottom = b.y + b.sprite.height * sb / 2
 
     -- Check if two objects intersect each other
-    return  a_right > b_left
-        and a_left < b_right
-        and a_bottom > b_top
-        and a_top < b_bottom
+
+    return a_left < b_right and a_right > b_left and a_top < b_bottom and a_bottom > b_top
 end
 
 function remove_if_destroyed(tbl)
@@ -104,6 +102,40 @@ function makeWorldEdges()
     table.insert(env.worldEdges, WorldEdge(0, params.worldHeight + 1, params.worldWidth, 10)) -- bot
 end
 
-function getOffscreenDestination()
+function getOffscreenPoint()
+    --- Get a random point that is just off the edge of the screen for a, for
+    --- immigration and emigration.
+    local edge = love.math.random(1,4)
+    local x, y
+    if edge == 1 then -- top
+        x = love.math.random(0,params.worldWidth)
+        y = -200
+    elseif edge == 2 then --right
+        x = params.worldWidth + 200
+        y = love.math.random(0,params.worldHeight)
+    elseif edge == 3 then --bottom
+        x = love.math.random(0,params.worldWidth)
+        y = params.worldHeight + 200
+    else --left
+        x = -200
+        y = love.math.random(0,params.worldHeight)
+    end
     return x, y
+end
+
+function prepSprite(img, nRows, nCols, rate, ...)
+    --- @... frame specification for anim8.newAnimation(g(...))
+    local sprite = {}
+    sprite.image = love.graphics.newImage(img)
+    sprite.width = math.floor(sprite.image:getWidth() / nCols)
+    sprite.height = math.floor(sprite.image:getHeight() / nRows)
+    sprite.animated = nRows > 1 or nCols > 1
+    if sprite.animated then
+        local g = anim8.newGrid(sprite.width, sprite.height, 
+                                sprite.width * nCols, sprite.height * nRows)
+        sprite.animation = anim8.newAnimation(g(...), rate)
+    end
+    sprite.drawOffsetX = sprite.width / 2
+    sprite.drawOffsetY = sprite.height / 2
+    return sprite
 end

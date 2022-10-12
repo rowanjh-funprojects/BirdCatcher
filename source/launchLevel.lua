@@ -1,17 +1,18 @@
-function launchGamestate(state)
-    if state == "menu" then
+function launchLevel(gamestate)
+    if gamestate == "menu" then
         destroyAll()
         love.audio.stop()
         -- Create button entities
         launchMenu()
         menuMusic:play()
-    elseif state == "forest" then
+    elseif gamestate == "forest" then
         destroyAll()
         love.audio.stop()
-        createForest()
+        local spec = require "source/maps/level_forest1"
+        generateLevel(spec)
         forestMusic:play()
         BGbirds:play()
-    elseif state == "endround" then
+    elseif gamestate == "endround" then
         -- create round end screen 
         roundEnd()
     end

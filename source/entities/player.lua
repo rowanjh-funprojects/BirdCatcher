@@ -1,7 +1,7 @@
 Player = Sprite:extend()
 
-function Player:new(x, y)
-    Player.super.new(self, x, y)
+function Player:new(x, y, sprite)
+    Player.super.new(self, x, y, sprite)
 
     -- Player parameters
     self.speed = params.player_speed
@@ -14,22 +14,9 @@ function Player:new(x, y)
     self.speaktimer = 0
     self.quiettimer = 5
 
-    -- Sprite, image, animations
-    self.image = sprites.player
-    local nSpriteCols = 4
-    local nSpriteRows = 2
-    self.spriteWidth = math.floor(self.image:getWidth() / nSpriteCols)
-    self.spriteHeight = math.floor(self.image:getHeight() / nSpriteRows)
-    local g = anim8.newGrid(self.spriteWidth, self.spriteHeight, self.spriteWidth * nSpriteCols, self.spriteHeight * nSpriteRows)
-    self.animation = anim8.newAnimation(g('1-4', 1), 0.1)
-
-    -- drawing offsets
-    self.drawOffsetX = self.spriteWidth / 2
-    self.y_drawoffset = self.spriteHeight / 2
-
     -- Setup collision rectangle
-    self.boxWidth = math.floor(self.spriteWidth / 2)
-    self.boxHeight = math.floor(self.spriteHeight / 2)
+    self.boxWidth = math.floor(self.sprite.width / 2)
+    self.boxHeight = math.floor(self.sprite.height / 2)
     self.boxOffsetX = self.boxWidth / 2
     self.boxOffsetY = self.boxHeight / 2
     world:add(self, self.x - self.boxOffsetX, self.y - self.boxOffsetY, self.boxWidth, self.boxHeight)
@@ -72,12 +59,10 @@ function Player:update(dt)
     -- Transform coordinates back to original
     self.x = resultingX + self.boxOffsetX
     self.y = resultingY + self.boxOffsetY
-    self.animation:update(dt)
 end
 
 function Player:draw()
     Player.super.draw(self)
-    self.animation:draw(self.image, self.x - self.drawOffsetX, self.y - self.y_drawoffset)
 end
 
 function Player:alignNet(maxLength)

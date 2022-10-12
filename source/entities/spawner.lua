@@ -1,37 +1,52 @@
 Spawner = Entity:extend()
 
-function Spawner:new(type, spawntimer, initialcd)
+function Spawner:new(birdType, birdX, birdY, birdSprite, birdSpeed, birdValue, spawncd, initialcd)
+    ---@birdX location to spawn bird. Can be "random" and a random spot around edge of map will be selected
+    ---@birdY location to spawn bird. Can be "random" and a random spot around edge of map will be selected
+    ---@birdSprite sprite of the bird to spawn
+    ---@birdSpeed speed of spawned birds
+    ---@birdValue score value of spawned birds
+    ---@spawncd cooldown of spawner 
+    ---@initialcd time until the first spawn instance, after which subsequent spawns will occur every <spawncd> seconds.
+    ---           initialcd is overwritten if spawnNow() is manually called at map generation
     Spawner.super.new(self)
-    self.type = type
-    self.spawntimer = spawntimer
+    self.birdType = birdType
+    self.birdX = birdX
+    self.birdY = birdY
+    self.birdSprite = birdSprite
+    self.birdSpeed = birdSpeed
+    self.birdValue = birdValue
+    self.spawncd = spawncd
     if initialcd then
-        self.cd = initialcd
+        self.timeTillNextSpawn = initialcd
     else
-        self.cd = spawntimer
+        self.timeTillNextSpawn = self.spawncd
     end
 end
 
 function Spawner:update(dt)
     Spawner.super.update(self,dt)
-    self.cd = self.cd - dt
-    if self.cd <= 0 then
+    self.timeTillNextSpawn = self.timeTillNextSpawn - dt
+    if self.timeTillNextSpawn <= 0 then
         self:spawnNow()
     end
 end
 
 function Spawner:spawnNow()
-    self.cd = self.spawntimer
-    if self.type == "Bird" then
-        table.insert(birds, Bird(love.math.random(0, params.worldWidth), love.math.random(0, params.worldHeight), params.bird_speed, 10))
+    local x, y
+    if self.birdX == "random" or self.birdY == "random" then
+        x, y = getOffscreenPoint()
+    else
+        x = self.birdX
+        y = self.birdY
     end
-    if self.type == "BirdSpecial" then
-        table.insert(birds, BirdSpecial(love.math.random(0, params.worldWidth), love.math.random(0, params.worldHeight), params.bird_speed * 1.5, 25))
+
+    self.timeTillNextSpawn = self.spawncd
+    if self.birdType == "Bird" then
+        table.insert(birds, Bird(x, y, self.birdSprite, self.birdSpeed, self.birdValue))
     end
-    if self.type == "BirdPerching" then
-        table.insert(birds, BirdPerching(love.math.random(0, params.worldWidth), love.math.random(0, params.worldHeight), params.bird_speed, 10, "TreePerch"))
-    end
-    if self.type == "BirdLittleBrown" then
-        table.insert(birds, BirdLittleBrown(love.math.random(0, params.worldWidth), love.math.random(0, params.worldHeight), params.bird_speed, 10))
+    if self.birdType == "BirdPerching" then
+        table.insert(birds, Bird(x, y, self.birdSprite, self.birdSpeed, self.birdValue, "TreePerch"))
     end
 end
 
