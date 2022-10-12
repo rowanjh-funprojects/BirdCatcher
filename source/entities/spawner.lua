@@ -46,7 +46,7 @@ function Spawner:spawnNow()
         table.insert(birds, Bird(x, y, self.birdSprite, self.birdSpeed, self.birdValue))
     end
     if self.birdType == "BirdPerching" then
-        table.insert(birds, Bird(x, y, self.birdSprite, self.birdSpeed, self.birdValue, "TreePerch"))
+        table.insert(birds, BirdPerching(x, y, self.birdSprite, self.birdSpeed, self.birdValue, "TreePerch"))
     end
 end
 

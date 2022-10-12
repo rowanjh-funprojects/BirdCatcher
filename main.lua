@@ -151,7 +151,7 @@ function love.draw()
 
     end
     -- drawDebugGrid()
-    
+
 end
 
 local love_errorhandler = love.errhand
