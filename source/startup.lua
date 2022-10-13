@@ -39,6 +39,7 @@ function startup()
     require "source/entities/environment/worldEdge"
     require "source/entities/environment/pond"
     require "source/entities/environment/rock"
+    require "source/entities/environment/bush"
     require "source/entities/spawner"
     require "source/entities/ui/image"
     require "source/entities/ui/text"

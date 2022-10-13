@@ -35,7 +35,14 @@ sprites.env.treePaintYellow01 = prepSprite("img/painted-trees/yellow-01.png", 1,
 sprites.env.treePaintYellow02 = prepSprite("img/painted-trees/yellow-02.png", 1, 1)
 sprites.env.treePaintPurple01 = prepSprite("img/painted-trees/purple-01.png", 1, 1)
 
-
+sprites.env.bush01 = prepSprite("img/bush-01.png", 1, 1)
+sprites.env.bush02 = prepSprite("img/bush-02.png", 1, 1)
+sprites.env.bush03 = prepSprite("img/bush-03.png", 1, 1)
+sprites.env.bush04 = prepSprite("img/bush-04.png", 1, 1)
+sprites.env.bush05 = prepSprite("img/bush-05.png", 1, 1)
+sprites.env.bush06 = prepSprite("img/bush-06.png", 1, 1)
+sprites.env.bush07 = prepSprite("img/bush-07.png", 1, 1)
+sprites.env.bush08 = prepSprite("img/bush-08.png", 1, 1)
 
 sprites.env.rockBare = prepSprite("img/rock-bare-1.png", 1, 1)
 sprites.env.rockBareSmall = prepSprite("img/rock-bare-small-1.png", 1, 1)
@@ -52,25 +59,16 @@ sprites.ui.bgmenu = prepSprite("img/bg-menu-dalle.png", 1, 1)
 
 -- tileset2
 tileset1 = {}
-tileset1.tiles = love.graphics.newImage("img/tileset.png")
-
+tileset1.tiles = love.graphics.newImage("img/bg-tile-green.png")
 tileset1.image_width = tileset1.tiles:getWidth()
 tileset1.image_height = tileset1.tiles:getHeight()
-tileset1.tile_width = (tileset1.image_width / 20) - 2
-tileset1.tile_height = (tileset1.image_height / 9) - 2
-tileset1.quads = {}
-for i=0,20 do
-    for j=0,9 do
-        --The only reason this code is split up in multiple lines
-        --is so that it fits the page
-        table.insert(tileset1.quads,
-            love.graphics.newQuad(
-                1 + j * (tileset1.tile_width + 2),
-                1 + i * (tileset1.tile_height + 2),
-                tileset1.tile_width, tileset1.tile_height,
-                tileset1.image_width, tileset1.image_height))
-    end
-end
+
+tileset1.tile_width = tileset1.image_width
+tileset1.tile_height = tileset1.image_height
+tileset1.image_ntilesWide = 1
+tileset1.image_ntilesHigh = 1
+tileset1.tile_width = (tileset1.image_width / tileset1.image_ntilesWide)
+tileset1.tile_height = (tileset1.image_height / tileset1.image_ntilesHigh)
 
 -- tileset2
 tileset2 = {}

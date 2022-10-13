@@ -16,6 +16,7 @@ function generateLevel(spec)
     birds = {}
     spawners = {}
     env = {}
+    env.bushes = {}
     env.trees = {}
     env.rocks = {}
     env.bgElements = {}
@@ -25,20 +26,6 @@ function generateLevel(spec)
     ui.panels = {}
     ui.textblocks = {}
     makeWorldEdges()
-
-    for i=1, #spec.spawners do
-        table.insert(spawners, spec.spawners[i])
-    end
-
-
-    -- Spawn initial birds
-    for i=1, #spec.spawners do
-        if spec.initialSpawns[i] > 0 then
-            for j=1, spec.initialSpawns[i] do
-                spec.spawners[i]:spawnNow()
-            end
-        end
-    end
 
     -- Create environment
     -- Pond(s)
@@ -51,7 +38,16 @@ function generateLevel(spec)
             pond:addToWorld()
         end
     end
-    
+    for k,v in pairs(spec.env.bushes) do  
+        if v > 0 then
+            for i=1,v do
+                local bushes = place_obj(Bush(200, 200, sprites.env[k]), env.bgElements)
+                if bushes then
+                    table.insert(env.bushes, bushes)
+                end
+            end   
+        end
+    end
     for k,v in pairs(spec.env.rocks) do  
         if v > 0 then
             for i=1,v do
@@ -81,6 +77,25 @@ function generateLevel(spec)
             end
         end
     end
+
+    -- Sort trees by lowest Y position for nicer drawing
+    table.sort(env.trees, function(A, B) return (A.y + A.sprite.height/2) < (B.y + B.sprite.height/2) end)
+    
+    -- Setup spawners
+    for i=1, #spec.spawners do
+        table.insert(spawners, spec.spawners[i])
+    end
+
+
+    -- Spawn initial birds
+    for i=1, #spec.spawners do
+        if spec.initialSpawns[i] > 0 then
+            for j=1, spec.initialSpawns[i] do
+                spec.spawners[i]:spawnNow()
+            end
+        end
+    end
+
     
     -- round statistics
     score = 0

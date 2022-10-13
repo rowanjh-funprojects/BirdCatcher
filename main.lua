@@ -100,11 +100,14 @@ function love.draw()
             local nTilesHigh = math.floor(params.worldHeight / tileset1.tile_height) + 1
             for row=0, nTilesHigh do
                 for col=0, nTilesWide do
-                    love.graphics.draw(tileset1.tiles, tileset1.quads[25], col * tileset1.tile_width, row * tileset1.tile_height)
+                    love.graphics.draw(tileset1.tiles, col * tileset1.tile_width, row * tileset1.tile_height)
                 end
             end
             
             for i,v in ipairs(env.bgElements) do
+                v:draw()
+            end
+            for i,v in ipairs(env.bushes) do
                 v:draw()
             end
             player:draw()

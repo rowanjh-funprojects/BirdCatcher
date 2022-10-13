@@ -2,7 +2,7 @@ Sprite = Entity:extend()
 
 function Sprite:new(x, y, sprite)
     Sprite.super.new(self, x, y)
-    self.sprite = deepcopy(sprite)    
+    self.sprite = deepcopy(sprite)
 
     -- Every sprite can 'talk'
     self.speaktimer = 0
