@@ -33,7 +33,7 @@ function Tree:addToWorld()
     Tree.super.addToWorld(self)
     --setup collision rectangle at base of the tree trunk
     self.boxOffsetX = 5
-    self.boxOffsetY = self.sprite.height / 2 - 5
+    self.boxOffsetY = self.sprite.height / 2 - 20
     self.boxWidth = 10
     self.boxHeight = 10
     world:add(self, self.x - self.boxOffsetX, self.y + self.boxOffsetY, self.boxWidth, self.boxHeight)

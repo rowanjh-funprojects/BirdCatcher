@@ -35,10 +35,6 @@ function Sprite:draw()
         local speechWidth = font:getWidth(self.speakmessage) --gets the width in pixels for this font
         love.graphics.print(self.speakmessage, self.x - speechWidth/2, self.y - self.sprite.height/2 - 5)
     end
-    -- -- for debugging sprites: pink rectangles
-    -- love.graphics.setColor(1,0.5,0.5)
-    -- love.graphics.rectangle("line", self.x - self.sprite.width/2, self.y - self.sprite.height/2, self.sprite.width, self.sprite.height)
-    -- love.graphics.setColor(1,1,1)
 end
 
 function Sprite:talk(text, duration)

@@ -19,12 +19,32 @@ sprites.env.treeStagSmall = prepSprite("img/stag-small.png", 1, 1)
 sprites.env.treeStagLarge = prepSprite("img/stag-large.png", 1, 1)
 sprites.env.treeYellowLarge = prepSprite("img/yellow-tree-large.png", 1, 1)
 sprites.env.treeRedSmall = prepSprite("img/red-tree-small.png", 1, 1)
+
+sprites.env.treePaintGreen01 = prepSprite("img/painted-trees/green-01.png", 1, 1)
+sprites.env.treePaintGreen02 = prepSprite("img/painted-trees/green-02.png", 1, 1)
+sprites.env.treePaintGreen03 = prepSprite("img/painted-trees/green-03.png", 1, 1)
+sprites.env.treePaintGreen04 = prepSprite("img/painted-trees/green-04.png", 1, 1)
+sprites.env.treePaintOrange01 = prepSprite("img/painted-trees/orange-01.png", 1, 1)
+sprites.env.treePaintOrange02 = prepSprite("img/painted-trees/orange-02.png", 1, 1)
+sprites.env.treePaintOrange03 = prepSprite("img/painted-trees/orange-03.png", 1, 1)
+sprites.env.treePaintOrange04 = prepSprite("img/painted-trees/orange-04.png", 1, 1)
+sprites.env.treePaintStag01 = prepSprite("img/painted-trees/stag-01.png", 1, 1)
+sprites.env.treePaintStag02 = prepSprite("img/painted-trees/stag-02.png", 1, 1)
+sprites.env.treePaintStag03 = prepSprite("img/painted-trees/stag-03.png", 1, 1)
+sprites.env.treePaintYellow01 = prepSprite("img/painted-trees/yellow-01.png", 1, 1)
+sprites.env.treePaintYellow02 = prepSprite("img/painted-trees/yellow-02.png", 1, 1)
+sprites.env.treePaintPurple01 = prepSprite("img/painted-trees/purple-01.png", 1, 1)
+
+
+
 sprites.env.rockBare = prepSprite("img/rock-bare-1.png", 1, 1)
 sprites.env.rockBareSmall = prepSprite("img/rock-bare-small-1.png", 1, 1)
 sprites.env.rockBareLarge = prepSprite("img/rock-bare-large-1.png", 1, 1)
 sprites.env.rockMossHuge = prepSprite("img/rock-moss-huge-1.png", 1, 1)
 sprites.env.rockMoss = prepSprite("img/rock-moss-1.png", 1, 1)
-sprites.env.pond = prepSprite("img/pond.png", 1, 1)
+sprites.env.rockStump = prepSprite("img/painted-trees/stump-01.png", 1, 1)
+-- sprites.env.pond = prepSprite("img/pond-01.png", 1, 1)
+sprites.env.pond = prepSprite("img/pond-02.png", 1, 1)
 
 sprites.ui = {}
 sprites.ui.bgmenu = prepSprite("img/bg-menu-dalle.png", 1, 1)

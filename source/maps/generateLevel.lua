@@ -64,7 +64,7 @@ function generateLevel(spec)
         end
     end
     for i=1,spec.env.perchTrees do
-        local perchTree = place_obj(TreePerch(200, 200, sprites.env.treeYellowLarge), env.trees)
+        local perchTree = place_obj(TreePerch(200, 200, sprites.env.treePaintPurple01), env.trees)
         if perchTree then
             table.insert(env.trees, perchTree)
             perchTree:addToWorld()
