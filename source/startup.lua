@@ -52,6 +52,7 @@ function startup()
     require "source/sound"
     require "source/loadAudio"
     require "source/loadSprites"
+    require "source/loadFonts"
     require "source/launchLevel"
     require "source/maps/generateLevel"
     require "source/maps/launchMenu"
@@ -78,12 +79,12 @@ function startup()
     else
       scale = h_scale
     end
-    scale = scale * offset
+    params.gameScale = scale * offset
 
     -- update actual window size
-    params.winWidth = winWidth * scale
-    params.winHeight = winHeight * scale
-    love.window.setMode(winWidth, winHeight, {fullscreen = false,
+    params.winWidth = winWidth * params.gameScale
+    params.winHeight = winHeight * params.gameScale
+    love.window.setMode(  params.winWidth,    params.winHeight, {fullscreen = false,
       fullscreentype = "desktop", resizable = false, borderless = false,
       vsync = true})
 
@@ -105,4 +106,6 @@ function startup()
 
     -- Load audio
     loadAudio()
+    loadFonts()
+    loadSprites()
 end

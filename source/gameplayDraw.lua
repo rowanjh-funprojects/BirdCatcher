@@ -38,6 +38,7 @@ function gameplayDraw()
             end
         end
     end)
+    love.graphics.setFont(fonts.regularText)
     love.graphics.print("Score: " .. score, 10, 10)
     love.graphics.print("Time Left: " .. round_time - seconds, 10, 25)
     love.graphics.print("High Score: " .. globals.high_score, params.winWidth/2, 10)

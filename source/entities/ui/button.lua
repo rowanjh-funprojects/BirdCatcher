@@ -1,13 +1,13 @@
 Button = Text:extend()
 
-function Button:new(x, y, text, scale, action, txtCol, bCol, fill)
+function Button:new(x, y, text, font, action, txtCol, bCol, fill)
     -- @tCol = text colour
     -- @bCol = button color
     -- @fill = whether button should be "fill"ed or drawn with "line" only
     -- input x and y are treated as mid points, and recalcualted to be 
     -- the top-left corner
 
-    Button.super.new(self, x, y, text, scale, txtCol)
+    Button.super.new(self, x, y, text, font, txtCol)
     self.action = action
     if not fill then 
         self.fill = "line" 
@@ -32,12 +32,14 @@ function Button:draw()
     love.graphics.rectangle(self.fill, 
                             self.x - self.drawOffsetX - 20, 
                             self.y - self.drawOffsetY - 10, 
-                            self.width + 40, self.height + 20)
+                            self.width + 40, self.height + 20,
+                            30, 30)
     if self.highlight then
         love.graphics.rectangle(self.fill, 
                                 self.x - self.drawOffsetX - 30, 
                                 self.y - self.drawOffsetY - 15, 
-                                self.width + 60, self.height + 30)
+                                self.width + 60, self.height + 30,
+                                30, 30)
     end
     love.graphics.setColor(1, 1, 1, 1)
 

@@ -1,15 +1,15 @@
 Text = Entity:extend()
 
-function Text:new(x, y, text, scale, txtCol, bgpanel)
+function Text:new(x, y, text, font, txtCol, bgpanel)
     --@bgpanel: panel drawn underneath text to make more readble
     Text.super.new(self)
     self.x = x
     self.y = y
-    local font = love.graphics.getFont()
+    self.font = font
     self.text = text
     self.scale = scale
-    self.width = font:getWidth(self.text) * self.scale
-    self.height = font:getHeight() * self.scale
+    self.width = self.font:getWidth(self.text)
+    self.height = self.font:getHeight()
     
     if txtCol then
         self.txtCol = txtCol
@@ -31,12 +31,14 @@ end
 
 function Text:draw()
     Text.super.draw(self)
+    love.graphics.setFont(self.font)
     if self.bgpanel then
         love.graphics.setColor(self.bgpanel)
         local buffer = 10
         love.graphics.rectangle("fill", self.x - self.drawOffsetX - buffer, 
                                 self.y - self.drawOffsetY - buffer, 
-                                self.width + buffer * 2, self.height + buffer * 2)
+                                self.width + buffer * 2, self.height + buffer * 2,
+                                30,30)
     end
     love.graphics.setColor(self.txtCol)
     love.graphics.print(self.text, self.x - self.drawOffsetX, self.y  - self.drawOffsetY, 0, self.scale, self.scale)

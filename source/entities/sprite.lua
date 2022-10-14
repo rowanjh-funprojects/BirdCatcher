@@ -31,8 +31,8 @@ function Sprite:draw()
 
     -- Draw speech
     if self.speaktimer > 0 then
-        local font = love.graphics.getFont()
-        local speechWidth = font:getWidth(self.speakmessage) --gets the width in pixels for this font
+        love.graphics.setFont(fonts.regularText)
+        local speechWidth = fonts.regularText:getWidth(self.speakmessage) --gets the width in pixels for this font
         love.graphics.print(self.speakmessage, self.x - speechWidth/2, self.y - self.sprite.height/2 - 5)
     end
 end
