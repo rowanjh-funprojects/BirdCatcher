@@ -10,7 +10,7 @@ function showPauseScreen()
     table.insert(ui.textblocks, Text(xWinCentre, yWinCentre, "Failed Net Extractions: " .. failed_extractions, 1, {0,0,0}))
     table.insert(ui.textblocks, Text(xWinCentre, yWinCentre + 20, "Nets placed: " .. nets_placed, 1, {0,0,0}))
     
-    table.insert(buttons, Button(xWinCentre - 130, yWinCentre + 120, "Resume" , 3, "resume", {0,0,0}, {0,0,0}))
-    table.insert(buttons, Button(xWinCentre - 130, yWinCentre + 120, "Restart" , 3, "restart", {0,0,0}, {0,0,0}))
-    table.insert(buttons, Button(xWinCentre + 130, yWinCentre + 120, "Main Menu" , 3, "menu", {0,0,0}, {0,0,0}))
+    table.insert(buttons, Button(xWinCentre - 220, yWinCentre + 120, "Resume" , 3, "resume", {0,0,0}, {0,0,0}))
+    table.insert(buttons, Button(xWinCentre-20, yWinCentre + 120, "Restart" , 3, "restart", {0,0,0}, {0,0,0}))
+    table.insert(buttons, Button(xWinCentre + 210, yWinCentre + 120, "Main Menu" , 3, "menu", {0,0,0}, {0,0,0}))
 end

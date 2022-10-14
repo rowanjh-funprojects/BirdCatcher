@@ -18,7 +18,7 @@ function Player:new(x, y, sprite)
     self.boxWidth = math.floor(self.sprite.width / 2)
     self.boxHeight = math.floor(self.sprite.height / 2)
     self.boxOffsetX = self.boxWidth / 2
-    self.boxOffsetY = self.boxHeight / 2
+    self.boxOffsetY = self.boxHeight / 2 - 15
     world:add(self, self.x - self.boxOffsetX, self.y - self.boxOffsetY, self.boxWidth, self.boxHeight)
 end
 

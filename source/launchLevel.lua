@@ -12,8 +12,5 @@ function launchLevel(gamestate)
         generateLevel(spec)
         forestMusic:play()
         BGbirds:play()
-    elseif gamestate == "endround" then
-        -- create round end screen 
-        roundEnd()
     end
 end

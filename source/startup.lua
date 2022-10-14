@@ -3,6 +3,7 @@ function startup()
     globals = {}
     globals.soundOn = true
     globals.high_score = 0
+    globals.paused = false
 
     params = {}
     params.capture_range = 100
@@ -55,7 +56,9 @@ function startup()
     require "source/maps/generateLevel"
     require "source/maps/launchMenu"
     require "source/maps/roundEnd"
-    
+    require "source/maps/pauseScreen"
+    require "source/gameplayUpdate"
+    require "source/gameplayDraw"
     -- Game window config
     love.window.setTitle("Bird Catcher")
     -- local icon = love.image.newImageData('img/bird_static.png')

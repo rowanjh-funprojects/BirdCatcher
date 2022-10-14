@@ -1,6 +1,7 @@
 -- Handle all user inputs (keys, mouse clicks)
 function love.keypressed(key)
-    if not gamestate == "forest" then
+    if not (gamestate == "forest") then
+        -- No keyboard except in gameplay
         return
     end
     -- Space: Capture bird or place net
@@ -39,6 +40,9 @@ function love.keypressed(key)
         player.placing_net = false
         tempNet:destroy()
         tempNet = nil
+    elseif key == "escape" and not globals.paused then
+        globals.paused = true
+        showPauseScreen()
     end
 end
 

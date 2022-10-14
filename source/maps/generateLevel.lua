@@ -5,6 +5,8 @@ function generateLevel(spec)
     params.player_skill = 0.7
     round_time = spec.round_time
     tree_placement_attempts = 1000
+    globals.roundEnd = false
+    globals.paused = false
 
     -- Resize world
     params.worldWidth = spec.levelWidth

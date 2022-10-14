@@ -62,6 +62,12 @@ function Button:click()
         gamestate = "forest"
         launchLevel("forest")
     elseif self.action == "resume" then
-        paused = false
+        globals.paused = false
+        tag_as_destoyed(buttons)
+        remove_if_destroyed(buttons)    
+        tag_as_destoyed(ui.panels)
+        remove_if_destroyed(ui.panels)    
+        tag_as_destoyed(ui.textblocks)
+        remove_if_destroyed(ui.textblocks)    
     end
 end
