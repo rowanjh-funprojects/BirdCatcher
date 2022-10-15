@@ -20,7 +20,7 @@ end
 function Panel:draw()
     Panel.super.draw(self)
     love.graphics.setColor(self.col[1], self.col[2], self.col[3], self.col[4])
-    love.graphics.rectangle("fill", self.x - self.width / 2, self.y - self.height / 2, self.width, self.height, 10, 10)
+    love.graphics.rectangle("fill", self.x - self.width / 2, self.y - self.height / 2, self.width, self.height, self.width/8, self.height/8)
     love.graphics.setColor(1, 1, 1)
 end
 
