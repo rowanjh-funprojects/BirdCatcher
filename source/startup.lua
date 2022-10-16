@@ -23,6 +23,10 @@ function startup()
     params.flock_lonely_timer = 2 -- how long before a solo bird gives up on their flock and joins another one
     params.player_extract_duration = 1.5
 
+    style = {}
+    style.buttonCol = {0.96,0.87,0.70, 0.8}
+    style.txtCol = {0,0,0}
+
     env = {}
     ui = {}
     -- require all libraries
@@ -61,7 +65,7 @@ function startup()
     require "source/debugging"
     require "source/sound"
     require "source/loadAudio"
-    require "source/loadSprites"
+    require "source/loadGraphics"
     require "source/loadFonts"
     require "source/launchLevel"
     require "source/maps/generateLevel"

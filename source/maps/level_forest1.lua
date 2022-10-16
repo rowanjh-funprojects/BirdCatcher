@@ -4,6 +4,7 @@ local level = {
     levelWidth = 1400,
     levelHeight = 1000,
     env = {
+        bgTiles = tileset1,
         ponds = 1,
         perchTrees = 4,
         bushes = {
@@ -41,8 +42,8 @@ local level = {
     },
     spawners = {
         Spawner("BirdFlocking", "random", "random", sprites.birds.littleBrown, params.bird_speed + love.math.random(-30, 30), 5, params.bird_spawn_rate/2, 2),
-        Spawner("BirdPerching", "random", "random", sprites.birds.generic, params.bird_speed, 10, params.bird_spawn_rate, 2),
-        Spawner("Bird", "random", "random", sprites.birds.special, params.bird_speed * 1.75, 25, 60, 30)
+        Spawner("BirdPerching", "random", "random", sprites.birds.generic, params.bird_speed + love.math.random(-30, 30), 15, params.bird_spawn_rate, 2),
+        Spawner("Bird", "random", "random", sprites.birds.special, params.bird_speed * 1.5, 35, 60, 30)
     },
     initialSpawns = {
         5,1,0

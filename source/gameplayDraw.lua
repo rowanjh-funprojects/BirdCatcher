@@ -1,11 +1,11 @@
 function gameplayDraw()
     cam:draw(function(l,t,w,h)
         -- Tilemap
-        local nTilesWide = math.floor(params.worldWidth / tileset1.tile_width) + 1
-        local nTilesHigh = math.floor(params.worldHeight / tileset1.tile_height) + 1
+        local nTilesWide = math.floor(params.worldWidth / env.bgTiles.tile_width) + 1
+        local nTilesHigh = math.floor(params.worldHeight / env.bgTiles.tile_height) + 1
         for row=0, nTilesHigh do
             for col=0, nTilesWide do
-                love.graphics.draw(tileset1.tiles, col * tileset1.tile_width, row * tileset1.tile_height)
+                love.graphics.draw(env.bgTiles.tiles, col * env.bgTiles.tile_width, row * env.bgTiles.tile_height)
             end
         end
         for i,v in ipairs(env.bgElements) do
