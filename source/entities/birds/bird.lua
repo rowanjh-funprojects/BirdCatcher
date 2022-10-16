@@ -44,13 +44,13 @@ function Bird:update(dt)
             self:moveTowardsDestination(dt)
         end
     -- If bird is free and too close to the player, get scared away
-    elseif get_dist_objs(player, self) <= self.scared_dist then
-        if self.scared_timer <= 0 then
-            self:scaredAway()
-        end
-        if get_dist_points(self.x, self.y, self.target_x, self.target_y) >= 30 then
-            self:moveTowardsDestination(dt)
-        end
+    elseif get_dist_objs(player, self) <= self.scared_dist and not player.quiet and self.scared_timer <= 0 then
+        -- if self.scared_timer <= 0 then
+        self:scaredAway()
+        -- end
+        -- if get_dist_points(self.x, self.y, self.target_x, self.target_y) >= 30 then
+        --     self:moveTowardsDestination(dt)
+        -- end
     -- If not trapped, and not yet at destination
     elseif get_dist_points(self.x, self.y, self.target_x, self.target_y) >= 30 then
         self:moveTowardsDestination(dt)

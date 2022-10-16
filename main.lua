@@ -10,12 +10,12 @@ end
 function love.load()
     require "source/startup"
     startup()
-    gamestate = "menu"
-    launchLevel(gamestate)
+    globals.gamestate = "menu"
+    launchLevel(globals.gamestate)
 end
 
 function love.update(dt)
-    if gamestate == "menu" then
+    if globals.gamestate == "menu" then
         if show_tutorial then
             for i = 1, #tutorial_elements do
                 tutorial_elements[i]:update()
@@ -25,10 +25,10 @@ function love.update(dt)
                 buttons[i]:update()
             end
         end
-    elseif gamestate == "forest" and not globals.paused then
+    elseif globals.gamestate == "forest" and not globals.paused then
         -- handles main game updates
         gameplayUpdate(dt)
-    elseif gamestate == "forest" and globals.paused then
+    elseif globals.gamestate == "forest" and globals.paused then
         -- Buttons update
         for i,v in ipairs(buttons) do
             v:update(dt)
@@ -37,7 +37,7 @@ function love.update(dt)
 end
 
 function love.draw()
-    if gamestate == "menu" then
+    if globals.gamestate == "menu" then
         for i=1,#images do
             images[i]:draw()
         end
@@ -55,7 +55,7 @@ function love.draw()
                 tutorial_elements[i]:draw()
             end
         end
-    elseif gamestate == "forest" then
+    elseif globals.gamestate == "forest" then
         gameplayDraw()
     end
     -- drawDebugGrid()

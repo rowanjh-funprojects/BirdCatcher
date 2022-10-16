@@ -39,7 +39,11 @@ end
 
 function Sprite:talk(text, duration)
     self.speakmessage = text
-    self.speaktimer = duration
+    if duration then
+        self.speaktimer = duration
+    else
+        self.speaktimer = 2
+    end
 end
 
 function Sprite:destroy()

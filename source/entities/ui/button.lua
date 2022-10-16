@@ -49,11 +49,11 @@ end
 
 function Button:click()
     if self.action == "gotoForest" then
-        gamestate = "forest"
-        launchLevel(gamestate)
+        globals.gamestate = "forest"
+        launchLevel(globals.gamestate)
     elseif self.action == "menu" then
-        gamestate = "menu"
-        launchLevel(gamestate)
+        globals.gamestate = "menu"
+        launchLevel(globals.gamestate)
     elseif self.action == "showTutorial" then
         show_tutorial = true
     elseif self.action == "closeTutorial" then
@@ -61,8 +61,8 @@ function Button:click()
     elseif self.action == "quit" then
         love.event.quit()
     elseif self.action == "restart" then
-        gamestate = "forest"
-        launchLevel("forest")
+        globals.gamestate = "forest"
+        launchLevel(globals.gamestate)
     elseif self.action == "resume" then
         globals.paused = false
         tag_as_destoyed(buttons)

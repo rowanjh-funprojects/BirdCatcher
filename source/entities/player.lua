@@ -11,8 +11,7 @@ function Player:new(x, y, sprite)
     self.placing_net = false
     self.quiet = false
     self.frustration = 0
-    self.speaktimer = 0
-    self.quiettimer = 5
+    self.quietCurrentCd = 5
 
     -- Setup collision rectangle
     self.boxWidth = math.floor(self.sprite.width / 2)
@@ -29,13 +28,22 @@ function Player:update(dt)
     local goalY = self.y
     if love.keyboard.isDown("left") or love.keyboard.isDown("a") then
         goalX = self.x - self.speed * dt
+        self.quiet = false
+        self.quietCurrentCd = params.player_quiet_cooldown
     elseif love.keyboard.isDown("right") or love.keyboard.isDown("d")  then
         goalX = self.x + self.speed * dt
+        self.quiet = false
+        self.quietCurrentCd = params.player_quiet_cooldown
+
     end
     if love.keyboard.isDown("up") or love.keyboard.isDown("w") then
         goalY = self.y - self.speed * dt
+        self.quiet = false
+        self.quietCurrentCd = params.player_quiet_cooldown
     elseif love.keyboard.isDown("down") or love.keyboard.isDown("s") then
         goalY = self.y + self.speed * dt
+        self.quiet = false
+        self.quietCurrentCd = params.player_quiet_cooldown
     end
 
     -- Prevent player from going too far away from the temp net's origin point
@@ -59,10 +67,26 @@ function Player:update(dt)
     -- Transform coordinates back to original
     self.x = resultingX + self.boxOffsetX
     self.y = resultingY + self.boxOffsetY
+
+    -- Increment timer
+    if self.quietCurrentCd >= 0 then
+        self.quietCurrentCd = self.quietCurrentCd - dt
+    else
+        self.quiet = true
+    end
+    if self.quiet then
+        self:talk("shhh",0.01)
+    end
 end
 
 function Player:draw()
-    Player.super.draw(self)
+    if player.quiet then
+        love.graphics.setColor(1,1,1,0.5)
+        Player.super.draw(self)
+        love.graphics.setColor(1,1,1,1)
+    else
+        Player.super.draw(self)
+    end
 end
 
 function Player:alignNet(maxLength)

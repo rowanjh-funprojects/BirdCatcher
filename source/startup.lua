@@ -16,6 +16,7 @@ function startup()
     params.bird_spawn_rate = 8
     params.player_skill = 0.6
     params.player_frustration_increment = 0.1
+    params.player_quiet_cooldown = 3
 
     env = {}
     ui = {}
