@@ -16,9 +16,11 @@ function Bird:new(x, y, sprite, speed, value)
     self.scared_timer = 1
     self.invincible_timer = 2
     self.destroyed = false
+    self.captured = false
     self.lifespan = params.bird_lifespan
     self.emigrating = false -- Bird still wants to stay in the world
-    
+    self.underExtraction = false
+
     -- Setup collision rectangle.
     self.boxWidth = math.floor(self.sprite.width / 2)
     self.boxHeight = math.floor(self.sprite.height / 2)
@@ -30,12 +32,16 @@ end
 
 function Bird:update(dt)
     Bird.super.update(self, dt)
-    if self.trapped then
+    if self.captured then 
+        self:destroy()
+    elseif self.trapped then
         if self.escapetime > 0 then
             self.escapetime = self.escapetime - 1*dt
         else
             self:gotFree()
         end
+    elseif self.underExtraction then
+        return -- no movement if the bird is actively being extracted
     -- If the bird is emigrating
     elseif self.emigrating then
         if self:isOffscreen() then
@@ -47,10 +53,6 @@ function Bird:update(dt)
     elseif get_dist_objs(player, self) <= self.scared_dist and not player.quiet and self.scared_timer <= 0 then
         -- if self.scared_timer <= 0 then
         self:scaredAway()
-        -- end
-        -- if get_dist_points(self.x, self.y, self.target_x, self.target_y) >= 30 then
-        --     self:moveTowardsDestination(dt)
-        -- end
     -- If not trapped, and not yet at destination
     elseif get_dist_points(self.x, self.y, self.target_x, self.target_y) >= 30 then
         self:moveTowardsDestination(dt)
@@ -175,12 +177,18 @@ function Bird:gotTrapped()
     self:chirp("gotTrapped")
 end
 
-function Bird:captured()
-    self:destroy()
+function Bird:beingExtracted()
+    self.underExtraction = true
+end
+
+
+function Bird:gotCaptured()
+    self.captured = true
 end
 
 function Bird:gotFree()
     self.trapped = false
+    self.underExtraction = false
     self.patience = 0
     self.invincible_timer = 2
     self:findSafeDestination()

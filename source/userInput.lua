@@ -9,15 +9,16 @@ function love.keypressed(key)
         -- prioritize capturing bird
         local any_birds_capturable, nearest_capturable_bird = player:check_bird_captures()
         if any_birds_capturable then
-            player:tryToExtractBird(nearest_capturable_bird)
-            if tempNet then
-                tempNet:destroy()
-                tempNet = nil
+            player:startExtractionAttempt(nearest_capturable_bird)
+            -- Kill net if in the middle of placement
+            if netTemp then
+                netTemp:destroy()
+                netTemp = nil
                 player.placing_net = false
             end
         -- place net, if not already in net placement mode
         elseif not player.placing_net then
-            tempNet = player:alignNet(20)
+            netTemp = player:alignNet(20)
         -- if in net placement mode, finalize net placement
         elseif player.placing_net then
             -- kill the old net, place a new net
@@ -25,9 +26,9 @@ function love.keypressed(key)
                 net:destroy()
                 net = nil
             end
-            net = Net(tempNet.startx, tempNet.starty, tempNet.endx, tempNet.endy)
-            tempNet:destroy()
-            tempNet = nil
+            net = NetPlaced(netTemp.startx, netTemp.starty, netTemp.endx, netTemp.endy)
+            netTemp:destroy()
+            netTemp = nil
             player.placing_net = false
         end
     end
@@ -38,8 +39,8 @@ function love.keypressed(key)
     -- Kill net placement
     if (key == "escape" or key == "x") and player.placing_net then
         player.placing_net = false
-        tempNet:destroy()
-        tempNet = nil
+        netTemp:destroy()
+        netTemp = nil
     elseif key == "escape" and not globals.paused then
         globals.paused = true
         showPauseScreen()

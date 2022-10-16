@@ -84,9 +84,9 @@ function destroyAll()
         player:destroy()
         player = nil
     end
-    if tempNet then
-        tempNet:destroy()
-        tempNet = nil
+    if netTemp then
+        netTemp:destroy()
+        netTemp = nil
     end
     if net then
         net:destroy()

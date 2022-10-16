@@ -8,7 +8,6 @@ function gameplayDraw()
                 love.graphics.draw(tileset1.tiles, col * tileset1.tile_width, row * tileset1.tile_height)
             end
         end
-        
         for i,v in ipairs(env.bgElements) do
             v:draw()
         end
@@ -16,18 +15,16 @@ function gameplayDraw()
             v:draw()
         end
         player:draw()
-
         for i,v in ipairs(env.rocks) do
             v:draw()
         end
-
 
         if net then
             net:draw()
         end
 
-        if tempNet then
-            tempNet:draw()
+        if netTemp then
+            netTemp:draw()
         end
         for i,v in ipairs(env.trees) do
             v:draw()

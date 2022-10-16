@@ -5,7 +5,7 @@ function gameplayUpdate(dt)
     -- Player update
     player:update(dt)
     if player.placing_net then
-        tempNet:update(dt, player)
+        netTemp:update(dt, player)
     end
     -- Bird update
     for i,v in ipairs(birds) do

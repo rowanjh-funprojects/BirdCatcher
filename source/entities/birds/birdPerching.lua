@@ -22,7 +22,7 @@ function BirdPerching:destroy()
 end
 
 function BirdPerching:selectNewDestination()
-    -- Overwrite base Bird behaviour (which is finding a random destination), don't inherit.
+    -- Overwrite base Bird method behaviour (which is finding a random destination), don't inherit.
     self:findNewPerch()
 end
 

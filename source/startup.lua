@@ -11,12 +11,13 @@ function startup()
     params.player_speed = 200
     params.bird_speed = 300
     params.bird_scare_dist = 200
-    params.bird_escape_time = {3,7}
+    params.bird_escape_time = {5,10}
     params.bird_lifespan = 60
     params.bird_spawn_rate = 8
     params.player_skill = 0.6
     params.player_frustration_increment = 0.1
     params.player_quiet_cooldown = 3
+    params.player_extract_duration = 1.5
 
     env = {}
     ui = {}
@@ -33,8 +34,12 @@ function startup()
     require "source/entities/player"
     require "source/entities/birds/bird"
     require "source/entities/birds/birdPerching"
+    require "source/entities/birds/birdFlocking"
+    require "source/entities/birds/flock"
     require "source/entities/equipment/net"
-    require "source/entities/equipment/tempNet"
+    require "source/entities/equipment/netPlaced"
+    require "source/entities/equipment/netTemp"
+    require "source/entities/equipment/netTiles"
     require "source/entities/environment/envElement"
     require "source/entities/environment/tree"
     require "source/entities/environment/treePerch"
