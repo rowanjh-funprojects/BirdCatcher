@@ -15,6 +15,7 @@ function Bird:new(x, y, sprite, speed, value)
     self.scared_dist = params.bird_scare_dist
     self.scared_timer = 1
     self.invincible_timer = 2
+    self.paused_timer = 0
     self.destroyed = false
     self.captured = false
     self.lifespan = params.bird_lifespan
@@ -54,7 +55,7 @@ function Bird:update(dt)
         -- if self.scared_timer <= 0 then
         self:scaredAway()
     -- If not trapped, and not yet at destination
-    elseif get_dist_points(self.x, self.y, self.target_x, self.target_y) >= 30 then
+    elseif get_dist_points(self.x, self.y, self.target_x, self.target_y) >= 30 and self.paused_timer <= 0 then
         self:moveTowardsDestination(dt)
     -- If at destination, wait until patience runs out, and find new destination
     else
@@ -70,6 +71,9 @@ function Bird:update(dt)
     end
     if self.scared_timer > 0 then
         self.scared_timer = self.scared_timer - dt
+    end
+    if self.paused_timer >0 then 
+        self.paused_timer = self.paused_timer - dt
     end
     if self.lifespan <= 0 and not self.emigrating then
         self:emigrate() -- fly away from the world

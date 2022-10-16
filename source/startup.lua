@@ -13,10 +13,14 @@ function startup()
     params.bird_scare_dist = 200
     params.bird_escape_time = {5,10}
     params.bird_lifespan = 60
-    params.bird_spawn_rate = 8
+    params.bird_spawn_rate = 15 -- How many seconds between spawns
     params.player_skill = 0.6
     params.player_frustration_increment = 0.1
     params.player_quiet_cooldown = 3
+    params.player_extract_duration = 1.5
+    params.flock_join_prob = 0.8 -- Prob of joining a flock rather then making a new flock if not already in a flock
+    params.flock_loyalty = 0.9 -- Prob that a bird will stay with a flock and not leave it every time the flock moves
+    params.flock_lonely_timer = 2 -- how long before a solo bird gives up on their flock and joins another one
     params.player_extract_duration = 1.5
 
     env = {}

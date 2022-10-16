@@ -16,6 +16,7 @@ function generateLevel(spec)
     -- Initialize entities
     player = Player(params.worldWidth/2, params.worldHeight/2, sprites.player)
     birds = {}
+    flocks = {}
     spawners = {}
     env = {}
     env.bushes = {}

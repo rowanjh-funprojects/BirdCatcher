@@ -48,6 +48,9 @@ function Spawner:spawnNow()
     if self.birdType == "BirdPerching" then
         table.insert(birds, BirdPerching(x, y, self.birdSprite, self.birdSpeed, self.birdValue, "TreePerch"))
     end
+    if self.birdType == "BirdFlocking" then
+        table.insert(birds, BirdFlocking(x, y, self.birdSprite, self.birdSpeed, self.birdValue, "TreePerch"))
+    end
 end
 
 function Spawner:destroy()

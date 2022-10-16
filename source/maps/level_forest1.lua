@@ -40,8 +40,8 @@ local level = {
         }
     },
     spawners = {
-        Spawner("BirdPerching", "random", "random", sprites.birds.littleBrown, params.bird_speed, 5, params.bird_spawn_rate*2, 2),
-        Spawner("BirdPerching", "random", "random", sprites.birds.generic, params.bird_speed, 10, params.bird_spawn_rate*2, 2),
+        Spawner("BirdFlocking", "random", "random", sprites.birds.littleBrown, params.bird_speed + love.math.random(-30, 30), 5, params.bird_spawn_rate/2, 2),
+        Spawner("BirdPerching", "random", "random", sprites.birds.generic, params.bird_speed, 10, params.bird_spawn_rate, 2),
         Spawner("Bird", "random", "random", sprites.birds.special, params.bird_speed * 1.75, 25, 60, 30)
     },
     initialSpawns = {

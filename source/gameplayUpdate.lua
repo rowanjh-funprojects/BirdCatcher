@@ -11,6 +11,9 @@ function gameplayUpdate(dt)
     for i,v in ipairs(birds) do
         v:update(dt)
     end
+    for i,v in ipairs(flocks) do
+        v:update(dt)
+    end
     -- Tree update
     for i,v in ipairs(env.trees) do
         v:update(dt)
@@ -25,6 +28,7 @@ function gameplayUpdate(dt)
     end
 
     remove_if_destroyed(birds)
+    remove_if_destroyed(flocks)
     remove_if_destroyed(env.trees)
     remove_if_destroyed(env.bgElements)
     remove_if_destroyed(ui.textblocks)
