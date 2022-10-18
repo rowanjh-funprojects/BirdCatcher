@@ -28,5 +28,5 @@ function launchMenu()
     table.insert(tutorial_elements, Text(xmid, yquart + 120, "Score as many points as you can before the timer runs out!", fonts.regularText, style.txtCol))
     table.insert(tutorial_elements, Text(xmid, yquart + 150, "Bird Behaviour Handbook, pp 26: 'Birds typically prefer to perch on certain tree species. Watch carefully how they move.", fonts.regularText, style.txtCol))
     table.insert(tutorial_elements, Text(xmid, yquart + 180, "However be cautious, when approached by humans they can become frightened (!)'.", fonts.regularText, style.txtCol))
-    table.insert(tutorial_elements, Button(xmid, params.winHeight*0.66, "Close", fonts.regularButton, "closeTutorial", style.txtCol, {1,1,1}, "fill"))
+    table.insert(tutorial_elements, Button(xmid, params.winHeight*0.66, "Close", fonts.regularButton, "closeTutorial", style.txtCol, {0,0,0}))
 end
