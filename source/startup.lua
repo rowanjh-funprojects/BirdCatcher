@@ -80,13 +80,13 @@ function startup()
     -- love.window.setIcon(icon)
 
     -- Resolution
-    local winWidth = 1200
-    local winHeight = 800
+    local targetWinWidth = 1200
+    local targetWinHeight = 800
     local scale = 1 -- adjusts game window to screen size
-    local offset = 0.8 -- window size relative to scale
+    local offset = 0.8 -- window size relative to screen size
     local screen_width, screen_height = love.window.getDesktopDimensions()
-    local w_scale = screen_width / winWidth
-    local h_scale = screen_height / winHeight
+    local w_scale = screen_width / targetWinWidth
+    local h_scale = screen_height / targetWinHeight
     -- scale set to be the lesser of w_scale and h_scale so that window will not exceed screen size
     if w_scale < h_scale then
       scale = w_scale
@@ -96,15 +96,15 @@ function startup()
     params.gameScale = scale * offset
 
     -- update actual window size
-    params.winWidth = winWidth * params.gameScale
-    params.winHeight = winHeight * params.gameScale
+    params.winWidth = targetWinWidth * params.gameScale
+    params.winHeight = targetWinHeight * params.gameScale
     love.window.setMode(  params.winWidth,    params.winHeight, {fullscreen = false,
       fullscreentype = "desktop", resizable = false, borderless = false,
       vsync = true})
 
     -- Start physics engine, initialize world width/height for menu
-    params.worldWidth = winWidth
-    params.worldHeight = winHeight
+    params.worldWidth = params.winWidth
+    params.worldHeight = params.winHeight
 
     world = bump.newWorld()
 
