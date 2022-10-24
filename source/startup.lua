@@ -21,7 +21,6 @@ function startup()
     params.flock_join_prob = 0.8 -- Prob of joining a flock rather then making a new flock if not already in a flock
     params.flock_loyalty = 0.9 -- Prob that a bird will stay with a flock and not leave it every time the flock moves
     params.flock_lonely_timer = 2 -- how long before a solo bird gives up on their flock and joins another one
-    params.player_extract_duration = 1.5
 
     style = {}
     style.buttonCol = {0.96,0.87,0.70, 0.8}

@@ -5,6 +5,7 @@ function Bird:new(x, y, sprite, speed, value)
     -- Bird parameters
     self.value = value
     self.speed = speed
+    self.extractResist = value / 10
 
     -- Bird state
     self.target_x = x
@@ -41,6 +42,11 @@ function Bird:update(dt)
         else
             self:gotFree()
         end
+        -- If a bird is trapped, struggle (doubles up on the animation timer)
+        if self.trapped then
+            self.sprite.animation.timer = self.sprite.animation.timer + dt
+        end
+        
     elseif self.underExtraction then
         return -- no movement if the bird is actively being extracted
     -- If the bird is emigrating
@@ -86,8 +92,7 @@ function Bird:draw()
     if self.trapped then
         -- Add halo if trapped
         love.graphics.setColor(1,0.95,0,0.3)
-        love.graphics.circle("fill", self.x, self.y, self.sprite.width * 0.4)
-        love.graphics.circle("fill", self.x, self.y, self.sprite.width * 0.3)
+        -- love.graphics.circle("fill", self.x, self.y, self.sprite.width * 0.3)
         love.graphics.circle("fill", self.x, self.y, self.sprite.width * 0.2)
         love.graphics.setColor(1,1,1,1)
     end
@@ -166,14 +171,12 @@ function Bird:findSafeDestination()
     self.target_y = self.y + love.math.random(200, 500) * (sin + love.math.random(-1, 1)) * -1
 end
 
-
 function Bird:scaredAway()
     self.scared_timer = 1 -- won't be scared again too fast
     self.patience = 0 -- find a new destination as soon as it reaches it safe destination
     self:findSafeDestination()
     self:talk("!",1)
 end
-
 
 function Bird:gotTrapped()
     self.trapped = true

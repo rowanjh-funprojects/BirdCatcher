@@ -58,7 +58,7 @@ function Player:draw()
     if self.attemptingExtraction then
         love.graphics.rectangle("line", self.x - self.sprite.width/3, self.y - self.sprite.height / 2 - 10, self.sprite.width * 0.667, 5)
         love.graphics.rectangle("fill", self.x - self.sprite.width/3, self.y - self.sprite.height / 2 - 10, 
-                                self.sprite.width * 0.667 * ((params.player_extract_duration - self.extractTimer)/params.player_extract_duration),
+                                self.sprite.width * 0.667 * ((self.extractingWhichBird.extractResist - self.extractTimer)/self.extractingWhichBird.extractResist),
                                 5)
     end
 end
@@ -145,7 +145,8 @@ function Player:startExtractionAttempt(thisbird)
     self.attemptingExtraction = true
     self.extractingWhichBird = thisbird
     thisbird:beingExtracted()
-    self.extractTimer = params.player_extract_duration
+    -- self.extractTimer = params.player_extract_duration
+    self.extractTimer = thisbird.extractResist
 end
 
 function Player:tryToExtractBird()
