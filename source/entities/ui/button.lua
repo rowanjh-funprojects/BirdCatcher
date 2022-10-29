@@ -30,16 +30,16 @@ end
 function Button:draw()
     love.graphics.setColor(self.bCol)
     love.graphics.rectangle(self.fill, 
-                            self.x - self.drawOffsetX - 20, 
-                            self.y - self.drawOffsetY - 10, 
-                            self.width + 40, self.height + 20,
-                            30, 30)
+                            self.x - self.drawOffsetX - self.height * 0.3, -- use height as the main buffer, consistent regardless of nchar 
+                            self.y - self.drawOffsetY - self.height * 0.3, 
+                            self.width + self.height * 0.6, self.height + self.height * 0.6, -- width/height
+                            self.height * 0.4, self.height * 0.4)--rounding
     if self.highlight then
         love.graphics.rectangle(self.fill, 
-                                self.x - self.drawOffsetX - 30, 
-                                self.y - self.drawOffsetY - 15, 
-                                self.width + 60, self.height + 30,
-                                30, 30)
+                                self.x - self.drawOffsetX - self.height * 0.35, -- use height as the main buffer, consistent regardless of nchar 
+                                self.y - self.drawOffsetY - self.height * 0.35, 
+                                self.width + self.height * 0.7, self.height + self.height * 0.7, -- width/height
+                                self.height * 0.4, self.height * 0.4)--rounding
     end
     love.graphics.setColor(1, 1, 1, 1)
 

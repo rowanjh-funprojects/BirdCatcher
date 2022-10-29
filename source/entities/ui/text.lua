@@ -7,10 +7,9 @@ function Text:new(x, y, text, font, txtCol, bgpanel)
     self.y = y
     self.font = font
     self.text = text
-    self.scale = scale
-    self.width = self.font:getWidth(self.text)
-    self.height = self.font:getHeight()
-    
+    self.scale = params.gameScale
+    self.width = self.font:getWidth(self.text) * self.scale
+    self.height = self.font:getHeight() * self.scale
     if txtCol then
         self.txtCol = txtCol
     else
