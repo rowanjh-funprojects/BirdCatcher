@@ -43,10 +43,8 @@ function Bird:update(dt)
             self:gotFree()
         end
         -- If a bird is trapped, struggle (doubles up on the animation timer)
-        if self.trapped then
-            self.sprite.animation.timer = self.sprite.animation.timer + dt
-        end
-        
+        self.sprite.animation.timer = self.sprite.animation.timer + dt
+        self:talk("!!", 0.1)
     elseif self.underExtraction then
         return -- no movement if the bird is actively being extracted
     -- If the bird is emigrating
