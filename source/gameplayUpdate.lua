@@ -1,5 +1,12 @@
 function gameplayUpdate(dt)
-    cam:setPosition(player.x, player.y)
+    -- update camera position
+    local camX, camY = cam:getPosition()
+    if camX ~= player.x or camY ~= player.y then
+        -- pan camera when there is a sudden jump
+        local newCamX = camX - (camX - player.x) * dt
+        local newCamY = camY - (camY - player.y) * dt
+        cam:setPosition(newCamX, newCamY)
+    end
 
     timer:update(dt)
     -- Player update

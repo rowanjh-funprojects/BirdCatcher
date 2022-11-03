@@ -47,7 +47,6 @@ function love.keypressed(key)
     end
 end
 
-
 function love.mousepressed(x, y, button, istouch)
     if button == 1  then
         if show_tutorial then
@@ -68,6 +67,8 @@ function love.mousepressed(x, y, button, istouch)
                 return
             end
         end
+    elseif button == 2 then
+        player:teleport(x, y)
     end
 end
 

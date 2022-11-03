@@ -15,6 +15,7 @@ function Player:new(x, y, sprite)
     self.extractTimer = params.player_extract_duration
     self.attemptingExtraction = false
     self.extractingWhichBird = nil
+    self.teleporting = false
 
     -- Setup collision rectangle
     self.boxWidth = math.floor(self.sprite.width / 2)
@@ -26,7 +27,7 @@ end
 
 function Player:update(dt)
     Player.super.update(self, dt)
-    self:move(dt)
+    self:walk(dt)
 
     -- Increment timers
     if self.quietCurrentCD >= 0 then
@@ -67,38 +68,51 @@ function Player:destroy()
     Player.super.destroy(self)
 end
 
-function Player:move(dt)
-    -- Manage player movements
-    if self.attemptingExtraction then
-        -- Can't move if attempting an extraction
-        return
-    end
-
-    local goalX = self.x
-    local goalY = self.y
+function Player:walk(dt)
+    -- Manage player walking movemenets: detect when movement arrows are pressed, and
+    -- attempt to do that movement with player:move()
+    local goalX = nil
+    local goalY = nil
     if love.keyboard.isDown("left") or love.keyboard.isDown("a") then
         goalX = self.x - self.speed * dt
-        self.quiet = false
-        self.quietCurrentCD = params.player_quiet_cooldown
     elseif love.keyboard.isDown("right") or love.keyboard.isDown("d")  then
         goalX = self.x + self.speed * dt
-        self.quiet = false
-        self.quietCurrentCD = params.player_quiet_cooldown
     end
     if love.keyboard.isDown("up") or love.keyboard.isDown("w") then
         goalY = self.y - self.speed * dt
-        self.quiet = false
-        self.quietCurrentCD = params.player_quiet_cooldown
     elseif love.keyboard.isDown("down") or love.keyboard.isDown("s") then
         goalY = self.y + self.speed * dt
-        self.quiet = false
-        self.quietCurrentCD = params.player_quiet_cooldown
     end
+    if goalX or goalY then
+        if not goalX then
+            goalX = self.x
+        elseif not goalY then
+            goalY = self.y
+        end
+        player:move(goalX, goalY)
+    end
+end
 
+function Player:teleport(x, y)
+    -- x and y are pixel coordinates. Transform this to world position with maths. 
+    local goalX, goalY = cam:toWorld(x,y)
+    world:update(self, goalX, goalY)
+    self:move(goalX, goalY)
+end
+
+function Player:move(goalX, goalY)
+    -- Manage any player movement - walking, teleport.
+    self.quiet = false
+    self.quietCurrentCD = params.player_quiet_cooldown
+    -- Can't move if attempting an extraction
+    if self.attemptingExtraction then
+        return
     -- Prevent player from going too far away from the temp net's origin point
-    if self.placing_net then
-        local new_dist = math.sqrt((goalY - netTemp.starty)^2 + (goalX - netTemp.startx)^2)
-        if new_dist > netTemp.maxLength then
+    elseif self.placing_net then
+        -- Get distance between destination and net's origin point
+        local goalDistance = math.sqrt((goalY - netTemp.starty)^2 + (goalX - netTemp.startx)^2)
+        if goalDistance > netTemp.maxLength then
+            -- If the destination would end up too far away, snap to the max range in the same direction.
             local angle = math.atan2(goalY - netTemp.starty, goalX - netTemp.startx)
             local cos = math.cos(angle)
             local sin = math.sin(angle)
@@ -106,13 +120,13 @@ function Player:move(dt)
             goalY = netTemp.starty + sin * netTemp.maxLength
         end
     end
-
-    -- Transform coordinates for bounding box offset
+    -- Transform object coordinates to bbox top-left
     goalX = goalX - self.boxOffsetX
     goalY = goalY - self.boxOffsetY
     local resultingX, resultingY
+    -- Move the collision rectangle
     resultingX, resultingY, cols, len = world:move(self, goalX, goalY, collision_filter)
-    -- Transform coordinates back to original
+    -- Transform bbox coordinates back to original object coordinate
     self.x = resultingX + self.boxOffsetX
     self.y = resultingY + self.boxOffsetY
 end
@@ -161,9 +175,9 @@ function Player:tryToExtractBird()
         if self:extractSkillCheck() then
             self.frustration = 0
             self.extractingWhichBird:gotCaptured()
-            if self.extractingWhichBird.value <= 10 then
+            if self.extractingWhichBird.value <= 20 then
                 bell:play()
-            elseif self.extractingWhichBird.value >10 then
+            elseif self.extractingWhichBird.value >20 then
                 bellMulti:play()
             end
             score = score + self.extractingWhichBird.value
