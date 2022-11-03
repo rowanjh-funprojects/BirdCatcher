@@ -87,13 +87,13 @@ function Bird:update(dt)
 end
 
 function Bird:draw()
-    if self.trapped then
-        -- Add halo if trapped
-        love.graphics.setColor(1,0.95,0,0.3)
-        -- love.graphics.circle("fill", self.x, self.y, self.sprite.width * 0.3)
-        love.graphics.circle("fill", self.x, self.y, self.sprite.width * 0.2)
-        love.graphics.setColor(1,1,1,1)
-    end
+    -- if self.trapped then
+    --     -- Add halo if trapped
+    --     love.graphics.setColor(1,0.95,0,0.3)
+    --     -- love.graphics.circle("fill", self.x, self.y, self.sprite.width * 0.3)
+    --     love.graphics.circle("fill", self.x, self.y, self.sprite.width * 0.2)
+    --     love.graphics.setColor(1,1,1,1)
+    -- end
     -- Draw bird, with bbox offset
     if self.invincible_timer > 0 then
         love.graphics.setColor(1,1,1,0.85)
@@ -165,8 +165,9 @@ function Bird:findSafeDestination()
     local angle = math.atan2(player.y - self.y, player.x - self.x)
     local cos = math.cos(angle)
     local sin = math.sin(angle)
-    self.target_x = self.x + love.math.random(200, 500) * (cos + love.math.random(-1, 1)) * -1
-    self.target_y = self.y + love.math.random(200, 500) * (sin + love.math.random(-1, 1)) * -1
+    -- add some random noise to the x and y destination
+    self.target_x = self.x + love.math.random(200, 500) * (cos + love.math.random(-0.4, 0.4)) * -1
+    self.target_y = self.y + love.math.random(200, 500) * (sin + love.math.random(-0.4, 0.4)) * -1
 end
 
 function Bird:scaredAway()
