@@ -35,6 +35,7 @@ function gameplayUpdate(dt)
     end
 
     remove_if_destroyed(birds)
+    remove_if_destroyed(nets)
     remove_if_destroyed(flocks)
     remove_if_destroyed(env.trees)
     remove_if_destroyed(env.bgElements)

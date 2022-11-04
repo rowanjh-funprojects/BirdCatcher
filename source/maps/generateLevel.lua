@@ -19,6 +19,8 @@ function generateLevel(spec)
     flocks = {}
     spawners = {}
     env = {}
+    nets = {}
+    
     env.bgTiles = spec.env.bgTiles
     env.bushes = {}
     env.trees = {}

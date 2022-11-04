@@ -18,15 +18,14 @@ function love.keypressed(key)
             end
         -- place net, if not already in net placement mode
         elseif not player.placing_net then
-            netTemp = player:alignNet(20)
+            netTemp = player:alignNet(params.net_max_length)
         -- if in net placement mode, finalize net placement
         elseif player.placing_net then
-            -- kill the old net, place a new net
-            if net then
-                net:destroy()
-                net = nil
+            -- kill the oldest net, place a new net
+            if #nets == params.player_nets_allowed then
+                nets[1]:destroy()
             end
-            net = NetPlaced(netTemp.startx, netTemp.starty, netTemp.endx, netTemp.endy)
+            table.insert(nets, NetPlaced(netTemp.startx, netTemp.starty, netTemp.endx, netTemp.endy))
             netTemp:destroy()
             netTemp = nil
             player.placing_net = false
@@ -47,6 +46,14 @@ function love.keypressed(key)
     elseif key == "escape" and not globals.paused then
         globals.paused = true
         showPauseScreen()
+    elseif key == "escape" and globals.paused then
+        globals.paused = false
+        tag_as_destoyed(buttons)
+        remove_if_destroyed(buttons)    
+        tag_as_destoyed(ui.panels)
+        remove_if_destroyed(ui.panels)    
+        tag_as_destoyed(ui.textblocks)
+        remove_if_destroyed(ui.textblocks)    
     end
 end
 

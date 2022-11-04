@@ -71,6 +71,8 @@ function destroyAll()
     remove_if_destroyed(birds)
     tag_as_destoyed(flocks)
     remove_if_destroyed(flocks)
+    tag_as_destoyed(nets)
+    remove_if_destroyed(nets)
     tag_as_destoyed(env.trees)
     remove_if_destroyed(env.trees)
     tag_as_destoyed(env.bgElements)
@@ -90,11 +92,6 @@ function destroyAll()
         netTemp:destroy()
         netTemp = nil
     end
-    if net then
-        net:destroy()
-        net = nil
-    end
-
 end
 
 function makeWorldEdges()

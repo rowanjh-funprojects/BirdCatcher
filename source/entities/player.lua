@@ -88,30 +88,54 @@ end
 function Player:walk(dt)
     -- Manage player walking movemenets: detect when movement arrows are pressed, and
     -- attempt to do that movement with player:move()
+    -- World out angle of movement, then implement distance with speed.
     if self.immobilized then
         return
     end
-    local goalX = nil
-    local goalY = nil
+    local dx, dy, goalX, goalY = 0, 0, nil, nil
+
     if love.keyboard.isDown("left") or love.keyboard.isDown("a") then
         if not self.flipped then
             self:toggleAnimFlip()
             self.flipped = true
         end
-        goalX = self.x - self.speed * dt
-    elseif love.keyboard.isDown("right") or love.keyboard.isDown("d")  then
+        dx = dx -1
+    end
+    if love.keyboard.isDown("right") or love.keyboard.isDown("d")  then
         if self.flipped then
             self:toggleAnimFlip()
             self.flipped = false
         end
-        self.flipped = false
-        goalX = self.x + self.speed * dt
+        dx = dx + 1
+        -- goalX = self.x + self.speed * dt
     end
     if love.keyboard.isDown("up") or love.keyboard.isDown("w") then
-        goalY = self.y - self.speed * dt
-    elseif love.keyboard.isDown("down") or love.keyboard.isDown("s") then
-        goalY = self.y + self.speed * dt
+        dy = dy -1
+        -- goalY = self.y - self.speed * dt
     end
+    if love.keyboard.isDown("down") or love.keyboard.isDown("s") then
+        dy = dy +1
+        -- goalY = self.y + self.speed * dt
+    end
+    if dx ~= 0 and dy ~= 0 then
+        local diag_speed_adjust = math.sqrt(dx^2 + dy ^2)
+        dx = dx / diag_speed_adjust
+        dy = dy / diag_speed_adjust
+    end
+    goalX = self.x + self.speed * dx * dt
+    goalY = self.y + self.speed * dy * dt
+
+    if love.mouse.isDown(1) then
+        -- mouse overrides.
+        local mouseX, mouseY = love.mouse.getPosition()
+        -- convert from pixel coordinates to world coordinates
+        mouseX, mouseY = cam:toWorld(mouseX, mouseY)
+        local angle = math.atan2(mouseY - self.y, mouseX - self.x)
+        local cos = math.cos(angle) -- x component of movement
+        local sin = math.sin(angle) -- y component of movement
+        goalX = self.x + self.speed * cos * dt
+        goalY = self.y + self.speed * sin * dt
+end
     if goalX or goalY then
         if not goalX then
             goalX = self.x
@@ -194,7 +218,7 @@ function Player:toggleAnimFlip()
 end
 function Player:alignNet(maxLength)
     self.placing_net = true
-    return NetTemp(self.x, self.y, 200, 200, maxLength)
+    return NetTemp(self.x, self.y, maxLength)
 end
 
 function Player:check_bird_captures()

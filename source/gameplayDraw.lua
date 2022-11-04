@@ -19,10 +19,11 @@ function gameplayDraw()
             v:draw()
         end
 
-        if net then
-            net:draw()
+        if #nets > 0 then
+            for i,v in ipairs(nets) do
+                v:draw()
+            end
         end
-
         if netTemp then
             netTemp:draw()
         end
