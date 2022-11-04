@@ -126,16 +126,16 @@ function getOffscreenPoint()
 end
 
 function prepSprite(img, nRows, nCols, rate, ...)
-    --- @... frame specification for anim8.newAnimation(g(...))
+    -- @... frame specification for anim8.newAnimation(g(...)) e.g. (1, 1, 2, 1, 1-5, 1-5)
     local sprite = {}
     sprite.image = love.graphics.newImage(img)
     sprite.width = math.floor(sprite.image:getWidth() / nCols)
     sprite.height = math.floor(sprite.image:getHeight() / nRows)
     sprite.animated = nRows > 1 or nCols > 1
     if sprite.animated then
-        local g = anim8.newGrid(sprite.width, sprite.height, 
-                                sprite.width * nCols, sprite.height * nRows)
-        sprite.animation = anim8.newAnimation(g(...), rate)
+        sprite.g = anim8.newGrid(sprite.width, sprite.height, 
+                               sprite.width * nCols, sprite.height * nRows, 0, 0, 0)
+        sprite.animation = anim8.newAnimation(sprite.g(...), rate)
     end
     sprite.drawOffsetX = sprite.width / 2
     sprite.drawOffsetY = sprite.height / 2

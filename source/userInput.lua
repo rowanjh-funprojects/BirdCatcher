@@ -41,6 +41,9 @@ function love.keypressed(key)
         player.placing_net = false
         netTemp:destroy()
         netTemp = nil
+    elseif (key == "escape" or key == "x") and player.teleporting then
+        player.teleporting = false
+        player.immobilized = false
     elseif key == "escape" and not globals.paused then
         globals.paused = true
         showPauseScreen()
@@ -68,7 +71,7 @@ function love.mousepressed(x, y, button, istouch)
             end
         end
     elseif button == 2 then
-        player:teleport(x, y)
+        player:initTpSequence(x, y)
     end
 end
 
