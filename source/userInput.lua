@@ -71,7 +71,9 @@ function love.mousepressed(x, y, button, istouch)
             end
         end
     elseif button == 2 then
-        player:initTpSequence(x, y)
+        if player.canTeleport then
+            player:initTpSequence(x, y)
+        end
     end
 end
 

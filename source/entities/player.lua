@@ -18,6 +18,7 @@ function Player:new(x, y, sprite)
     self.teleporting = false
     self.tpCountdown = 0
     self.flipped = false
+    self.canTeleport = true
 
     -- Setup collision rectangle
     self.boxWidth = math.floor(self.sprite.width / 2)
@@ -129,6 +130,8 @@ function Player:initTpSequence(x,y)
     -- x and y are pixel coordinates of the mouse click. Transform this to world position. 
     self.teleporting = true
     self.tpCountdown = params.tp_countdown
+    self.quietCurrentCD = params.player_quiet_cooldown
+    self.quiet = false
     local goalX, goalY = cam:toWorld(x,y)
     self.tpDestX = goalX
     self.tpDestY = goalY
