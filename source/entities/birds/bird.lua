@@ -22,6 +22,7 @@ function Bird:new(x, y, sprite, speed, value)
     self.lifespan = params.bird_lifespan
     self.emigrating = false -- Bird still wants to stay in the world
     self.underExtraction = false
+    self.flipped = false
 
     -- Setup collision rectangle.
     self.boxWidth = math.floor(self.sprite.width / 2)
@@ -144,6 +145,14 @@ function Bird:moveTowardsDestination(dt)
                 self:gotTrapped()
             end
         end
+    end
+    -- flip if necessary
+    if self.x < resultingX + self.boxOffsetX and self.flipped then
+        self.flipped = false
+        self.sprite.animation:flipH()
+    elseif self.x > resultingX + self.boxOffsetX and not self.flipped then
+        self.flipped = true
+        self.sprite.animation:flipH()
     end
     -- Transform back to original coordinates
     self.x = resultingX + self.boxOffsetX
