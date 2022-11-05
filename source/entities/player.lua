@@ -61,7 +61,7 @@ function Player:update(dt)
     end
 
     if self.quiet then
-        self:talk("shhh",0.01)
+        self:talk("shh",0.01)
     end
 end
 
@@ -95,17 +95,9 @@ function Player:walk(dt)
     local dx, dy, goalX, goalY = 0, 0, nil, nil
 
     if love.keyboard.isDown("left") or love.keyboard.isDown("a") then
-        if not self.flipped then
-            self:toggleAnimFlip()
-            self.flipped = true
-        end
         dx = dx -1
     end
     if love.keyboard.isDown("right") or love.keyboard.isDown("d")  then
-        if self.flipped then
-            self:toggleAnimFlip()
-            self.flipped = false
-        end
         dx = dx + 1
         -- goalX = self.x + self.speed * dt
     end
@@ -136,11 +128,14 @@ function Player:walk(dt)
         goalX = self.x + self.speed * cos * dt
         goalY = self.y + self.speed * sin * dt
 end
-    if goalX or goalY then
-        if not goalX then
-            goalX = self.x
-        elseif not goalY then
-            goalY = self.y
+    if not (goalX == self.x) or not (goalY == self.y) then
+        -- flip animation left/right
+        if not self.flipped and goalX < self.x then
+            self:toggleAnimFlip()
+            self.flipped = true
+        elseif self.flipped and goalX > self.x then
+            self:toggleAnimFlip()
+            self.flipped = false
         end
         self.sprite.animation = self.anim.walk
         player:move(goalX, goalY)
@@ -165,6 +160,7 @@ function Player:initTpSequence(x,y)
 end
 
 function Player:tickTpSequence(dt)
+    catPurr.sound:play()
     self.tpCountdown = self.tpCountdown - dt
     if self.tpCountdown <=0 then
         self:teleport(self.tpDestX, self.tpDestY)
@@ -173,6 +169,8 @@ end
 
 function Player:teleport(x, y)
     -- update position to move without being blocked by trees, then use move to adjust final position with collisions
+    catPurr.sound:stop()
+    teleport:play()
     world:update(self, x, y)
     self:move(x, y)
     self.teleporting = false
