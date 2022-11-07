@@ -88,13 +88,6 @@ function Bird:update(dt)
 end
 
 function Bird:draw()
-    -- if self.trapped then
-    --     -- Add halo if trapped
-    --     love.graphics.setColor(1,0.95,0,0.3)
-    --     -- love.graphics.circle("fill", self.x, self.y, self.sprite.width * 0.3)
-    --     love.graphics.circle("fill", self.x, self.y, self.sprite.width * 0.2)
-    --     love.graphics.setColor(1,1,1,1)
-    -- end
     -- Draw bird, with bbox offset
     if self.invincible_timer > 0 then
         love.graphics.setColor(1,1,1,0.85)

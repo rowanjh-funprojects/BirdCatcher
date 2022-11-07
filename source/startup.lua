@@ -18,7 +18,7 @@ function startup()
     params.player_frustration_increment = 0.1
     params.player_quiet_cooldown = 3
     params.player_extract_duration = 1.5
-    params.player_speed = 200
+    params.player_speed = 250
     params.player_nets_allowed = 2
     params.net_max_length = 200
 

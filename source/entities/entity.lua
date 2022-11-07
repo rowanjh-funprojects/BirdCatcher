@@ -11,7 +11,7 @@ function Entity:update(dt)
 end
 
 function Entity:draw()
-    -- For debugging collision rectangles (blue rectangles)
+    -- -- For debugging collision rectangles (blue rectangles)
     -- if world:hasItem(self) then
     --     love.graphics.setColor(0.5,1,1)
     --     local x, y, w, h = world:getRect(self)
@@ -19,7 +19,7 @@ function Entity:draw()
     --     love.graphics.setColor(1,1,1)
     -- end
 
-    -- Show x/y position of entity
+    -- -- Show x/y position of entity
     -- if self.x then
     --     love.graphics.circle("fill", self.x, self.y, 5)
     -- end
