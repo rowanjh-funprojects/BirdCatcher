@@ -1,6 +1,6 @@
 function roundEnd()
-    local xWinCentre = params.winWidth/2
-    local yWinCentre = params.winHeight/2
+    local xWinCentre = params.gameWidth/2
+    local yWinCentre = params.gameHeight/2
     if score > globals.high_score then
         globals.high_score = score
     end

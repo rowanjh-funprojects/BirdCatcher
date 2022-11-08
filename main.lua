@@ -37,28 +37,24 @@ function love.update(dt)
 end
 
 function love.draw()
-    if globals.gamestate == "menu" then
-        for i=1,#images do
-            images[i]:draw()
+    push:start()
+    if globals.gamestate == "forest" then
+        cam:draw(drawGameplay)
+        cam:draw(function(l,t,w,h) 
+            drawWorldGrid()
         end
-        for i=1,#ui.panels do
-            ui.panels[i]:draw()
-        end
-        for i=1,#buttons do
-            buttons[i]:draw()
-        end
-        for i=1,#ui.textblocks do
-            ui.textblocks[i]:draw()
-        end
-        if show_tutorial then
-            for i = 1, #tutorial_elements do
-                tutorial_elements[i]:draw()
-            end
-        end
-    elseif globals.gamestate == "forest" then
-        gameplayDraw()
+        )
     end
-    -- drawDebugGrid()
+    drawUI()
+    drawGameGrid()
+    -- local w, h = push:getDimensions()
+    -- love.graphics.print("scale" .. tostring(cam:getScale()), 50, 50)
+
+    -- love.graphics.print("gameWidth" .. tostring(params.gameWidth), 50, 100)
+    -- love.graphics.print("gameHeight" .. tostring(params.gameHeight), 50, 300)
+    -- love.graphics.print("worldWidth" .. tostring(w), 50, 600)
+    -- love.graphics.print("worldHeight" .. tostring(h), 50, 650)
+    push:finish()
 
 end
 

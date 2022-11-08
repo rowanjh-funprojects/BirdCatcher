@@ -67,6 +67,8 @@ end
 function destroyAll()
     tag_as_destoyed(buttons)
     remove_if_destroyed(buttons)
+    tag_as_destoyed(images)
+    remove_if_destroyed(images)
     tag_as_destoyed(birds)
     remove_if_destroyed(birds)
     tag_as_destoyed(flocks)
@@ -161,3 +163,6 @@ function deepcopy(orig, copies)
     return copy
 end
 
+function love.resize(w, h)
+    push:resize(w, h)
+end

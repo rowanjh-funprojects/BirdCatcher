@@ -58,6 +58,7 @@ function love.keypressed(key)
 end
 
 function love.mousepressed(x, y, button, istouch)
+    x, y = push:toGame(x, y)
     if button == 1  then
         if show_tutorial then
             -- check for tutorial window first to give close button 
@@ -87,6 +88,10 @@ end
 function checkMouseHover(entity)
     local mx = love.mouse.getX()
     local my = love.mouse.getY()
+    mx, my = push:toGame(mx,my)
+    if mx == nil or my == nil then
+        return false
+    end
     -- check horiz overlap first
     if mx > entity.x - (entity.width / 2) and mx < entity.x + (entity.width / 2) then
         -- then check vertical overlap

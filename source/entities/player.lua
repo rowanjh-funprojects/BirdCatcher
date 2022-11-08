@@ -119,15 +119,26 @@ function Player:walk(dt)
 
     if love.mouse.isDown(1) then
         -- mouse overrides.
-        local mouseX, mouseY = love.mouse.getPosition()
-        -- convert from pixel coordinates to world coordinates
-        mouseX, mouseY = cam:toWorld(mouseX, mouseY)
-        local angle = math.atan2(mouseY - self.y, mouseX - self.x)
-        local cos = math.cos(angle) -- x component of movement
-        local sin = math.sin(angle) -- y component of movement
-        goalX = self.x + self.speed * cos * dt
-        goalY = self.y + self.speed * sin * dt
-end
+        local mx, my = love.mouse.getPosition()
+
+        -- convert from pixel coordinates to game base resolution coordinates
+        mx, my = push:toGame(mx, my)
+        if mx == nil or my == nil then
+            return
+        end
+        -- convert from game resolution to world position
+        mx, my = cam:toWorld(mx, my)
+        -- don't move if already standing within 5 game pixels of mouse position, to prevent left/right animation flickering
+        if (math.abs(mx - self.x) > 5) or (math.abs(my - self.y) > 5) then
+            local angle = math.atan2(my - self.y, mx - self.x)
+            local cos = math.cos(angle) -- x component of movement
+            local sin = math.sin(angle) -- y component of movement
+            goalX = self.x + self.speed * cos * dt
+            goalY = self.y + self.speed * sin * dt    
+        end
+
+    end
+    -- carry out any mouse or keyboard walk movement
     if not (goalX == self.x) or not (goalY == self.y) then
         -- flip animation left/right
         if not self.flipped and goalX < self.x then

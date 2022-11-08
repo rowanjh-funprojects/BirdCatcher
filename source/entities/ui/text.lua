@@ -7,9 +7,8 @@ function Text:new(x, y, text, font, txtCol, bgpanel)
     self.y = y
     self.font = font
     self.text = text
-    self.scale = params.gameScale
-    self.width = self.font:getWidth(self.text) * self.scale
-    self.height = self.font:getHeight() * self.scale
+    self.width = self.font:getWidth(self.text)
+    self.height = self.font:getHeight()
     if txtCol then
         self.txtCol = txtCol
     else
@@ -40,7 +39,7 @@ function Text:draw()
                                 30,30)
     end
     love.graphics.setColor(self.txtCol)
-    love.graphics.print(self.text, self.x - self.drawOffsetX, self.y  - self.drawOffsetY, 0, self.scale, self.scale)
+    love.graphics.print(self.text, self.x - self.drawOffsetX, self.y  - self.drawOffsetY, 0)
     love.graphics.setColor(1, 1, 1)
 end
 

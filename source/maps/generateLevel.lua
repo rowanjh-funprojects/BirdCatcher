@@ -9,9 +9,11 @@ function generateLevel(spec)
     globals.paused = false
 
     -- Resize world
-    params.worldWidth = spec.levelWidth
-    params.worldHeight = spec.levelHeight   
-    cam:setWorld(0,0,spec.levelWidth, spec.levelHeight)
+    params.worldWidth, params.worldHeight = spec.levelWidth, spec.levelHeight
+
+    -- params.worldHeight = spec.levelHeight
+    cam:setWorld(0,0,params.worldWidth, params.worldHeight)
+    cam:setWindow(0,0,params.gameWidth, params.gameHeight)
 
     -- Initialize entities
     player = Player(params.worldWidth/2, params.worldHeight/2, sprites.player)

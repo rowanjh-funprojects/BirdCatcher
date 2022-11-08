@@ -39,6 +39,7 @@ function startup()
     anim8 = require "source/libraries/anim8"
     gamera = require "source/libraries/gamera"
     cron = require "source/libraries/cron"
+    push = require "source/libraries/push"
 
     -- require all source files
     require "source/entities/entity"
@@ -66,7 +67,6 @@ function startup()
     require "source/entities/ui/panel"
     require "source/userInput"
     require "source/helperFunctions"
-    require "source/debugging"
     require "source/sound"
     require "source/loadAudio"
     require "source/loadGraphics"
@@ -83,14 +83,15 @@ function startup()
     -- local icon = love.image.newImageData('img/bird_static.png')
     -- love.window.setIcon(icon)
 
-    -- Resolution
-    local targetWinWidth = 1200
-    local targetWinHeight = 800
+    -- Base game resolution
+    params.gameWidth = 1440
+    params.gameHeight = 810
+
     local scale = 1 -- adjusts game window to screen size
     local offset = 0.8 -- window size relative to screen size
     local screen_width, screen_height = love.window.getDesktopDimensions()
-    local w_scale = screen_width / targetWinWidth
-    local h_scale = screen_height / targetWinHeight
+    local w_scale = screen_width / params.gameWidth
+    local h_scale = screen_height / params.gameHeight
     -- scale set to be the lesser of w_scale and h_scale so that window will not exceed screen size
     if w_scale < h_scale then
       scale = w_scale
@@ -99,19 +100,22 @@ function startup()
     end
     params.gameScale = scale * offset
 
-    -- update actual window size
-    params.winWidth = targetWinWidth * params.gameScale
-    params.winHeight = targetWinHeight * params.gameScale
-    love.window.setMode(  params.winWidth,    params.winHeight, {fullscreen = false,
-      fullscreentype = "desktop", resizable = false, borderless = false,
-      vsync = true})
+    -- get window size in pixels
+    params.windowWidth = params.gameWidth * params.gameScale
+    params.windowHeight = params.gameHeight * params.gameScale
 
-    -- Start physics engine, initialize world width/height for menu
-    params.worldWidth = params.winWidth
-    params.worldHeight = params.winHeight
+    -- setup push to handle scaling to different window sizes and resolutions
+    push:setupScreen(params.gameWidth, params.gameHeight, params.windowWidth, params.windowHeight,
+      {fullscreen = false, resizable = true, canvas = true, pixelperfect = false})
 
+    -- love.window.setMode(params.windowWidth, params.windowHeight, {fullscreen = false,
+    --   fullscreentype = "desktop", resizable = false, borderless = false,
+    --   vsync = true})
+
+    -- Start physics engine
     world = bump.newWorld()
 
+    -- prepare collision filter for bump
     function collision_filter(item, other)
       if item:is(Player) and other:is(WorldEdge) then return "slide"
       elseif item:is(Player) and other:is(EnvElement) then return "slide"
@@ -119,9 +123,9 @@ function startup()
       end
     end
     
-    -- Start Camera
-    cam = gamera.new(0,0,params.worldWidth, params.worldHeight)
-
+    -- Start Camera, initialize world size to gameWidth.
+    cam = gamera.new(0,0,params.gameWidth, params.gameHeight)
+    -- cam:setScale(params.gameScale)
     -- Load audio
     loadAudio()
     loadFonts()

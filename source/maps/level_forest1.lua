@@ -1,7 +1,7 @@
 -- Parameters for a level:
 local level = {
     round_time = 90,
-    levelWidth = 1400,
+    levelWidth = 1500,
     levelHeight = 1000,
     env = {
         bgTiles = tileset1,

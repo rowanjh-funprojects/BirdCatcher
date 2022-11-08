@@ -1,6 +1,6 @@
 function showPauseScreen()
-    local xmid = params.winWidth/2
-    local ymid = params.winHeight/2
+    local xmid = params.gameWidth/2
+    local ymid = params.gameHeight/2
     
     table.insert(ui.panels, Panel(xmid, ymid, xmid * 1.5, ymid * 1.5))
     table.insert(ui.textblocks, Text(xmid, ymid - ymid*0.5, "Paused", fonts.regularButton, {0,0,0}))
