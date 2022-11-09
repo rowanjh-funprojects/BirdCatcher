@@ -125,6 +125,8 @@ function startup()
     
     -- Start Camera, initialize world size to gameWidth.
     cam = gamera.new(0,0,params.gameWidth, params.gameHeight)
+    cam:setWindow(0,0,params.gameWidth, params.gameHeight)
+
     -- cam:setScale(params.gameScale)
     -- Load audio
     loadAudio()

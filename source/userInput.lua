@@ -102,3 +102,13 @@ function checkMouseHover(entity)
     return false
 end
 
+function love.wheelmoved(x, y)
+    if globals.gamestate ~= "menu" then
+        local sx, sy = cam:getScale()
+        if y > 0 and sx < 3 then
+            cam:setScale(sx * 1.1)
+        elseif y < 0 and sx > 0.5 then
+            cam:setScale(sx / 1.1)
+        end
+    end
+end
