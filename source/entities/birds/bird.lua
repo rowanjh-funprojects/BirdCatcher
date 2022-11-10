@@ -25,8 +25,8 @@ function Bird:new(x, y, sprite, speed, value)
     self.flipped = false
 
     -- Setup collision rectangle.
-    self.boxWidth = math.floor(self.sprite.width / 2)
-    self.boxHeight = math.floor(self.sprite.height / 2)
+    self.boxWidth = math.floor(self.sprite.width / 4)
+    self.boxHeight = math.floor(self.sprite.height / 4)
     self.boxOffsetX = self.boxWidth / 2
     self.boxOffsetY = self.boxHeight / 2
 
