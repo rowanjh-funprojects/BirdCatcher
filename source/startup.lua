@@ -7,7 +7,7 @@ function startup()
 
     params = {}
     params.capture_range = 100
-    params.tp_countdown = 2
+    params.tp_countdown = 1.5
     params.tree_buffer = 50
     params.bird_speed = 300
     params.bird_scare_dist = 200
@@ -30,6 +30,7 @@ function startup()
     style = {}
     style.buttonCol = {0.96,0.87,0.70, 0.8}
     style.txtCol = {0,0,0}
+    style.panelCol = {220/255,215/255,142/255}
 
     env = {}
     ui = {}
