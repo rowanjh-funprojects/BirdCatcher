@@ -13,7 +13,7 @@ function generateLevel(spec)
 
     -- params.worldHeight = spec.levelHeight
     cam:setWorld(0,0,params.worldWidth, params.worldHeight)
-    cam:setScale(1)
+    cam:setScale(1.2)
     -- Initialize entities
     player = Player(params.worldWidth/2, params.worldHeight/2, sprites.player)
     birds = {}
