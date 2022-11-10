@@ -41,19 +41,12 @@ function love.draw()
     if globals.gamestate == "forest" then
         cam:draw(drawGameplay)
         cam:draw(function(l,t,w,h) 
-            drawWorldGrid()
+            -- drawWorldGrid()
         end
         )
     end
     drawUI()
-    drawGameGrid()
-    -- local w, h = push:getDimensions()
-    -- love.graphics.print("scale" .. tostring(cam:getScale()), 50, 50)
-
-    -- love.graphics.print("gameWidth" .. tostring(params.gameWidth), 50, 100)
-    -- love.graphics.print("gameHeight" .. tostring(params.gameHeight), 50, 300)
-    -- love.graphics.print("worldWidth" .. tostring(w), 50, 600)
-    -- love.graphics.print("worldHeight" .. tostring(h), 50, 650)
+    -- drawGameGrid()
     push:finish()
 
 end
