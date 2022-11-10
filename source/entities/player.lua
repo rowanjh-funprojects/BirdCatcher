@@ -34,7 +34,7 @@ function Player:new(x, y, sprite)
     -- self.tpAnimation = anim8.newAnimation(self.sprite.g('1-6',5), 0.1)
     -- self.anim.tp = anim8.newAnimation(self.sprite.g('1-3',7,2,7), 0.1)
     -- self.anim.tp = anim8.newAnimation(self.sprite.g('1-8',8, '8-1', 8), 0.1)
-    self.anim.tp = anim8.newAnimation(self.sprite.g('1-6',5, '1-6',5, 2,7,2,7,3,7,3,7), 0.13)
+    self.anim.tp = anim8.newAnimation(self.sprite.g('1-6',5, '1-6',5, 2,7,3,7,4,7,5,7,5,7,5,7), 0.10)
     self.sprite.animation = self.anim.stand
 end
 
@@ -171,7 +171,6 @@ function Player:initTpSequence(x,y)
 end
 
 function Player:tickTpSequence(dt)
-    catPurr.sound:play()
     self.tpCountdown = self.tpCountdown - dt
     if self.tpCountdown <=0 then
         self:teleport(self.tpDestX, self.tpDestY)
@@ -180,7 +179,6 @@ end
 
 function Player:teleport(x, y)
     -- update position to move without being blocked by trees, then use move to adjust final position with collisions
-    catPurr.sound:stop()
     teleport:play()
     world:update(self, x, y)
     self:move(x, y)
