@@ -25,15 +25,17 @@ function drawUI()
             tutorial_elements[i]:draw()
         end
     end
+    if globals.gamestate == "forest" then
+        love.graphics.setFont(fonts.hudText)
+        love.graphics.print("Score: " .. score, 10, 10)
+        love.graphics.print("Time Left: " .. round_time - seconds, 10, 45)
+        love.graphics.print("High Score: " .. globals.high_score, params.gameWidth/2, 10)    
+    end
 end
 
 -- spec'd as a gamera draw function
 function drawGameplay(l,t,w,h)
     -- HUD
-    love.graphics.setFont(fonts.regularText)
-    love.graphics.print("Score: " .. score, 10, 10)
-    love.graphics.print("Time Left: " .. round_time - seconds, 10, 25)
-    love.graphics.print("High Score: " .. globals.high_score, params.gameWidth/2, 10)
 
     -- Tilemap
     local nTilesWide = math.floor(params.worldWidth / env.bgTiles.tile_width) + 1
