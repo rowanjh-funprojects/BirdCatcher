@@ -1,6 +1,11 @@
 -- Handle all user inputs (keys, mouse clicks)
 function love.keypressed(key)
     if not (globals.gamestate == "forest") then
+        if key == "escape" then
+            if show_tutorial then
+                show_tutorial = false
+            end
+        end
         -- No keyboard except in gameplay
         return
     end

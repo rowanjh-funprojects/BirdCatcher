@@ -33,7 +33,8 @@ Press ESC to pause
 Score as many points as you can before the timer runs out!
 
 
-Bird Behaviour Handbook, pp 26: 'Birds typically prefer to perch on certain tree species. Watch carefully how they move. However be cautious, when approached by humans they can become frightened (!)'
+Bird Behaviour Handbook, pp 26: 
+"Watch where birds perch, they may have a preferred tree type. But be cautious, when approached by humans they can become frightened (!)'
 ]]
     local textBoxWidth = params.gameWidth * 0.8
     table.insert(tutorial_elements, Panel(xmid, ymid, params.gameWidth * 0.9, params.gameHeight * 0.8, style.panelCol))
