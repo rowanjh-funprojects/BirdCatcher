@@ -13,3 +13,10 @@ function Sound:play()
     end
     self.sound:play()
 end
+
+function Sound:playIfNotPlaying()
+    if self.sound:isPlaying() then
+        return
+    end
+    self.sound:play()
+end

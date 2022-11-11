@@ -19,6 +19,7 @@ function Player:new(x, y, sprite)
     self.tpCountdown = 0
     self.flipped = false
     self.canTeleport = true
+    self.appearing = false
 
     -- Setup collision rectangle
     self.boxWidth = math.floor(self.sprite.width / 2)
@@ -35,6 +36,7 @@ function Player:new(x, y, sprite)
     -- self.anim.tp = anim8.newAnimation(self.sprite.g('1-3',7,2,7), 0.1)
     -- self.anim.tp = anim8.newAnimation(self.sprite.g('1-8',8, '8-1', 8), 0.1)
     self.anim.tp = anim8.newAnimation(self.sprite.g('1-6',5, '1-6',5, 2,7,3,7,4,7,5,7,5,7,5,7), 0.10)
+    self.anim.appear = anim8.newAnimation(self.sprite.g(5,7,4,7,3,7,2,7,1,7,1,7,1,7,1,7), 0.10)
     self.sprite.animation = self.anim.stand
 end
 
@@ -78,6 +80,10 @@ function Player:draw()
         love.graphics.rectangle("fill", self.x - self.sprite.width/3, self.y - self.sprite.height / 2 - 10, 
                                 self.sprite.width * 0.667 * ((self.extractingWhichBird.extractResist - self.extractTimer)/self.extractingWhichBird.extractResist),
                                 5)
+    end
+    -- draw teleport reappearance
+    if self.appearing then
+        self.anim.appear:draw(self.sprite.image, self.tpDestX - self.sprite.drawOffsetX, self.tpDestY - self.sprite.drawOffsetY)
     end
 end
 
@@ -158,6 +164,10 @@ end
 
 function Player:initTpSequence(x,y)
     -- x and y are pixel coordinates of the mouse click. Transform this to world position. 
+    if self.immobilized then
+        -- doesn't work if immobilized
+        return
+    end
     self.teleporting = true
     self.tpCountdown = params.tp_countdown
     self.quietCurrentCD = params.player_quiet_cooldown
@@ -168,6 +178,7 @@ function Player:initTpSequence(x,y)
     self.immobilized = true
     self.sprite.animation = self.anim.tp
     self.sprite.animation:gotoFrame(1)
+    self.anim.appear:gotoFrame(1)
 end
 
 function Player:tickTpSequence(dt)
@@ -175,16 +186,24 @@ function Player:tickTpSequence(dt)
     if self.tpCountdown <=0 then
         self:teleport(self.tpDestX, self.tpDestY)
     end
+    if self.tpCountdown <= 0.5 and self.tpCountdown > 0 then
+        self.anim.appear:update(dt)
+        self.appearing = true
+    end
+    if self.tpCountdown <= 0.3 then
+        teleport:playIfNotPlaying()
+    end
+
 end
 
 function Player:teleport(x, y)
     -- update position to move without being blocked by trees, then use move to adjust final position with collisions
-    teleport:play()
     world:update(self, x, y)
     self:move(x, y)
     self.teleporting = false
     self.immobilized = false
     self.sprite.animation = self.anim.walk
+    self.appearing = false
 end
 
 function Player:move(goalX, goalY)
