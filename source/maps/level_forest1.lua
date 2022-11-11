@@ -1,6 +1,6 @@
 -- Parameters for a level:
 local level = {
-    round_time = 90,
+    round_time = 80,
     levelWidth = 1500,
     levelHeight = 1000,
     env = {
